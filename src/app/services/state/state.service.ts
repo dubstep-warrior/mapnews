@@ -8,10 +8,8 @@ import { State } from 'src/app/interfaces/state';
 })
 export class StateService {
 
-  constructor() { }
-  // currentState: 'articleDetails' | 'selectedArticle' | 'neutral' = 'neutral';
-  // stateStorage: any = { 
-  // }
+  constructor() { } 
+  
   state: State = {name: "neutral"};
   currentStateSubject: Subject<any> = new Subject();
 
