@@ -1,8 +1,8 @@
-<mgl-marker
+<mgl-marker 
   *ngIf="currentState?.name == 'selectedArticle'"
   [lngLat]="[currentState.data['lng'], currentState.data['lat']]"
 >
-  <div class="article-box">
+  <div class="article-box" (click)="$event.stopPropagation()">
     <div class="article-box-heading">
       <div>{{ currentState.data.title }}</div>
       <div class="button" (click)="service.openArticleDetails(currentState.data); $event.stopPropagation()">
