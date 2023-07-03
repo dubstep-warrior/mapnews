@@ -1,0 +1,12 @@
+<section>
+  <div class="heading">
+    <div></div>
+    <div>
+      <div *ngFor="let item of menu" class="button" (click)="selected = item" [class.selected]="item == selected">
+        <div>{{ item }}</div>
+        <div></div>
+      </div> 
+    </div>
+    <div></div>
+  </div>
+</section>

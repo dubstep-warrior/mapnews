@@ -1,0 +1,53 @@
+section {
+  position: relative;
+}
+
+.heading {
+  margin: 0;
+  padding: 0px;
+  background-color: rgba(0, 0, 0, 0.271);
+  color: white;
+  inset: 0 0 auto 0;
+  height: 64px;
+  z-index: 1;
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+
+  > div {
+    display: flex;
+    align-items: center;
+
+    > div {
+      display: flex;
+      flex-grow: 1;
+      flex-direction: column;
+      justify-content: end;
+      height: 100%;
+      align-items: center;
+      gap: 8px;
+
+      > :first-child {
+        font-size: 24px;
+        padding: 4px 24px;
+        border-radius: 18px; 
+      }
+
+      > :last-child {
+        width: 70%;
+        height: 3px; 
+      }
+
+      &.selected {
+
+        > :first-child { 
+          background-color: rgba(0, 0, 0, 0.34);
+        }
+
+        > :last-child { 
+          background-color: #1f1f1f;
+        }
+      }
+    }
+  }
+}

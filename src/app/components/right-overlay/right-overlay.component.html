@@ -1,0 +1,29 @@
+<section (click)="$event.stopPropagation()">
+    <div *ngIf="state.name == 'articleDetails'">
+        <div>
+            <div>
+                <div class="category">
+                    <img class="icon" src="https://placehold.co/30x30" alt="">
+                </div>
+                <div>
+                    <div>
+                        {{ state.data.title | titlecase }}
+                    </div>
+                    <div class="button" (click)="liked = !liked">
+                        <img class="icon" [src]="'../../../assets/images/star-' + (liked ? '' : 'un')  + 'liked.png'" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="button" (click)="exitArticleDetail()">
+                <img class="icon" src="./../../assets/images/close.png" alt="">
+            </div>
+        </div> 
+        <app-tags [tags]="state.data.tags" [currentState]="state"></app-tags>
+        <div>
+            <img src="https://placehold.co/460x272" alt="">
+        </div>
+        <div>
+            {{ state.data.description | titlecase }}
+        </div>
+    </div>
+</section>

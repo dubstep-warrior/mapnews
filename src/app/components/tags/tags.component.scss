@@ -1,0 +1,15 @@
+.tags {
+  display: flex;
+  justify-content: flex-start;
+  gap: 8px;
+  flex-wrap: wrap;
+
+  > div:not(.more) {
+    margin-right: 8px;
+    padding: 4px 18px;
+    background-color: black;
+    color: white;
+    font-size: 16px;
+    border-radius: 12px;
+  }
+}
