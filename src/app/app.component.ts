@@ -23,6 +23,7 @@ export class AppComponent extends Base implements OnInit {
   }
   
   resetState(): void {
+    if (['articleDetails'].includes(this.state.name)) return;
     this.stateService.resetState();
   }
 }
