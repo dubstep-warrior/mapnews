@@ -7,8 +7,8 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { Map } from 'maplibre-gl';
-import { Article } from 'src/app/interfaces/article';
-import { StateService } from 'src/app/services/state/state.service';
+import { Article } from '../../core/interfaces/article';
+import { StateService } from './../../core/services/state/state.service';
 
 @Component({
   selector: 'app-map',

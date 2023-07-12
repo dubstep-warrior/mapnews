@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Article } from './interfaces/article';
-import { StateService } from './services/state/state.service';
-import { Base } from './directives/base.directive';
-import { State } from './interfaces/state';
+import { Article } from './core/interfaces/article';
+import { StateService } from './core/services/state/state.service';
+import { Base } from './core/directives/base.directive';
+import { State } from './core/interfaces/state';
 
 @Component({
   selector: 'app-root',
