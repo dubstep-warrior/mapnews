@@ -16,7 +16,7 @@ export class ArticleBoxComponent extends Base implements OnInit{
   } 
 
   ngOnInit(): void {
-      this.service.currentStateSubject.pipe(this.takeUntilDestroy()).subscribe((state) => {
+      this.service.model.pipe(this.takeUntilDestroy()).subscribe((state) => {
         this.currentState = state
       })
   }

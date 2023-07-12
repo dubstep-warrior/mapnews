@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Article } from './core/interfaces/article';
 import { StateService } from './core/services/state/state.service';
 import { Base } from './core/directives/base.directive';
 import { State } from './core/interfaces/state';
@@ -17,13 +16,13 @@ export class AppComponent extends Base implements OnInit {
   }
 
   ngOnInit(): void {
-      this.stateService.currentStateSubject.pipe(this.takeUntilDestroy()).subscribe((state) => {
+      this.stateService.model.pipe(this.takeUntilDestroy()).subscribe((state) => {
         this.state = state
       })
   }
   
   resetState(): void {
-    if (['articleDetails'].includes(this.state.name)) return;
+    if (['articleDetails'].includes(this.state?.name)) return;
     this.stateService.resetState();
   }
 }

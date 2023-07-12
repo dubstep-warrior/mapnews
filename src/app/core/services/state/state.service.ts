@@ -11,7 +11,7 @@ export class StateService {
   constructor() { } 
   
   state: State = {name: "neutral"};
-  currentStateSubject: Subject<any> = new Subject();
+  model: Subject<any> = new Subject();
 
   openArticleDetails(article: Article) {
     this.state.name = 'articleDetails'
@@ -26,7 +26,7 @@ export class StateService {
   }
 
   stateBroadcast() {
-    this.currentStateSubject.next(this.state)
+    this.model.next(this.state)
   }
 
   resetState() {
