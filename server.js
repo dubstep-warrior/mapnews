@@ -3,6 +3,7 @@ const mongoose =  require("mongoose");
 const express = require('express')
 const articles = require("./routes/article.routes");
 const bodyParser =  require("body-parser");
+const cors = require("cors");
 
 const app = express();
 const port = 8000;
@@ -11,7 +12,21 @@ mongoose.connect(process.env.MONGODB_CLUSTER_URI, {useNewUrlParser: true, useUni
 .then(res => console.log(`Connection Succesful ${res}`))
 .catch(err => console.log(`Error in DB connection ${err}`));
 
+
+const whitelist = ['http://localhost:4200'];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+};
+
+
 //body-parser config;
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true }));
 app.use(bodyParser.json());

@@ -8,9 +8,12 @@ module.exports = class Article{
          if(!articles){
             res.status(404).json("There are no article published yet!")
          }
-         res.json(articles);
+         res.json({
+            success: true,
+            data: articles
+         });
        } catch (error) {
-          res.status(500).json({error: error})
+          res.status(500).json({success:false, error: error})
        }
 
    }
@@ -19,18 +22,24 @@ module.exports = class Article{
       try {
          let id = req.params.id || {};
          const article = await ArticleService.getArticlebyId(id);
-         res.json(article);
+         res.json({
+            success: true,
+            data: article
+         });
       } catch (error) {
-         res.status(500).json({error: error})
+         res.status(500).json({success:false, error: error})
       }
    }
 
    static async apiCreateArticle(req, res, next){
       try {
          const createdArticle =  await ArticleService.createArticle(req.body);
-         res.json(createdArticle);
+         res.json({
+            success: true,
+            data: createdArticle
+         });
       } catch (error) {
-         res.status(500).json({error: error});
+         res.status(500).json({success:false, error: error})
       }
    }
 

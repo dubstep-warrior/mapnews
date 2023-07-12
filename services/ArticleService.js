@@ -3,8 +3,10 @@ const Article = require("../models/Article");
 module.exports = class ArticleService{
     static async getAllArticles(){
         try {
-            const allArticles = await  Article.find();
-            return allArticles;
+            const allArticles = await Article.find().lean();
+            return allArticles.map(article => {
+                return {...article, coordinates: article.location.coordinates}
+            });
         } catch (error) {
             console.log(`Could not fetch articles ${error}`)
         }
