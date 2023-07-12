@@ -10,6 +10,7 @@ import { ArticleBoxComponent } from './components/article-box/article-box.compon
 import { MarkComponent } from './components/mark/mark.component';
 import { RightOverlayComponent } from './components/right-overlay/right-overlay.component';
 import { TagsComponent } from './components/tags/tags.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { TagsComponent } from './components/tags/tags.component';
     TagsComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     NgxMapLibreGLModule

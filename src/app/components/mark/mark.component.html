@@ -1,5 +1,5 @@
 <mgl-marker 
-    [lngLat]="[article['lng'], article['lat']]"
+    [lngLat]="[article['coordinates'][0], article['coordinates'][1]]"
   >
     <div class="marker" (click)="stateService.selectArticle(article); $event.stopPropagation()">
       <img [src]="'./../../assets/images/location.webp'" />

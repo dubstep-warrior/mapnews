@@ -1,6 +1,6 @@
 <mgl-marker 
   *ngIf="currentState?.name == 'selectedArticle'"
-  [lngLat]="[currentState.data['lng'], currentState.data['lat']]"
+  [lngLat]="[currentState.data['coordinates'][0], currentState.data['coordinates'][1]]"
 >
   <div class="article-box" (click)="$event.stopPropagation()">
     <div class="article-box-heading">

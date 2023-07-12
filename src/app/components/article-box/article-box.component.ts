@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Base } from 'src/app/directives/base.directive';
-import { Article } from 'src/app/interfaces/article';
-import { State } from 'src/app/interfaces/state';
-import { StateService } from 'src/app/services/state/state.service';
+import { Base } from 'src/app/core/directives/base.directive';
+import { Article } from './../../core/interfaces/article';
+import { State } from './../../core/interfaces/state';
+import { StateService } from './../../core/services/state/state.service';
 
 @Component({
   selector: 'app-article-box',
@@ -16,7 +16,7 @@ export class ArticleBoxComponent extends Base implements OnInit{
   } 
 
   ngOnInit(): void {
-      this.service.currentStateSubject.pipe(this.takeUntilDestroy()).subscribe((state) => {
+      this.service.model.pipe(this.takeUntilDestroy()).subscribe((state) => {
         this.currentState = state
       })
   }

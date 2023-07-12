@@ -1,6 +1,5 @@
 export interface Article {
-    lat: number,
-    lng: number,
+    coordinates: Array<number>
     id: String,
     title: String,
     description: String,

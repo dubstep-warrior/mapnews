@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Article } from 'src/app/interfaces/article';
+import { Article } from './../../interfaces/article';
 import { Subject } from 'rxjs';
-import { State } from 'src/app/interfaces/state';
+import { State } from './../../interfaces/state'
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class StateService {
   constructor() { } 
 
   state: State = {name: "neutral"};
-  currentStateSubject: Subject<any> = new Subject();
+  model: Subject<any> = new Subject();
 
   openArticleDetails(article: Article) {
     this.state.name = 'articleDetails'
@@ -26,7 +26,7 @@ export class StateService {
   }
 
   private stateBroadcast() {
-    this.currentStateSubject.next(this.state)
+    this.model.next(this.state)
   }
 
   resetState() {

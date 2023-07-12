@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Article } from 'src/app/interfaces/article';
-import { StateService } from 'src/app/services/state/state.service';
+import { Article } from './../../core/interfaces/article';
+import { StateService } from './../../core/services/state/state.service';
 
 @Component({
   selector: 'app-mark',
