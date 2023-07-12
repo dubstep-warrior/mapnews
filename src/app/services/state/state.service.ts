@@ -9,7 +9,7 @@ import { State } from 'src/app/interfaces/state';
 export class StateService {
 
   constructor() { } 
-  
+
   state: State = {name: "neutral"};
   currentStateSubject: Subject<any> = new Subject();
 
@@ -25,7 +25,7 @@ export class StateService {
     this.stateBroadcast()
   }
 
-  stateBroadcast() {
+  private stateBroadcast() {
     this.currentStateSubject.next(this.state)
   }
 
