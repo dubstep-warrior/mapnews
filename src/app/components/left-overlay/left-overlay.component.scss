@@ -3,14 +3,14 @@ section {
   background-color: #d9d9d9;
   padding: 12px 24px;
 
-  > div {
+  > form {
     > * {
       margin-bottom: 12px;
     }
 
     select,
     input,
-    textarea { 
+    textarea {
       border-radius: 14px;
       font-size: 18px;
     }
@@ -33,69 +33,100 @@ section {
       }
     }
 
-    > :nth-child(2), > :nth-child(3), > :nth-child(4), :nth-child(5) {
-        > div {
-            width: 100%;
-            display: flex;
+    > :nth-child(2),
+    > :nth-child(3),
+    > :nth-child(4),
+    :nth-child(5) {
+      > div {
+        width: 100%;
+        display: flex;
 
-            input {
-                padding: 12px 16px;
-                flex-grow: 1;
-                border-width: 1px;
-            }
-
-            &.tags {
-                margin-top: 18px;
-
-                > div {
-                    background-color: #212121;
-                    color: white;
-                    padding: 4px 16px;
-                    margin-right: 16px;
-                    border-radius: 24px;
-                }
-            }
+        input {
+          padding: 12px 16px;
+          flex-grow: 1;
+          border-width: 1px;
         }
+
+        &.tags {
+          margin-top: 18px;
+
+          > div {
+            background-color: #212121;
+            color: white;
+            padding: 4px 16px;
+            margin-right: 16px;
+            border-radius: 24px;
+          }
+        }
+      }
     }
 
     > :nth-child(4) > div > div {
-        border-radius: 50%;
-        overflow: hidden;
-        margin-left: 8px;
-        cursor: pointer;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-left: 8px;
+      cursor: pointer;
+      background-color: white;
+      width: 46px;
+      height: 46px;
+      border: 1px solid transparent;
+      display: flex;
+
+      &:hover {
+        border: 1px solid black;
+      }
+
+      img {
+        margin: auto;
+        width: 42px;
+        height: 42px;
+      }
     }
 
-    > :nth-child(5) > div  {
-        flex-direction: column;
+    > :nth-child(5) > div {
+      flex-direction: column;
 
-        >  textarea {
-            flex-grow: 1;
-            height: 150px;
-            padding: 12px 16px;
-        }
+      > textarea {
+        flex-grow: 1;
+        height: 150px;
+        padding: 12px 16px;
+      }
 
-        > div {
-            margin-top: 8px;
-            text-align: end;
-        }
+      > div {
+        margin-top: 8px;
+        text-align: end;
+      }
     }
 
     > :nth-child(6) > div {
-        > :first-child {
+      > :first-child > div {
+        display: flex;
+        border-radius: 14px;
+        border: 1px solid black;
+        border-style: dashed;
+        padding: 20px;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+
+        > label > div {
             display: flex;
-            border-radius: 14px;
-            border: 1px solid black;
-            border-style: dashed;
-            padding: 20px;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
-            gap: 8px;
         }
 
-        > :last-child {
-            margin-top: 16px;
+        img {
+            width: 113px;
         }
+      }
+
+      > :last-child {
+        margin-top: 16px;
+      }
     }
- 
+  }
+
+  .selected {
+    border: 1px solid black !important;
   }
 }

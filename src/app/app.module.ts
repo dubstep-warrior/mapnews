@@ -15,6 +15,8 @@ import { LeftOverlayComponent } from './components/left-overlay/left-overlay.com
 import { MultiItemCarouselComponent } from './components/multi-item-carousel/multi-item-carousel.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CarouselModule } from 'primeng/carousel';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { CarouselModule } from 'primeng/carousel';
     NgxMapLibreGLModule,
     BrowserAnimationsModule,
     CarouselModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

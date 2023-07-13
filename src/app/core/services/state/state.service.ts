@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Article } from './../../interfaces/article';
 import { Subject } from 'rxjs';
-import { State } from './../../interfaces/state'
+import { State } from './../../interfaces/state' 
 
 @Injectable({
   providedIn: 'root'
 })
 export class StateService {
 
-  constructor() { } 
+  constructor() {  
+  } 
 
-  state: State = {name: "neutral"};
+  state: State = {name: "neutral"}; 
   model: Subject<any> = new Subject();
 
   openArticleDetails(article: Article) {
@@ -25,9 +26,15 @@ export class StateService {
     this.stateBroadcast()
   }
 
+  selectArticleLocation() {
+    this.state.name = 'addArticleLocation' 
+    this.stateBroadcast()
+  }
+
   addArticle() {
-    this.state.name = 'addArticle'
+    console.log('addart state called')
     this.state.data = {}
+    this.state.name = 'addArticle'
     this.stateBroadcast()
   }
 
@@ -36,6 +43,8 @@ export class StateService {
   }
 
   resetState() {
+    console.log('reset state called')
+    if (['articleDetails', 'addArticleLocation'].includes(this.state?.name)) return;
     this.state = {name: "neutral"}
     this.stateBroadcast()
   }

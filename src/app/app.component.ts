@@ -39,20 +39,20 @@ import {
 })
 export class AppComponent extends Base implements OnInit {
   title = 'MapNews';
-  state: State;
+  state: State; 
   constructor(private stateService: StateService) {
     super()
   }
 
   ngOnInit(): void {
       this.stateService.model.pipe(this.takeUntilDestroy()).subscribe((state) => {
-        this.state = state
-        console.log(this.state)
+        this.state = state 
+        console.log(this.state.name)
       })
   }
   
-  resetState(): void {
-    if (['articleDetails'].includes(this.state?.name)) return;
+  resetState(): void { 
+    if (['articleDetails', 'addArticleLocation'].includes(this.state?.name)) return;
     this.stateService.resetState();
   }
 }

@@ -1,8 +1,8 @@
 <section (click)="$event.stopPropagation()">
-  <div *ngIf="state.name == 'addArticle'">
+  <form [formGroup]="form"  *ngIf="['addArticle', 'addArticleLocation'].includes(state?.name) && form">
     <div>
       <h2>Category</h2>
-      <select name="cars" id="cars">
+      <select formControlName="category" name="cars" id="cars">
         <option value="volvo">Volvo</option>
         <option value="saab">Saab</option>
         <option value="mercedes">Mercedes</option>
@@ -12,55 +12,60 @@
     <div>
       <h2>Title</h2>
       <div>
-        <input />
+        <input formControlName="title"/>
       </div>
     </div>
     <div>
       <h2>Tags</h2>
       <div>
-        <input />
+        <input #tags (keyup.enter)="addTag($event)"/>
       </div>
       <div class="tags">
-        <div>Test</div>
-        <div>Test</div>
-        <div>Test</div>
+        <div *ngFor="let tag of form.get('tags').value">{{ tag }}</div> 
       </div>
     </div>
     <div>
       <h2>Location</h2>
       <div>
-        <input />
-        <div>
-          <img class="" src="https://placehold.co/46x46" alt="" />
+        <input readonly [value]="form.get('location').value.coordinates.toString()"/>
+        <div (click)="setLoc('current')">
+          <img class="" src="./../../../assets/images/current-loc.png" alt="" />
         </div>
-        <div>
-          <img class="" src="https://placehold.co/46x46" alt="" />
+        <div (click)="setLoc()" [class.selected]="locationMouseMode == true">
+          <img class="" src="./../../../assets/images/select-loc.png" alt="" />
         </div>
       </div>
     </div>
     <div>
       <h2>Description</h2>
       <div>
-        <textarea maxlength="280"></textarea>
+        <textarea formControlName="description" maxlength="280"></textarea>
         <div>280/280 remaining</div>
       </div>
     </div>
     <div>
       <h2>Add Images</h2>
       <div>
-        <div>
-          <div>
-            <img class="" src="https://placehold.co/106x88" alt="" />
-            <div>Drop image here</div>
-          </div>
-        </div>
+        <label class="button" for="image">
+            <input type="file" name="image" id="image" style="display: none" />
+            <div>
+                <div>
+                  <img
+                    class=""
+                    src="./../../../assets/images/upload-image.png"
+                    alt=""
+                  />
+                  <div>Drop image here</div>
+                </div>
+              </div>
+          </label>
         <div>
           <app-multi-item-carousel></app-multi-item-carousel>
         </div>
       </div>
     </div>
     <div>
-        <div class="button blue-btn">Submit</div>
+      <div class="button blue-btn">Submit</div>
     </div>
-  </div>
+  </form>
 </section>

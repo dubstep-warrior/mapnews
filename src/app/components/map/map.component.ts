@@ -11,68 +11,56 @@ import { Article } from '../../core/interfaces/article';
 import { StateService } from './../../core/services/state/state.service';
 import { Base } from 'src/app/core/directives/base.directive';
 import { ArticleService } from 'src/app/core/services/article/article.service';
+import { LocationService } from 'src/app/core/services/location/location.service';
+import { State } from 'src/app/core/interfaces/state';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
 })
-export class MapComponent
-  extends Base
-  implements OnInit, AfterViewInit, OnDestroy
-{
+export class MapComponent extends Base implements OnInit, OnDestroy {
   map: Map | undefined;
   @ViewChild('map')
   private mapContainer!: ElementRef<HTMLElement>;
   startingCoordinates: any = { lng: 139.753, lat: 35.6844, zoom: 14 };
   articles: Article[] = [];
+  state: State;
 
-  constructor(private service: ArticleService) {
+  constructor(
+    private service: ArticleService,
+    private locationService: LocationService,
+    private stateService: StateService
+  ) {
     super();
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.service.model
       .pipe(this.takeUntilDestroy())
-      .subscribe((data) => (
-        this.articles =  data
-      ));
+      .subscribe((data) => (this.articles = data));
+
+    this.locationService
+      .getLocation()
+      .pipe(this.takeUntilDestroy())
+      .subscribe((data) => {
+        console.log('rep', data);
+        this.startingCoordinates = {
+          lng: data.coords.longitude,
+          lat: data.coords.latitude,
+        };
+      });
+
+    this.stateService.model.pipe(this.takeUntilDestroy()).subscribe(data => {
+      this.state = data
+    })
+    await this.service.getArticles();
   }
 
-  async ngAfterViewInit() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          this.startingCoordinates = {
-            lng: position.coords.longitude,
-            lat: position.coords.latitude,
-          };
-           
-          // for (let i = 0; i < 30; i++) {
-          //   let tagsArr = []
-          //   for(let i = 0 ; i < Math.floor(Math.random() * 20 + 3); i ++) {
-          //     tagsArr.push(`${(Math.random() + 1).toString(36).substring(7)}`)
-          //   }
-          //   this.articles.push({
-          //     id: `${(Math.random() + 1).toString(36).substring(7)}`,
-          //     title: `Title Heading`,
-          //     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac auctor ipsum. Sed commodo est nec eros mollis, vitae faucibus justo ultricies. Vestibulum varius orci nibh, vitae hendrerit dolor efficitur ac. Vivamus vel condimentum erat. Morbi consequat luctus sem, eu scelerisque mi feugiat id. Vivamus vestibulum metus faucibus risus ultricies, fringilla fringilla augue vehicula. Integer mattis mauris quis orci convallis, ac pharetra ante interdum. Fusce volutpat finibus nisi, ultricies lobortis neque. Sed sed leo ut diam ultricies maximus sed in libero. Ut nibh odio, scelerisque sit amet auctor id, facilisis nec ligula. Quisque semper rutrum lorem id scelerisque. Aenean fermentum.',
-          //     lng: position.coords.longitude + (Math.random() < 0.5 ? Math.random() * -0.05 : Math.random() * 0.05),
-          //     lat: position.coords.latitude + (Math.random() < 0.5 ? Math.random() * -0.05 : Math.random() * 0.05),
-          //     tags: tagsArr
-          //   } as Article);
-          // }
-        },
-        () => {
-          console.error('Error: The Geolocation service failed.');
-        },
-        { enableHighAccuracy: true }
-      );
-    } else {
-      console.error("Error: Your browser doesn't support geolocation.");
+  sendMouseCoordinates(event: any) {
+    if(['addArticleLocation'].includes(this.state?.name)) {
+      this.locationService.setMouseCoordinates(JSON.stringify(event.lngLat.wrap())) 
     }
-
-    await this.service.getArticles();
   }
 
   override ngOnDestroy() {
