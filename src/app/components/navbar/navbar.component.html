@@ -1,7 +1,7 @@
-<section>
+<section (click)="$event.stopPropagation()">
   <div class="heading">
     <div>
-      <div>
+      <div (click)="addArticle()">
         Add Post
       </div>
     </div>

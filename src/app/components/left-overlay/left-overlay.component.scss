@@ -1,0 +1,84 @@
+section {
+  width: 424px;
+  background-color: #d9d9d9;
+  padding: 12px 24px;
+  position: absolute;
+  inset: 64px auto 0 0;
+
+  > div {
+    > * {
+      margin-bottom: 12px;
+    }
+
+    select,
+    input,
+    textarea { 
+      border-radius: 14px;
+      font-size: 18px;
+    }
+
+    h2 {
+      margin: 0 0 4px;
+      font-size: 24px;
+      font-weight: normal;
+    }
+
+    > :first-child {
+      > select {
+        width: 100%;
+        padding: 3px 14px;
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        background-size: 1em;
+      }
+    }
+
+    > :nth-child(2), > :nth-child(3), > :nth-child(4), :nth-child(5) {
+        > div {
+            width: 100%;
+            display: flex;
+
+            input {
+                padding: 12px 16px;
+                flex-grow: 1;
+                border-width: 1px;
+            }
+
+            &.tags {
+                margin-top: 18px;
+
+                > div {
+                    background-color: #212121;
+                    color: white;
+                    padding: 4px 16px;
+                    margin-right: 16px;
+                    border-radius: 24px;
+                }
+            }
+        }
+    }
+
+    > :nth-child(4) > div > div {
+        border-radius: 50%;
+        overflow: hidden;
+        margin-left: 8px;
+        cursor: pointer;
+    }
+
+    > :nth-child(5) > div  {
+        flex-direction: column;
+
+        >  textarea {
+            flex-grow: 1;
+            height: 150px;
+            padding: 12px 16px;
+        }
+
+        > div {
+            text-align: end;
+        }
+    }
+  }
+}

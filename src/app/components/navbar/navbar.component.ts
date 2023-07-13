@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { StateService } from 'src/app/core/services/state/state.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,4 +9,12 @@ import { Component } from '@angular/core';
 export class NavbarComponent {
   selected = 'Relevant'
   menu = ['Relevant', 'New']
+
+  constructor(private service: StateService) {
+
+  }
+
+  addArticle() {
+    this.service.addArticle()
+  }
 }

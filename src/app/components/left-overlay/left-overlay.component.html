@@ -1,0 +1,56 @@
+<section (click)="$event.stopPropagation()">
+  <div *ngIf="state.name == 'addArticle'">
+    <div>
+      <h2>Category</h2>
+      <select name="cars" id="cars">
+        <option value="volvo">Volvo</option>
+        <option value="saab">Saab</option>
+        <option value="mercedes">Mercedes</option>
+        <option value="audi">Audi</option>
+      </select>
+    </div>
+    <div>
+      <h2>Title</h2>
+      <div>
+        <input />
+      </div>
+    </div>
+    <div>
+      <h2>Tags</h2>
+      <div>
+        <input />
+      </div>
+      <div class="tags">
+        <div>Test</div>
+        <div>Test</div>
+        <div>Test</div>
+      </div>
+    </div>
+    <div>
+      <h2>Location</h2>
+      <div>
+        <input />
+        <div>
+          <img class="" src="https://placehold.co/46x46" alt="" />
+        </div>
+        <div>
+          <img class="" src="https://placehold.co/46x46" alt="" />
+        </div>
+      </div>
+    </div>
+    <div>
+      <h2>Description</h2>
+      <div>
+        <textarea maxlength="280"></textarea>
+        <div>280/280 remaining</div>
+      </div>
+    </div>
+    <div>
+        <h2>Add Images</h2>
+        <div>
+           <div>image box</div>
+           <div>image gallery</div>
+        </div>
+      </div>
+  </div>
+</section>
