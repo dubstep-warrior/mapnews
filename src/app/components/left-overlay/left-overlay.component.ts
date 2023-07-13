@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { StateService } from 'src/app/core/services/state/state.service';
+ 
 
 @Component({
   selector: 'app-left-overlay',

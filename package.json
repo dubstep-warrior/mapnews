@@ -11,10 +11,12 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^15.1.0",
+    "@angular/cdk": "^15.2.9",
     "@angular/common": "^15.1.0",
     "@angular/compiler": "^15.1.0",
     "@angular/core": "^15.1.0",
     "@angular/forms": "^15.1.0",
+    "@angular/material": "^15.2.9",
     "@angular/platform-browser": "^15.1.0",
     "@angular/platform-browser-dynamic": "^15.1.0",
     "@angular/router": "^15.1.0",
@@ -22,6 +24,8 @@
     "@types/geojson": "^7946.0.10",
     "@types/maplibre-gl": "^1.14.0",
     "maplibre-gl": "^3.1.0",
+    "ngx-bootstrap": "^10.2.0",
+    "primeng": "^16.0.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"

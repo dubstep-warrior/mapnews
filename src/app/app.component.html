@@ -1,5 +1,6 @@
 <div class="App" (click)="resetState()">
   <app-navbar></app-navbar>
   <app-map></app-map>
-  <app-right-overlay *ngIf="['articleDetails'].includes(state?.name)" [state]="state" ></app-right-overlay>
+  <app-right-overlay [@slideInFromRight] *ngIf="['articleDetails'].includes(state?.name)" [state]="state" ></app-right-overlay>
+  <app-left-overlay [@slideInFromLeft] *ngIf="['addArticle'].includes(state?.name)" [state]="state"></app-left-overlay>
 </div>

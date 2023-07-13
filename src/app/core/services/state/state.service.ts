@@ -25,6 +25,12 @@ export class StateService {
     this.stateBroadcast()
   }
 
+  addArticle() {
+    this.state.name = 'addArticle'
+    this.state.data = {}
+    this.stateBroadcast()
+  }
+
   private stateBroadcast() {
     this.model.next(this.state)
   }

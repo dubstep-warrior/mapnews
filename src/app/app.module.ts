@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -11,6 +11,10 @@ import { MarkComponent } from './components/mark/mark.component';
 import { RightOverlayComponent } from './components/right-overlay/right-overlay.component';
 import { TagsComponent } from './components/tags/tags.component';
 import { HttpClientModule } from '@angular/common/http';
+import { LeftOverlayComponent } from './components/left-overlay/left-overlay.component';
+import { MultiItemCarouselComponent } from './components/multi-item-carousel/multi-item-carousel.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CarouselModule } from 'primeng/carousel';
 
 @NgModule({
   declarations: [
@@ -20,15 +24,20 @@ import { HttpClientModule } from '@angular/common/http';
     ArticleBoxComponent,
     MarkComponent,
     RightOverlayComponent,
-    TagsComponent
+    TagsComponent,
+    LeftOverlayComponent,
+    MultiItemCarouselComponent,
   ],
   imports: [
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
-    NgxMapLibreGLModule
+    NgxMapLibreGLModule,
+    BrowserAnimationsModule,
+    CarouselModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
-export class AppModule { }
+export class AppModule {}

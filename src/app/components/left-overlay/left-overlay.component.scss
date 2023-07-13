@@ -2,8 +2,6 @@ section {
   width: 424px;
   background-color: #d9d9d9;
   padding: 12px 24px;
-  position: absolute;
-  inset: 64px auto 0 0;
 
   > div {
     > * {
@@ -77,8 +75,27 @@ section {
         }
 
         > div {
+            margin-top: 8px;
             text-align: end;
         }
     }
+
+    > :nth-child(6) > div {
+        > :first-child {
+            display: flex;
+            border-radius: 14px;
+            border: 1px solid black;
+            border-style: dashed;
+            padding: 20px;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        > :last-child {
+            margin-top: 16px;
+        }
+    }
+ 
   }
 }
