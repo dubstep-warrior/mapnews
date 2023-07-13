@@ -34,8 +34,8 @@ const articleSchema = Schema({
     },
   },
 
-  img: {
-    type: String,
+  images: {
+    type: [String],
     required: false,
   },
 
