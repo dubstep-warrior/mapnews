@@ -1,5 +1,5 @@
 <section (click)="$event.stopPropagation()">
-  <form [formGroup]="form"  *ngIf="['addArticle', 'addArticleLocation'].includes(state?.name) && form">
+  <form enctype="multipart/form-data"  [formGroup]="form"  *ngIf="['addArticle', 'addArticleLocation'].includes(state?.name) && form">
     <div>
       <h2>Category</h2>
       <select formControlName="category">
