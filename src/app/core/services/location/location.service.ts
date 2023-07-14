@@ -7,6 +7,7 @@ import { Observable, Observer, Subject } from 'rxjs';
 export class LocationService {
   constructor() {}
   mouseLocationCoordinates: Subject<any> = new Subject()
+  
 
   getLocation(): Observable<any> {
     return new Observable((observer: Observer<any>) => {
