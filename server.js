@@ -6,7 +6,7 @@ const bodyParser =  require("body-parser");
 const cors = require("cors");
 
 const app = express();
-const port = 8000;
+const port = process.env.PORT || 8000;
 
 mongoose.connect(process.env.MONGODB_CLUSTER_URI, {useNewUrlParser: true, useUnifiedTopology: true })
 .then(res => console.log(`Connection Succesful ${res}`))
