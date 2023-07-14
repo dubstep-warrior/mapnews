@@ -32,18 +32,15 @@ module.exports = class Article{
    }
 
    static async apiCreateArticle(req, res, next){
-      try {
-         // console.log(req.headers)
-         // console.log(next)
-         console.log('api called')
-         console.log(req.body.values())
-         const createdArticle =  await ArticleService.createArticle(req.body);
+      try { 
+         const createdArticle =  await ArticleService.createArticle(req);
          res.json({
             success: true,
             data: createdArticle
          });
       } catch (error) {
          console.log('error caught heres')
+         console.log(error)
          res.status(500).json({success:false, error: error})
       }
    }
