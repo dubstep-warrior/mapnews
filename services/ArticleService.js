@@ -1,6 +1,8 @@
 const Article = require("../models/Article");
+var fs = require('fs');
+var path = require('path'); 
 
-module.exports = class ArticleService{
+module.exports = class ArticleService{ 
     static async getAllArticles(){
         try {
             const allArticles = await Article.find().lean();
@@ -15,14 +17,22 @@ module.exports = class ArticleService{
     static async createArticle(data){
         try {
 
-            const newArticle = {
-                title: data.title,
-                tags: data.tags,
-                category: data.category,
-                description: data.description,
-                location: data.location,
-                img: data.img
-            }
+            console.log(JSON.parse(data.images))
+            // const images = [...data.images].map((img) => {
+            //     return {
+            //         data: fs.readFileSync(path.join(__dirname + '/uploads/' + img.file.name)),
+            //         contentType: 'image/png'
+            //     }
+            // })
+
+            // const newArticle = {
+            //     title: data.title,
+            //     tags: data.tags,
+            //     category: data.category,
+            //     description: data.description,
+            //     location: data.location,
+            //     images: images
+            // }
            const response = await new Article(newArticle).save();
            return response;
         } catch (error) {

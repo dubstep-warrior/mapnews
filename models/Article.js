@@ -35,7 +35,10 @@ const articleSchema = Schema({
   },
 
   images: {
-    type: [String],
+    type: [{
+      data: Buffer,
+      contentType: String
+  }],
     required: false,
   },
 
