@@ -24,10 +24,14 @@ export class ServerService {
     }).catch(() => {
       return { success: false };
     });
+  } 
+
+  get(api: string): any {
+    return this.request('GET', `${this.url}/${api}`)
   }
 
-  getNewsArticles(): any {
-    return this.request('GET', `${this.url}/api/v1/articles`);
+  post(api: string, event: any): any {
+    return this.request('POST', `${this.url}/${api}`, event)
   }
 
   // getProducts(): any {

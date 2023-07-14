@@ -49,6 +49,12 @@ export class MapComponent extends Base implements OnInit, OnDestroy {
           lng: data.coords.longitude,
           lat: data.coords.latitude,
         };
+
+        this.startingCoordinates = {
+          lng: 103.77431291838502,
+          lat: 1.3295169515211853
+        }
+ 
       });
 
     this.stateService.model.pipe(this.takeUntilDestroy()).subscribe(data => {

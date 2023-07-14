@@ -2,11 +2,8 @@
   <form [formGroup]="form"  *ngIf="['addArticle', 'addArticleLocation'].includes(state?.name) && form">
     <div>
       <h2>Category</h2>
-      <select formControlName="category" name="cars" id="cars">
-        <option value="volvo">Volvo</option>
-        <option value="saab">Saab</option>
-        <option value="mercedes">Mercedes</option>
-        <option value="audi">Audi</option>
+      <select formControlName="category">
+        <option value="Emergency">Emergency</option> 
       </select>
     </div>
     <div>
@@ -46,7 +43,7 @@
     <div>
       <h2>Add Images</h2>
       <div>
-        <label class="button" for="image">
+        <label (dragover)="$event.preventDefault()" (drop)="imageDropHandler($event)" class="button" for="image">
             <input type="file" name="image" id="image" style="display: none" />
             <div>
                 <div>
@@ -60,12 +57,12 @@
               </div>
           </label>
         <div>
-          <app-multi-item-carousel></app-multi-item-carousel>
+          <app-multi-item-carousel [images]="form.get('images').value"></app-multi-item-carousel>
         </div>
       </div>
     </div>
     <div>
-      <div class="button blue-btn">Submit</div>
+      <div (click)="submit()" class="button blue-btn">Submit</div>
     </div>
   </form>
 </section>

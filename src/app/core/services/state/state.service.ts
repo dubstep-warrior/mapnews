@@ -44,7 +44,6 @@ export class StateService {
 
   resetState() {
     console.log('reset state called')
-    if (['articleDetails', 'addArticleLocation'].includes(this.state?.name)) return;
     this.state = {name: "neutral"}
     this.stateBroadcast()
   }

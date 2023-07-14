@@ -3,6 +3,8 @@ import { Base } from 'src/app/core/directives/base.directive';
 import { LocationService } from 'src/app/core/services/location/location.service';
 import { StateService } from 'src/app/core/services/state/state.service';
 import { FormGroup, FormControl } from '@angular/forms';
+import { FormService } from 'src/app/core/services/form/form.service';
+import { ArticleService } from 'src/app/core/services/article/article.service';
 
 @Component({
   selector: 'app-left-overlay',
@@ -20,22 +22,15 @@ export class LeftOverlayComponent extends Base implements OnInit {
 
   constructor(
     private stateService: StateService,
-    private locationService: LocationService
+    private articleService: ArticleService,
+    private locationService: LocationService,
+    private formService: FormService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.form = new FormGroup({
-      category: new FormControl(''),
-      title: new FormControl(''),
-      tags: new FormControl([]),
-      location: new FormControl({
-        coordinates: []
-      }),
-      description: new FormControl(''),
-      images: new FormControl([])
-    })
+    this.form = this.formService.addArticleForm;
 
     this.locationService
       .getLocation()
@@ -69,8 +64,8 @@ export class LeftOverlayComponent extends Base implements OnInit {
     // console.log(this.state.data.get('tags'))
     this.form
       .get('tags')
-      .setValue([...this.state.data.get('tags').value, event.target.value]);
-    console.log(this.state.data.get('tags').value);
+      .setValue([...this.form.get('tags').value, event.target.value]);
+    console.log(this.form.get('tags').value);
     this.inputTags.nativeElement.value = '';
   }
 
@@ -84,5 +79,22 @@ export class LeftOverlayComponent extends Base implements OnInit {
       if (this.locationMouseMode) this.stateService.selectArticleLocation();
       else this.stateService.addArticle();
     }
+  }
+
+  imageDropHandler(event: any) { 
+    event.preventDefault()  
+    this.form.get('images').setValue([...this.form.get('images').value, ...[...event.dataTransfer.files]
+    .map(data => { 
+      return {
+        file: data,
+        preview_uri: URL.createObjectURL(data as Blob)
+      }
+    })])
+    console.log(this.form.get('images').value)
+  }
+
+  async submit(): Promise<void> {
+    const res = await this.articleService.report(this.form)
+    console.log(res);
   }
 }
