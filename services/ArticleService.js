@@ -1,14 +1,14 @@
-const Article = require("../models/Article"); 
+const Article = require("../models/Article");
 const ImageKit = require("imagekit");
 require("dotenv").config();
 
-const imageKit = new ImageKit({
-  publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
-  privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
-  urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
-});
-
 module.exports = class ArticleService {
+  static imageKit = new ImageKit({
+    publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
+    privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
+    urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
+  });
+
   static async getAllArticles() {
     try {
       const allArticles = await Article.find().lean();
@@ -23,11 +23,11 @@ module.exports = class ArticleService {
   static async createArticle(req) {
     try {
       let data = req.body;
-      let imagekit_images = []; 
+      let imagekit_images = [];
 
       for (const img of req.files) {
         try {
-          const res = await imageKit.upload({
+          const res = await this.imageKit.upload({
             file: img.buffer.toString("base64"),
             fileName: img.originalname,
             folder: "Articles",
@@ -36,7 +36,7 @@ module.exports = class ArticleService {
         } catch (err) {
           console.error(err);
         }
-      } 
+      }
       const newArticle = {
         images: imagekit_images,
       };
@@ -46,7 +46,7 @@ module.exports = class ArticleService {
       });
 
       const response = await new Article(newArticle).save();
-      console.log(response)
+      console.log(response);
       return response;
     } catch (error) {
       console.log("error in service");
