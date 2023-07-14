@@ -1,0 +1,23 @@
+<mgl-map
+  [style]="
+    'https://api.maptiler.com/maps/bright-v2/style.json?key=Vf3Ucwo3a2GSlz4MWlz4'
+  "
+  [zoom]="[startingCoordinates['zoom']]"
+  [center]="[startingCoordinates['lng'], startingCoordinates['lat']]"
+  (mapMouseUp)="sendMouseCoordinates($event)"
+  (click)="['addArticleLocation'].includes(state?.name) ? $event.stopPropagation() : null"
+  #map
+  [class.locationSelection]="['addArticleLocation'].includes(state?.name)" 
+  [cursorStyle]="'crosshair'"
+> 
+  <app-mark *ngFor="let article of articles" [article]="article" ></app-mark>
+  <app-article-box></app-article-box>  
+</mgl-map>
+
+
+
+<!-- <div class="map-wrap">
+  <a href="https://www.maptiler.com" class="watermark"><img
+      src="https://api.maptiler.com/resources/logo.svg" alt="MapTiler logo"/></a>
+  <div class="map" #map></div>
+</div> -->

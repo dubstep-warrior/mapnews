@@ -1,0 +1,7 @@
+<mgl-marker 
+    [lngLat]="[article['coordinates'][0], article['coordinates'][1]]"
+  >
+    <div class="marker" (click)="stateService.selectArticle(article); $event.stopPropagation()">
+      <img [src]="'./../../assets/images/location.webp'" />
+    </div>
+  </mgl-marker>
