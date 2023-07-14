@@ -10,7 +10,7 @@ import { FormService } from '../form/form.service';
 })
 export class ArticleService {
   model: Subject<any>;
-  api: string = 'api/v1/articles'
+  api: string = 'api/v1/articles';
   constructor(
     private service: ServerService,
     private formService: FormService,
@@ -30,19 +30,20 @@ export class ArticleService {
   }
 
   async report(form: FormGroup) {
-    // let formData = new FormData();
-    // Object.keys(form.value).forEach((key) => {
-    //   if ((form.value as any)[key]) {
-    //     if(key == 'images') {
-    //       formData.append(key, (form.value as any)[key].map((image: any) => image.file));
-    //     } else {
-    //       formData.append(key, (form.value as any)[key]);
-    //     }
-    //   }
-         
-       
-    // });
-    const res = await Promise.all([this.service.post(this.api, form.value), this.formService.uploadToImageKit(form.value['images'])]); 
-    console.log(res)
+    let formData = new FormData();
+    Object.keys(form.value).forEach((key) => {
+      if ((form.value as any)[key]) {
+        if (key == 'images') { 
+          (form.value as any)[key].forEach((image: any) => {
+            formData.append(key, image.file)
+          })
+        } 
+        else {
+          formData.append(key, JSON.stringify((form.value as any)[key]));
+        }
+      }
+    }); 
+    const res = await this.service.post(this.api, formData);
+    return res;
   }
 }

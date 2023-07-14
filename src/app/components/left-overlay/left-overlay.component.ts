@@ -93,6 +93,17 @@ export class LeftOverlayComponent extends Base implements OnInit {
     console.log(this.form.get('images').value)
   }
 
+  addImage(event: any) { 
+    this.imageDropHandler({
+      dataTransfer: {
+        files: [event.target.files[0]]
+      },
+      preventDefault: () => {
+        return
+      }
+    })
+  }
+
   async submit(): Promise<void> {
     const res = await this.articleService.report(this.form)
     console.log(res);

@@ -20,7 +20,7 @@
         </div> 
         <app-tags [tags]="state.data.tags" [currentState]="state"></app-tags>
         <div>
-            <img src="https://placehold.co/460x272" alt="">
+            <img [src]="state.data.images[0]" alt="">
         </div>
         <div>
             {{ state.data.description | titlecase }}

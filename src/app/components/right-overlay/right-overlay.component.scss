@@ -54,6 +54,12 @@ section {
         }
     }
 
+    > :nth-last-child(2) {
+      img {
+        width: 100%;
+      }
+    }
+
     > :last-child {
         text-align: left;
     }
