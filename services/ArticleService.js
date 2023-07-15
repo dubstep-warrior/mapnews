@@ -46,8 +46,7 @@ module.exports = class ArticleService {
       });
 
       const response = await new Article(newArticle).save();
-      console.log(response);
-      return response;
+      return {...response.toObject(), coordinates: response.location.coordinates};
     } catch (error) {
       console.log("error in service");
       console.log(error);
