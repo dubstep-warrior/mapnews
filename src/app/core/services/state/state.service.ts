@@ -38,6 +38,20 @@ export class StateService {
     this.stateBroadcast()
   }
 
+  submittingArticle() {
+    this.state.name = 'submittingArticle'
+    this.state.data = {}
+    this.stateBroadcast()
+  }
+
+  submitAttempted(success: boolean) {
+    this.state.name = "submitAttempted"
+    this.state.data = {
+      success: success
+    }
+    this.stateBroadcast()
+  }
+
   private stateBroadcast() {
     this.model.next(this.state)
   }

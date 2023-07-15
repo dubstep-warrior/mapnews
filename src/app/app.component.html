@@ -1,6 +1,21 @@
 <div class="App" (click)="resetState()">
   <app-navbar></app-navbar>
   <app-map></app-map>
-  <app-right-overlay [@slideInFromRight] *ngIf="['articleDetails'].includes(state?.name)" [state]="state" ></app-right-overlay>
-  <app-left-overlay [@slideInFromLeft] *ngIf="['addArticle', 'addArticleLocation'].includes(state?.name)" [state]="state"></app-left-overlay>
+  <app-right-overlay
+    [@slideInFromRight]
+    *ngIf="['articleDetails'].includes(state?.name)"
+    [state]="state"
+  ></app-right-overlay>
+  <app-left-overlay
+    [@slideInFromLeft]
+    *ngIf="
+      [
+        'addArticle',
+        'addArticleLocation',
+        'submittingArticle',
+        'submitAttempted'
+      ].includes(state?.name)
+    "
+    [state]="state"
+  ></app-left-overlay>
 </div>

@@ -8,6 +8,7 @@ app-left-overlay, app-right-overlay {
   position: absolute;
   inset: 64px auto 0 0;
   overflow: scroll;
+  // display: flex;
 
   &::-webkit-scrollbar {
     display: none;

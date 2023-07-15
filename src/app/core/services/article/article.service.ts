@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { StateService } from '../state/state.service';
 import { FormGroup } from '@angular/forms';
 import { FormService } from '../form/form.service';
+import { Article } from '../../interfaces/article';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +23,10 @@ export class ArticleService {
   async getArticles() {
     const res = await this.service.get(this.api);
     if (res && res.success) {
-      this.model.next(res.data);
+      this.model.next({
+        type: 'articles',
+        data: res.data,
+      });
       console.log(res);
     } else {
       console.log(res.error);
@@ -33,17 +37,24 @@ export class ArticleService {
     let formData = new FormData();
     Object.keys(form.value).forEach((key) => {
       if ((form.value as any)[key]) {
-        if (key == 'images') { 
+        if (key == 'images') {
           (form.value as any)[key].forEach((image: any) => {
-            formData.append(key, image.file)
-          })
-        } 
-        else {
+            formData.append(key, image.file);
+          });
+        } else {
           formData.append(key, JSON.stringify((form.value as any)[key]));
         }
       }
-    }); 
+    });
+    this.stateService.submittingArticle();
     const res = await this.service.post(this.api, formData);
+    if (res && res.success) {
+      this.model.next({
+        type: 'article',
+        data: res.data,
+      });
+    }
+    this.stateService.submitAttempted(res.success)
     return res;
   }
 }

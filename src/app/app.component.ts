@@ -2,13 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { StateService } from './core/services/state/state.service';
 import { Base } from './core/directives/base.directive';
 import { State } from './core/interfaces/state';
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition 
-} from '@angular/animations';
+import { trigger, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-root',
@@ -35,24 +29,32 @@ import {
     ]),
   ],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent extends Base implements OnInit {
   title = 'MapNews';
-  state: State; 
+  state: State;
   constructor(private stateService: StateService) {
-    super()
+    super();
   }
 
   ngOnInit(): void {
-      this.stateService.model.pipe(this.takeUntilDestroy()).subscribe((state) => {
-        this.state = state 
-        console.log(this.state.name)
-      })
+    this.stateService.model.pipe(this.takeUntilDestroy()).subscribe((state) => {
+      this.state = state;
+      console.log(this.state.name);
+    });
   }
-  
-  resetState(): void { 
-    if (['articleDetails', 'addArticleLocation'].includes(this.state?.name)) return;
+
+  resetState(): void {
+    if (
+      [
+        'articleDetails',
+        'addArticleLocation',
+        'submittingArticle',
+        'submissionSuccess',
+      ].includes(this.state?.name)
+    )
+      return;
     this.stateService.resetState();
   }
 }

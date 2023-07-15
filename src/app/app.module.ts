@@ -13,9 +13,10 @@ import { TagsComponent } from './components/tags/tags.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LeftOverlayComponent } from './components/left-overlay/left-overlay.component';
 import { MultiItemCarouselComponent } from './components/multi-item-carousel/multi-item-carousel.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CarouselModule } from 'primeng/carousel';
+ import { CarouselModule } from 'primeng/carousel';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -28,7 +29,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     RightOverlayComponent,
     TagsComponent,
     LeftOverlayComponent,
-    MultiItemCarouselComponent,
+    MultiItemCarouselComponent, 
   ],
   imports: [
     HttpClientModule,
@@ -38,7 +39,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     CarouselModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent],

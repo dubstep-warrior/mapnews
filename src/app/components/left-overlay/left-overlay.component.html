@@ -1,30 +1,37 @@
 <section (click)="$event.stopPropagation()">
-  <form enctype="multipart/form-data"  [formGroup]="form"  *ngIf="['addArticle', 'addArticleLocation'].includes(state?.name) && form">
+  <form
+    enctype="multipart/form-data"
+    [formGroup]="form"
+    *ngIf="['addArticle', 'addArticleLocation'].includes(state?.name) && form"
+  >
     <div>
       <h2>Category</h2>
       <select formControlName="category">
-        <option value="Emergency">Emergency</option> 
+        <option value="Emergency">Emergency</option>
       </select>
     </div>
     <div>
       <h2>Title</h2>
       <div>
-        <input formControlName="title"/>
+        <input formControlName="title" />
       </div>
     </div>
     <div>
       <h2>Tags</h2>
       <div>
-        <input #tags (keyup.enter)="addTag($event)"/>
+        <input #tags (keyup.enter)="addTag($event)" />
       </div>
       <div class="tags">
-        <div *ngFor="let tag of form.get('tags').value">{{ tag }}</div> 
+        <div *ngFor="let tag of form.get('tags').value">{{ tag }}</div>
       </div>
     </div>
     <div>
       <h2>Location</h2>
       <div>
-        <input readonly [value]="form.get('location').value.coordinates.toString()"/>
+        <input
+          readonly
+          [value]="form.get('location').value.coordinates.toString()"
+        />
         <div (click)="setLoc('current')">
           <img class="" src="./../../../assets/images/current-loc.png" alt="" />
         </div>
@@ -43,21 +50,34 @@
     <div>
       <h2>Add Images</h2>
       <div>
-        <label (dragover)="$event.preventDefault()" (drop)="imageDropHandler($event)" class="button" for="image">
-            <input (change)="addImage($event)" type="file" name="image" id="image" style="display: none" />
+        <label
+          (dragover)="$event.preventDefault()"
+          (drop)="imageDropHandler($event)"
+          class="button"
+          for="image"
+        >
+          <input
+            (change)="addImage($event)"
+            type="file"
+            name="image"
+            id="image"
+            style="display: none"
+          />
+          <div>
             <div>
-                <div>
-                  <img
-                    class=""
-                    src="./../../../assets/images/upload-image.png"
-                    alt=""
-                  />
-                  <div>Drop image here</div>
-                </div>
-              </div>
-          </label>
+              <img
+                class=""
+                src="./../../../assets/images/upload-image.png"
+                alt=""
+              />
+              <div>Drop image here</div>
+            </div>
+          </div>
+        </label>
         <div>
-          <app-multi-item-carousel [images]="form.get('images').value"></app-multi-item-carousel>
+          <app-multi-item-carousel
+            [images]="form.get('images').value"
+          ></app-multi-item-carousel>
         </div>
       </div>
     </div>
@@ -65,4 +85,23 @@
       <div (click)="submit()" class="button blue-btn">Submit</div>
     </div>
   </form>
+  <mat-spinner *ngIf="['submittingArticle'].includes(state.name)"></mat-spinner>
+  <div *ngIf="['submitAttempted'].includes(state.name)">
+    <img
+      [@bounce]
+      (@bounce.done)="resetState()"
+      [src]="
+        './../../../assets/images/submit-' +
+        (state.data?.success ? 'success' : 'failure') +
+        '.png'
+      "
+    />
+    <div [@slideIn]>
+      {{
+        state.data?.success
+          ? "Successfully Reported"
+          : "Failed to add article, please try again later."
+      }}
+    </div>
+  </div>
 </section>

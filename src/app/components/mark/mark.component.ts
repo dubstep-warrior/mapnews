@@ -8,7 +8,8 @@ import { StateService } from './../../core/services/state/state.service';
   styleUrls: ['./mark.component.scss']
 })
 export class MarkComponent {
-  @Input() article: Article = {} as Article; 
+  @Input() article: Article | any = {} as Article; 
+  @Input() type: string = 'location'
   constructor(public stateService: StateService){
 
   }

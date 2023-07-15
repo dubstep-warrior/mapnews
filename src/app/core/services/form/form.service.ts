@@ -19,4 +19,17 @@ export class FormService {
       images: new FormControl([])
     })
   } 
+
+  resetForm() {
+    this.addArticleForm.reset({
+      category: '',
+      title: '',
+      tags: [],
+      location: {
+        coordinates: []
+      },
+      description: '',
+      images: []
+    })
+  }
 }

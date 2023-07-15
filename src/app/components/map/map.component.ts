@@ -13,9 +13,38 @@ import { Base } from 'src/app/core/directives/base.directive';
 import { ArticleService } from 'src/app/core/services/article/article.service';
 import { LocationService } from 'src/app/core/services/location/location.service';
 import { State } from 'src/app/core/interfaces/state';
+import { FormService } from 'src/app/core/services/form/form.service';
+import { trigger, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-map',
+  animations: [
+    trigger('locationDrop', [
+      transition(':enter', [
+        style({
+          width: '500px',
+          backgroundColor: 'white',
+          position: 'absolute',
+          top: '-100px',
+          opacity: 0,
+        }),
+        animate(
+          '1000ms',
+          style({
+            width: '500px',
+            backgroundColor: 'black',
+            position: 'absolute',
+            top: '0px',
+            opacity: 1,
+          })
+        ),
+      ]),
+      transition(':leave', [
+        style({ top: '0px', opacity: 1 }),
+        animate('1000ms', style({ top: '-100px', opacity: 0 })),
+      ]),
+    ]),
+  ],
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
 })
@@ -30,15 +59,21 @@ export class MapComponent extends Base implements OnInit, OnDestroy {
   constructor(
     private service: ArticleService,
     private locationService: LocationService,
-    private stateService: StateService
+    private stateService: StateService,
+    public formService: FormService
   ) {
     super();
   }
 
   async ngOnInit() {
-    this.service.model
-      .pipe(this.takeUntilDestroy())
-      .subscribe((data) => (this.articles = data));
+    this.service.model.pipe(this.takeUntilDestroy()).subscribe((data) => {
+      console.log(data)
+      if (data.type == 'article') {
+        this.articles = [...this.articles, data.data]
+      } else {
+        this.articles = data.data
+      }
+    });
 
     this.locationService
       .getLocation()
@@ -52,20 +87,21 @@ export class MapComponent extends Base implements OnInit, OnDestroy {
 
         this.startingCoordinates = {
           lng: 103.77431291838502,
-          lat: 1.3295169515211853
-        }
- 
+          lat: 1.3295169515211853,
+        };
       });
 
-    this.stateService.model.pipe(this.takeUntilDestroy()).subscribe(data => {
-      this.state = data
-    })
+    this.stateService.model.pipe(this.takeUntilDestroy()).subscribe((data) => {
+      this.state = data;
+    });
     await this.service.getArticles();
   }
 
   sendMouseCoordinates(event: any) {
-    if(['addArticleLocation'].includes(this.state?.name)) {
-      this.locationService.setMouseCoordinates(JSON.stringify(event.lngLat.wrap())) 
+    if (['addArticleLocation'].includes(this.state?.name)) {
+      this.locationService.setMouseCoordinates(
+        JSON.stringify(event.lngLat.wrap())
+      );
     }
   }
 
