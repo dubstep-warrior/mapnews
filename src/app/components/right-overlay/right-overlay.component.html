@@ -20,7 +20,8 @@
         </div> 
         <app-tags [tags]="state.data.tags" [currentState]="state"></app-tags>
         <div>
-            <img [src]="state.data.images[0]" alt="">
+            <!-- <img [src]="state.data.images[0]" alt=""> -->
+            <app-image-gallery [images]="state.data.images"></app-image-gallery>
         </div>
         <div>
             {{ state.data.description | titlecase }}
