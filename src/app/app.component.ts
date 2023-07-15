@@ -51,7 +51,7 @@ export class AppComponent extends Base implements OnInit {
         'articleDetails',
         'addArticleLocation',
         'submittingArticle',
-        'submissionSuccess',
+        'submitAttempted',
       ].includes(this.state?.name)
     )
       return;

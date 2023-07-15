@@ -2,10 +2,16 @@
 
  .content-section {
 
-    .card.item {
-        margin-right: 16px;
-        border-radius: 12px;
-        overflow: hidden;
+    .card {
+        .item {
+            margin-right: 16px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        &.notCarousel {
+            display: flex; 
+        }
     }
 
     img {
@@ -34,4 +40,6 @@
     ::ng-deep .p-carousel-indicators {
         display: none;
     }
+
+     
  }

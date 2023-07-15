@@ -55,7 +55,7 @@ section {
     }
 
     > :nth-last-child(2) {
-      img {
+      > app-image-gallery {
         width: 100%;
       }
     }

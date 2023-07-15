@@ -1,8 +1,6 @@
-// .App {
-//     text-align: center;
-//     flex-grow: 1;
-//     position: relative;
-// }
+.App {
+    overflow: hidden;
+}
 
 app-left-overlay, app-right-overlay { 
   position: absolute;

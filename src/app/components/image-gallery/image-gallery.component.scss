@@ -1,0 +1,17 @@
+ .gallery-section {
+    ::ng-deep .p-galleria-item {
+        background-color: black !important;
+    }
+
+    ::ng-deep .p-galleria-thumbnail-container {
+        max-height: 100px;
+
+        .p-galleria-thumbnail-items {
+            max-height: 100%;
+
+            .p-galleria-thumbnail-item {
+                overflow: hidden !important;
+            }
+        }
+    }
+ }

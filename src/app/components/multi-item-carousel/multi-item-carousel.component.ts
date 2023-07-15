@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./multi-item-carousel.component.scss'],
 })
 export class MultiItemCarouselComponent implements OnInit {
-  @Input() images: Array<File>; 
+  @Input() images: Array<any>; 
     responsiveOptions: any;
 
     constructor() {
@@ -20,5 +20,9 @@ export class MultiItemCarouselComponent implements OnInit {
           numVisible: 1,
           numScroll: this.images.length
       }];
+    }
+
+    getNumScroll(arrLength: number): number {
+      return Math.floor(arrLength/3)
     }
 }
