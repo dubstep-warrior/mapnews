@@ -14,10 +14,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { LeftOverlayComponent } from './components/left-overlay/left-overlay.component';
 import { MultiItemCarouselComponent } from './components/multi-item-carousel/multi-item-carousel.component';
  import { CarouselModule } from 'primeng/carousel';
+ import { GalleriaModule } from 'primeng/galleria';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { ImageGalleryComponent } from './components/image-gallery/image-gallery.component';
+ 
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     RightOverlayComponent,
     TagsComponent,
     LeftOverlayComponent,
-    MultiItemCarouselComponent, 
+    MultiItemCarouselComponent,
+    ImageGalleryComponent, 
   ],
   imports: [
     HttpClientModule,
@@ -38,9 +41,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NgxMapLibreGLModule,
     BrowserAnimationsModule,
     CarouselModule,
+    GalleriaModule,
     FormsModule,
     ReactiveFormsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule 
   ],
   providers: [],
   bootstrap: [AppComponent],
