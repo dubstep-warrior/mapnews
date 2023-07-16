@@ -30,13 +30,13 @@ import { AuthService } from 'src/app/core/services/auth/auth.service';
     ]),
   ],
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent extends Base implements OnInit {
   state: State;
   authenticated: boolean;
   constructor(private service: StateService, private authService: AuthService) {
-    super()
+    super();
   }
 
   ngOnInit(): void {
@@ -45,10 +45,10 @@ export class HomeComponent extends Base implements OnInit {
       console.log(this.state.name);
     });
 
-    this.authService.authStatusSubject.pipe(this.takeUntilDestroy()).subscribe(status => {
-      this.authenticated = status
-      console.log('authenticated var at home is now ' + this.authenticated)
-    })
+    this.authService.authStatusSubject
+      .pipe(this.takeUntilDestroy())
+      .subscribe((status) => {
+        this.authenticated = status;
+      });
   }
-
 }

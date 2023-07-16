@@ -1,4 +1,4 @@
-<div class="App" (click)="resetState()"> 
+<div class="App" (click)="resetState()" [@fadeAnimations]="prepareRoute(outlet)"> 
   <app-map></app-map> 
-  <router-outlet></router-outlet>
+  <router-outlet #outlet="outlet"></router-outlet>
 </div>

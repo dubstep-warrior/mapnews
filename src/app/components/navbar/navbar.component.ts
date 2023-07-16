@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { StateService } from 'src/app/core/services/state/state.service';
 
 @Component({
@@ -11,11 +12,15 @@ export class NavbarComponent {
   menu = ['Relevant', 'New']
   @Input() authenticated: boolean = false;
 
-  constructor(private service: StateService) {
+  constructor(private service: StateService, private authService: AuthService) {
 
   }
 
   addArticle() {
     this.service.addArticle()
+  }
+
+  logout() {
+    this.authService.logout()
   }
 }

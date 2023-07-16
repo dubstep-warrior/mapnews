@@ -17,9 +17,9 @@ const routes: Routes = [
       config: ConfigResolver
     },
     children: [
-      { path: 'login', component: LoginComponent },
-      { path: 'register', component: RegisterComponent },
-    ],
+      { path: 'login', component: LoginComponent, data: { animation: 'isRight' } },
+      { path: 'register', component: RegisterComponent, data: { animation: 'isLeft' }},
+    ] 
   },
 ];
 
