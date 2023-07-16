@@ -8,7 +8,7 @@ const storage = multer.memoryStorage()
 const upload = multer({  storage });
 
 
-router.post("/register", upload.single('avatar') , AuthController.apiRegister);
+router.post("/register", upload.single('profile_img') , AuthController.apiRegister);
 router.post("/login", AuthController.apiLogin);
 // router.get("/article/:id", AuthController.apiGetArticleById);
 // router.put("/article/:id", ArticleCtrl.apiUpdateArticle);

@@ -3,6 +3,7 @@ const mongoose =  require("mongoose");
 const express = require('express')
 const articles = require("./routes/article.routes");
 const auth = require("./routes/auth.routes");
+const config = require("./routes/config.routes")
 const bodyParser =  require("body-parser");
 const cors = require("cors"); 
 const app = express();
@@ -41,5 +42,6 @@ app.listen(port, () => {
     console.log(`Application is listening at port ${port}`);
 });
 
+app.use("/api/v1/config", config); 
 app.use("/api/v1/articles", articles); 
 app.use("/api/v1/auth", auth); 
