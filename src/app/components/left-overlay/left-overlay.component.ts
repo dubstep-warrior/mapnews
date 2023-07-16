@@ -109,7 +109,7 @@ export class LeftOverlayComponent extends Base implements OnInit {
   }
 
   ngOnInit(): void {
-    this.form = this.formService.addArticleForm;
+    this.form = this.formService.resolve('addArticle')
 
     this.locationService
       .getLocation()

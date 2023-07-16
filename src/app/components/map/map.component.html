@@ -20,11 +20,11 @@
     [type]="'post-location'"
     *ngIf="
       ['addArticleLocation', 'addArticle'].includes(state?.name) &&
-      formService.addArticleForm.get('location')?.value?.coordinates.length
+      formService.form?.get('location')?.value?.coordinates.length
     "
     [article]="{
       coordinates:
-        formService.addArticleForm.get('location')?.value?.coordinates
+        formService.form?.get('location')?.value?.coordinates
     }"
   ></app-mark>
 </mgl-map> 

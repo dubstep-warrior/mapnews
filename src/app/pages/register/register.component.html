@@ -3,17 +3,32 @@
     <h2>MapNews</h2>
   </div>
   <div>
-    <div>
-      <img src="./../../../assets/images/profile.png" alt="" />
-    </div>
-    <div>Add Profile Photo</div>
+    <label for="image">
+      <input
+        (change)="addImage($event)"
+        type="file"
+        name="image"
+        id="image"
+        style="display: none"
+      />
+      <div>
+        <img [src]="previewImg ?? './../../../assets/images/profile.png'" alt="" />
+      </div>
+      <div>Add Profile Photo</div>
+    </label>
   </div>
   <div>
-    <input type="text" placeholder="Email" />
-    <input type="text" placeholder="Password" />
-    <input type="text" placeholder="Confirm Password" />
+    <form [formGroup]="form">
+      <input formControlName="email" type="text" placeholder="Email" />
+      <input formControlName="password" type="password" placeholder="Password" />
+      <input
+        formControlName="confirmPassword"
+        type="password"
+        placeholder="Confirm Password"
+      />
+    </form>
   </div>
   <div>
-    <div class="button blue-btn">Register</div>
+    <div (click)="submit()" class="button blue-btn">Register</div>
   </div>
 </section>

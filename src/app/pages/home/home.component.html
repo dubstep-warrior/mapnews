@@ -1,4 +1,4 @@
-<app-navbar></app-navbar>
+<app-navbar [authenticated]="authenticated"></app-navbar>
 <app-right-overlay
   [@slideInFromRight]
   *ngIf="['articleDetails'].includes(state?.name)"
@@ -12,7 +12,7 @@
       'addArticleLocation',
       'submittingArticle',
       'submitAttempted'
-    ].includes(state?.name)
+    ].includes(state?.name) && authenticated
   "
   [state]="state"
 ></app-left-overlay>

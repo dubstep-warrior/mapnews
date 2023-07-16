@@ -4,6 +4,9 @@
       <div *ngIf="authenticated; else access" class="button blue-btn" (click)="addArticle()">
         Add Post
       </div>
+      <!-- <div   class="button blue-btn" (click)="addArticle()">
+        Add Post
+      </div> -->
       <ng-template #access>
         <div class="button blue-btn" [routerLink]="'/auth/login'">
           Login/Sign up

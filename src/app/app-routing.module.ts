@@ -4,12 +4,18 @@ import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { AccessComponent } from './pages/access/access.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { ConfigResolver } from './core/resolvers/config.resolver';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: HomeComponent, resolve: {
+    config: ConfigResolver
+  } },
   {
     path: 'auth',
     component: AccessComponent,
+    resolve: {
+      config: ConfigResolver
+    },
     children: [
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },

@@ -3,6 +3,7 @@ import { trigger, style, animate, transition } from '@angular/animations';
 import { Base } from 'src/app/core/directives/base.directive';
 import { StateService } from 'src/app/core/services/state/state.service';
 import { State } from 'src/app/core/interfaces/state';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -33,7 +34,8 @@ import { State } from 'src/app/core/interfaces/state';
 })
 export class HomeComponent extends Base implements OnInit {
   state: State;
-  constructor(private service: StateService) {
+  authenticated: boolean;
+  constructor(private service: StateService, private authService: AuthService) {
     super()
   }
 
@@ -42,6 +44,11 @@ export class HomeComponent extends Base implements OnInit {
       this.state = state;
       console.log(this.state.name);
     });
+
+    this.authService.authStatusSubject.pipe(this.takeUntilDestroy()).subscribe(status => {
+      this.authenticated = status
+      console.log('authenticated var at home is now ' + this.authenticated)
+    })
   }
 
 }
