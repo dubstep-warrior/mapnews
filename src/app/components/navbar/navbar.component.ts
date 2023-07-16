@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { StateService } from 'src/app/core/services/state/state.service';
 
 @Component({
@@ -9,6 +9,7 @@ import { StateService } from 'src/app/core/services/state/state.service';
 export class NavbarComponent {
   selected = 'Relevant'
   menu = ['Relevant', 'New']
+  @Input() authenticated: boolean = false;
 
   constructor(private service: StateService) {
 

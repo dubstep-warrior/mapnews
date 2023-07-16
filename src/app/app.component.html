@@ -1,21 +1,4 @@
-<div class="App" (click)="resetState()">
-  <app-navbar></app-navbar>
-  <app-map></app-map>
-  <app-right-overlay
-    [@slideInFromRight]
-    *ngIf="['articleDetails'].includes(state?.name)"
-    [state]="state"
-  ></app-right-overlay>
-  <app-left-overlay
-    [@slideInFromLeft]
-    *ngIf="
-      [
-        'addArticle',
-        'addArticleLocation',
-        'submittingArticle',
-        'submitAttempted'
-      ].includes(state?.name)
-    "
-    [state]="state"
-  ></app-left-overlay>
+<div class="App" (click)="resetState()"> 
+  <app-map></app-map> 
+  <router-outlet></router-outlet>
 </div>

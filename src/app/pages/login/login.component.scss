@@ -1,0 +1,52 @@
+* {
+  color: white;
+}
+
+section {
+  min-width: 389px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 96px;
+
+  > * {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+
+    * {
+      width: 100%;
+    }
+
+    &:not(:nth-child(2)) * {
+      text-align: center;
+    }
+  }
+
+  h2 {
+    font-weight: 400;
+    font-size: 32px;
+  }
+
+  > :nth-child(2) {
+    gap: 24px;
+
+    input {
+        color: black;
+    }
+  }
+
+  > :last-child {
+    gap: 8px;
+
+    > :last-child{
+        font-size: 22px;
+        cursor: pointer;
+        
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+  }
+}

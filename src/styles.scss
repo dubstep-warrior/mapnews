@@ -85,6 +85,14 @@ code {
   }
 }
 
+input {
+  border-radius: 14px;
+  font-size: 18px;
+  padding: 12px 16px;
+  flex-grow: 1;
+  border-width: 1px;
+}
+
 html,
 body {
   height: 100%;

@@ -1,9 +1,14 @@
 <section (click)="$event.stopPropagation()">
   <div class="heading">
     <div>
-      <div class="button blue-btn" (click)="addArticle()">
+      <div *ngIf="authenticated; else access" class="button blue-btn" (click)="addArticle()">
         Add Post
       </div>
+      <ng-template #access>
+        <div class="button blue-btn" [routerLink]="'/auth/login'">
+          Login/Sign up
+        </div>
+      </ng-template>
     </div>
     <div>
       <div *ngFor="let item of menu" class="button" (click)="selected = item" [class.selected]="item == selected">

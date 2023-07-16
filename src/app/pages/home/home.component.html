@@ -1,0 +1,18 @@
+<app-navbar></app-navbar>
+<app-right-overlay
+  [@slideInFromRight]
+  *ngIf="['articleDetails'].includes(state?.name)"
+  [state]="state"
+></app-right-overlay>
+<app-left-overlay
+  [@slideInFromLeft]
+  *ngIf="
+    [
+      'addArticle',
+      'addArticleLocation',
+      'submittingArticle',
+      'submitAttempted'
+    ].includes(state?.name)
+  "
+  [state]="state"
+></app-left-overlay>

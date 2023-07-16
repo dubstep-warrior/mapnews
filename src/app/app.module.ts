@@ -19,6 +19,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ImageGalleryComponent } from './components/image-gallery/image-gallery.component';
+import { HomeComponent } from './pages/home/home.component';
+import { LoginComponent } from './pages/login/login.component';
+import { AccessComponent } from './pages/access/access.component';
+import { RegisterComponent } from './pages/register/register.component';
  
 
 @NgModule({
@@ -32,7 +36,11 @@ import { ImageGalleryComponent } from './components/image-gallery/image-gallery.
     TagsComponent,
     LeftOverlayComponent,
     MultiItemCarouselComponent,
-    ImageGalleryComponent, 
+    ImageGalleryComponent,
+    HomeComponent,
+    LoginComponent, 
+    AccessComponent,
+    RegisterComponent, 
   ],
   imports: [
     HttpClientModule,
