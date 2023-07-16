@@ -18,33 +18,41 @@ module.exports = class ArticleService {
       Object.keys(data).forEach((key) => {
         newUser[key] = data[key];
       });
-      console.log(newUser)
+      console.log(newUser);
 
       if (newUser.password !== newUser.confirmPassword) {
         throw new Error("Passwords do not match!");
       }
       delete newUser.confirmPassword;
 
-      const res = await this.imageKit.upload({
-        file: req.file.buffer.toString("base64"),
-        fileName: req.file.originalname,
-        folder: "Users",
-      });
-      if (res) {
-        newUser["profile_img"] = res.url;
-      }
-
       newUser["password"] = Bcrypt.hashSync(newUser["password"], 10);
 
       const user = await new User(newUser).save();
-      if(user) {
+      if (user) {
         const token = JsonWebToken.sign(
-            { id: user._id, email: user.email },
-            process.env.SECRET_JWT_CODE
+          { id: user._id, email: user.email },
+          process.env.SECRET_JWT_CODE
+        );
+
+        if (req.file) {
+          this.imageKit.upload(
+            {
+              file: req.file.buffer.toString("base64"),
+              fileName: req.file.originalname,
+              folder: "Users",
+            },
+            (err, res) => {
+              if (err) throw err;
+              else {
+                user.profile_img = res.url;
+                user.save();
+              }
+            }
           );
-          return token; 
+        }
+        return token;
       } else {
-        throw 'Something happened, please try again later'
+        throw "Something happened, please try again later";
       }
     } catch (error) {
       throw error;
@@ -56,27 +64,27 @@ module.exports = class ArticleService {
 
     const currentUser = {};
     Object.keys(data).forEach((key) => {
-      currentUser[key] = data[key]
+      currentUser[key] = data[key];
     });
-    console.log('currentUser', currentUser)
 
     if (["email", "password"].some((element) => !(element in currentUser))) {
       // return not all params filled
       throw new Error("Not all parameters filled");
     }
-     User.findOne({ email: currentUser["email"] }).then((user) => {
-      if (!user) {
-        throw new Error("User does not exist");
-      }
-      if (!Bcrypt.compareSync(currentUser["password"], user.password)) {
-        throw new Error("Wrong password");
-      }
-      const token = JsonWebToken.sign(
-        { id: user._id, email: user.email },
-        process.env.SECRET_JWT_CODE
-      );
-      return token;
-    });
+    const user = await User.findOne({ email: currentUser["email"] });
+
+    if (!user) {
+      throw new Error("User does not exist");
+    }
+    if (!Bcrypt.compareSync(currentUser["password"], user.password)) {
+      throw new Error("Wrong password");
+    }
+    const token = JsonWebToken.sign(
+      { id: user._id, email: user.email },
+      process.env.SECRET_JWT_CODE
+    );
+    console.log(token);
+    return token;
   }
 
   // static async updateArticle(title, body, articleImage){

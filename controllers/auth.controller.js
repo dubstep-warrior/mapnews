@@ -10,6 +10,7 @@ module.exports = class Article {
       });
     } catch (error) {
       console.log("error caught in register"); 
+      console.log(error)
       res.send({ success: false, error: error.message });
     }
   }
@@ -17,6 +18,7 @@ module.exports = class Article {
   static async apiLogin(req, res, next) {
     try {
       const token = await authService.userLogin(req);
+      console.log('controller', token)
       res.json({
         success: true,
         data: token,
