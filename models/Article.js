@@ -45,6 +45,6 @@ const articleSchema = Schema({
   },
 
   //   TO ADD MONTHLYVIEWCOUNT, LIKECOUNT, POSTED BY AND LIKES
-});
+}, {collection: 'articles'});
 
 module.exports = Article = mongoose.model("Article", articleSchema);

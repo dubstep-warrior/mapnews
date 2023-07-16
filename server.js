@@ -2,6 +2,7 @@ require('dotenv').config();
 const mongoose =  require("mongoose");
 const express = require('express')
 const articles = require("./routes/article.routes");
+const auth = require("./routes/auth.routes");
 const bodyParser =  require("body-parser");
 const cors = require("cors"); 
 const app = express();
@@ -41,3 +42,4 @@ app.listen(port, () => {
 });
 
 app.use("/api/v1/articles", articles); 
+app.use("/api/v1/auth", auth); 
