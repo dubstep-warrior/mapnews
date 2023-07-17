@@ -1,6 +1,5 @@
 // src/application.ts
 import express, { Application as ExApplication, NextFunction } from "express";
-import cors from "cors";
 import bodyParser from "body-parser";
 import articles from "./routes/article.routes"
 import auth from "./routes/auth.routes"

@@ -1,5 +1,6 @@
-require('dotenv').config();
-const mongoose =  require("mongoose");
+import * as dotenv from "dotenv";
+dotenv.config();
+import mongoose, { ConnectOptions } from 'mongoose'
 // const express = require('express')
 // const articles = require("./routes/article.routes");
 // const auth = require("./routes/auth.routes");
@@ -10,7 +11,7 @@ import application from './application'
 import * as http from 'http';
 const port = process.env.PORT || 8000;
 
-mongoose.connect(process.env.MONGODB_CLUSTER_URI, {useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGODB_CLUSTER_URI!, {useNewUrlParser: true, useUnifiedTopology: true } as ConnectOptions)
 .then((res: any) => console.log(`Connection Succesful ${res}`))
 .catch((err: any) => console.log(`Error in DB connection ${err}`));
 
