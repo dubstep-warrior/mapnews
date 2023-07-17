@@ -5,7 +5,7 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "start": "ts-node-esm ./src/server.ts",
+    "start": "ts-node/esm ./src/server.ts",
     "postinstall": "tsc",
     "watch-node": "nodemon dist/server.js",
     "watch-ts": "tsc -w",
