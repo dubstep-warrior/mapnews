@@ -15,18 +15,18 @@ class Application {
     this._instance = express();
 
     // IMPORTANT: CORS settings before express json
-    const whitelist = ["*"];
-    const corsOptions = {
-      origin: function (origin: any, callback: any) {
-        if (whitelist.indexOf(origin) !== -1) {
-          callback(null, true);
-        } else {
-          callback(new Error("Not allowed by CORS"));
-        }
-      },
-    };
+    // const whitelist = ["*"];
+    // const corsOptions = {
+    //   origin: function (origin: any, callback: any) {
+    //     if (whitelist.indexOf(origin) !== -1) {
+    //       callback(null, true);
+    //     } else {
+    //       callback(new Error("Not allowed by CORS"));
+    //     }
+    //   },
+    // };
 
-    this._instance.use(cors(corsOptions));
+    // this._instance.use(cors(corsOptions));
 
     const allowCrossDomain = (req: any, res: any, next: any) => {
       res.header(`Access-Control-Allow-Origin`, `http://localhost:4200`);
