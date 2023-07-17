@@ -25,6 +25,7 @@ export class FormService {
   resetForm() {
     this.form.reset();
     this.formObjSchema = {};
+    this.currentFormName = ''
   }
 
   resolve(name: string) {

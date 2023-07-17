@@ -80,7 +80,7 @@ export const bounce = trigger('bounce', [
       ),
     ])
   ),
-])
+]);
 
 export const slideIn = trigger('slideIn', [
   transition(
@@ -113,7 +113,7 @@ export const slideIn = trigger('slideIn', [
       ),
     ])
   ),
-])
+]);
 
 export const rotate = trigger('rotate', [
   transition(':enter', [
@@ -122,11 +122,14 @@ export const rotate = trigger('rotate', [
       position: 'absolute',
       width: '200px',
       height: '200px',
-      top: '75px'
+      top: '75px',
     }),
-    animate('1000ms ease', style({ transform: 'rotate(0deg)' ,width: '0px', height: '0px' })),
+    animate(
+      '1000ms ease',
+      style({ transform: 'rotate(0deg)', width: '0px', height: '0px' })
+    ),
   ]),
-])
+]);
 
 export const slider = trigger('routeAnimations', [
   transition('* => isLeft', slideTo('left')),
@@ -187,26 +190,23 @@ function slideTo(direction: string) {
   ];
 }
 
-
-export const overlaySlides: Array<any> = [
-  trigger('slideInFromLeft', [
-    transition(':enter', [
-      style({ transform: 'translateX(-100%)', opacity: 0 }),
-      animate('200ms', style({ transform: 'translateX(0%)', opacity: 1 })),
-    ]),
-    transition(':leave', [
-      style({ transform: 'translateX(0%)' }),
-      animate('200ms', style({ transform: 'translateX(-100%)' })),
-    ]),
+export const slideInFromLeft = trigger('slideInFromLeft', [
+  transition(':enter', [
+    style({ transform: 'translateX(-100%)', opacity: 0 }),
+    animate('200ms', style({ transform: 'translateX(0%)', opacity: 1 })),
   ]),
-  trigger('slideInFromRight', [
-    transition(':enter', [
-      style({ transform: 'translateX(100%)', opacity: 0 }),
-      animate('200ms', style({ transform: 'translateX(0%)', opacity: 1 })),
-    ]),
-    transition(':leave', [
-      style({ transform: 'translateX(0%)' }),
-      animate('200ms', style({ transform: 'translateX(100%)' })),
-    ]),
+  transition(':leave', [
+    style({ transform: 'translateX(0%)' }),
+    animate('200ms', style({ transform: 'translateX(-100%)' })),
   ]),
-]
+]);
+export const slideInFromRight = trigger('slideInFromRight', [
+  transition(':enter', [
+    style({ transform: 'translateX(100%)', opacity: 0 }),
+    animate('200ms', style({ transform: 'translateX(0%)', opacity: 1 })),
+  ]),
+  transition(':leave', [
+    style({ transform: 'translateX(0%)' }),
+    animate('200ms', style({ transform: 'translateX(100%)' })),
+  ]),
+]);

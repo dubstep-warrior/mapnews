@@ -4,11 +4,11 @@ import { Base } from 'src/app/core/directives/base.directive';
 import { StateService } from 'src/app/core/services/state/state.service';
 import { State } from 'src/app/core/interfaces/state';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
-import { overlaySlides } from 'src/app/core/utilities/animations';
+import { slideInFromLeft, slideInFromRight } from 'src/app/core/utilities/animations';
 
 @Component({
   selector: 'app-home',
-  animations: overlaySlides,
+  animations: [slideInFromLeft, slideInFromRight],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
