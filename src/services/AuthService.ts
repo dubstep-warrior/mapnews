@@ -13,6 +13,7 @@ class AuthService {
     urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT!,
   });
 
+  // see if can refactor
   async createUser(req: Request) {
     try {
       let data = req.body;

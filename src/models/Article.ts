@@ -1,51 +1,56 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
-const articleSchema = new Schema({
-  title: {
-    type: String,
-    required: true,
-  },
-
-  tags: {
-    type: [String],
-    required: true,
-  },
-
-  category: {
-    type: String,
-    required: true,
-  },
-
-  description: {
-    type: String,
-    required: true,
-  },
-
-  location: {
-    type: {
+const articleSchema = new Schema(
+  {
+    title: {
       type: String,
-      enum: ["Point"],
-      default: "Point",
+      required: true,
     },
-    coordinates: {
-      type: [Number],
-      index: "2dsphere", // Create a geospatial index for faster queries
+
+    tags: {
+      type: [String],
+      required: true,
     },
-  },
 
-  images: {
-    type: [String],
-    required: false,
-  },
+    category: {
+      type: String,
+      required: true,
+    },
 
-  time: {
-    type: Date,
-    default: Date.now(),
-  },
+    description: {
+      type: String,
+      required: true,
+    },
 
-  //   TO ADD MONTHLYVIEWCOUNT, LIKECOUNT, POSTED BY AND LIKES
-}, {collection: 'articles'});
+    location: {
+      type: {
+        type: String,
+        enum: ["Point"],
+        default: "Point",
+      },
+      coordinates: {
+        type: [Number],
+        index: "2dsphere", // Create a geospatial index for faster queries
+      },
+    },
+
+    images: {
+      type: [String],
+      required: false,
+    },
+
+    time: {
+      type: Date,
+      default: Date.now(),
+    },
+
+    posted_by: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: false },
+
+    //   TO ADD MONTHLYVIEWCOUNT, LIKECOUNT, POSTED BY AND LIKES
+  },
+  { collection: "articles" }
+);
 
 const Article = mongoose.model("Article", articleSchema);
 export default Article;
