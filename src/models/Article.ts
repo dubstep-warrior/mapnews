@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
+import mongoose from 'mongoose'
 const Schema = mongoose.Schema;
 
-const articleSchema = Schema({
+const articleSchema = new Schema({
   title: {
     type: String,
     required: true,
@@ -47,4 +47,5 @@ const articleSchema = Schema({
   //   TO ADD MONTHLYVIEWCOUNT, LIKECOUNT, POSTED BY AND LIKES
 }, {collection: 'articles'});
 
-module.exports = Article = mongoose.model("Article", articleSchema);
+const Article = mongoose.model("Article", articleSchema);
+export default Article;

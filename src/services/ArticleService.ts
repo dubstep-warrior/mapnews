@@ -1,18 +1,22 @@
-const Article = require("../models/Article");
-const ImageKit = require("imagekit");
-require("dotenv").config();
+// const Article = require("../models/Article");
+// const ImageKit = require("imagekit");
+// require("dotenv").config();
+import Article from "../models/Article";
+import ImageKit from "imagekit";
+import * as dotenv from "dotenv";
+dotenv.config();
 
-module.exports = class ArticleService {
-  static imageKit = new ImageKit({
-    publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
-    privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
-    urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
+class ArticleService {
+  imageKit = new ImageKit({
+    publicKey: process.env.IMAGEKIT_PUBLIC_KEY!,
+    privateKey: process.env.IMAGEKIT_PRIVATE_KEY!,
+    urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT!,
   });
 
-  static async getAllArticles() {
+  async getAllArticles() {
     try {
       const allArticles = await Article.find().lean();
-      return allArticles.map((article) => {
+      return allArticles.map((article: any) => {
         return { ...article, coordinates: article.location.coordinates };
       });
     } catch (error) {
@@ -20,7 +24,7 @@ module.exports = class ArticleService {
     }
   }
 
-  static async createArticle(req) {
+  async createArticle(req: any) {
     try {
       let data = req.body;
       let imagekit_images = [];
@@ -37,7 +41,7 @@ module.exports = class ArticleService {
           console.error(err);
         }
       }
-      const newArticle = {
+      const newArticle: any = {
         images: imagekit_images,
       };
 
@@ -46,13 +50,16 @@ module.exports = class ArticleService {
       });
 
       const response = await new Article(newArticle).save();
-      return {...response.toObject(), coordinates: response.location.coordinates};
+      return {
+        ...response.toObject(),
+        coordinates: (response.location as any).coordinates,
+      };
     } catch (error) {
       console.log("error in service");
       console.log(error);
     }
   }
-  static async getArticlebyId(articleId) {
+  async getArticlebyId(articleId: string) {
     try {
       const singleArticleResponse = await Article.findById({ _id: articleId });
       return singleArticleResponse;
@@ -83,4 +90,5 @@ module.exports = class ArticleService {
   //     }
 
   // }
-};
+}
+export default new ArticleService()

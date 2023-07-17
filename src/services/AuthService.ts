@@ -1,25 +1,26 @@
-const User = require("../models/User");
-const ImageKit = require("imagekit");
-require("dotenv").config();
-const JsonWebToken = require("jsonwebtoken");
-const Bcrypt = require("bcryptjs");
+import User from "../models/User";
+import ImageKit from "imagekit";
+import * as dotenv from "dotenv";
+dotenv.config();
+import JsonWebToken from "jsonwebtoken";
+import Bcrypt from "bcryptjs";
+import { Request } from "express";
 
-module.exports = class ArticleService {
-  static imageKit = new ImageKit({
-    publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
-    privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
-    urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
+class AuthService {
+  imageKit = new ImageKit({
+    publicKey: process.env.IMAGEKIT_PUBLIC_KEY!,
+    privateKey: process.env.IMAGEKIT_PRIVATE_KEY!,
+    urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT!,
   });
 
-  static async createUser(req) {
+  async createUser(req: Request) {
     try {
       let data = req.body;
-      const newUser = {};
+      const newUser: any = {};
       Object.keys(data).forEach((key) => {
         newUser[key] = data[key];
       });
       console.log(newUser);
-
       if (newUser.password !== newUser.confirmPassword) {
         throw new Error("Passwords do not match!");
       }
@@ -31,7 +32,7 @@ module.exports = class ArticleService {
       if (user) {
         const token = JsonWebToken.sign(
           { id: user._id, email: user.email },
-          process.env.SECRET_JWT_CODE
+          process.env.SECRET_JWT_CODE!
         );
 
         if (req.file) {
@@ -41,7 +42,7 @@ module.exports = class ArticleService {
               fileName: req.file.originalname,
               folder: "Users",
             },
-            (err, res) => {
+            (err: any, res: any) => {
               if (err) throw err;
               else {
                 user.profile_img = res.url;
@@ -59,10 +60,10 @@ module.exports = class ArticleService {
     }
   }
 
-  static async userLogin(req) {
+  async userLogin(req: Request) {
     let data = req.body;
 
-    const currentUser = {};
+    const currentUser: any = {};
     Object.keys(data).forEach((key) => {
       currentUser[key] = data[key];
     });
@@ -81,7 +82,7 @@ module.exports = class ArticleService {
     }
     const token = JsonWebToken.sign(
       { id: user._id, email: user.email },
-      process.env.SECRET_JWT_CODE
+      process.env.SECRET_JWT_CODE!
     );
     console.log(token);
     return token;
@@ -109,4 +110,5 @@ module.exports = class ArticleService {
   //     }
 
   // }
-};
+}
+export default new AuthService();

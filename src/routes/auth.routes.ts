@@ -1,12 +1,10 @@
-const  express =  require("express");
+import express from "express";
 const router = express.Router();
-const AuthController = require("../controllers/auth.controller");
-const multer = require('multer'); 
+import AuthController from "../controllers/auth.controller";
+import multer from "multer";
 
-const storage = multer.memoryStorage()
-  
-const upload = multer({  storage });
-
+const storage = multer.memoryStorage() 
+const upload = multer({  storage }); 
 
 router.post("/register", upload.single('profile_img') , AuthController.apiRegister);
 router.post("/login", AuthController.apiLogin);
@@ -14,4 +12,4 @@ router.post("/login", AuthController.apiLogin);
 // router.put("/article/:id", ArticleCtrl.apiUpdateArticle);
 // router.delete("/article/:id", ArticleCtrl.apiDeleteArticle);
 
-module.exports =  router; 
+export default router;
