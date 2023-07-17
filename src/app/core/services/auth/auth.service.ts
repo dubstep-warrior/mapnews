@@ -51,8 +51,8 @@ export class AuthService {
       console.log(res);
       localStorage.setItem('token', res.data);
       console.log(localStorage.getItem('token'));
-      this.router.navigate(['/']);
       this.authStatusSubject.next(this.authenticated);
     }
+    return res;
   }
 }

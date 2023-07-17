@@ -5,87 +5,11 @@ import { StateService } from 'src/app/core/services/state/state.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { FormService } from 'src/app/core/services/form/form.service';
 import { ArticleService } from 'src/app/core/services/article/article.service';
-import { slideInLeftAnimation } from 'angular-animations';
-import {
-  trigger,
-  style,
-  transition,
-  animate,
-  sequence,
-} from '@angular/animations';
+import { bounce, slideIn } from 'src/app/core/utilities/animations';
 
 @Component({
   selector: 'app-left-overlay',
-  animations: [
-    trigger('bounce', [
-      transition(
-        ':enter',
-        sequence([
-          style({ transform: 'translateY(-30px) translateX(150px)' }),
-          animate(
-            '100ms cubic-bezier(0,0,0,1)',
-            style({ transform: 'translateY(-14px) translateX(120px)' })
-          ),
-          animate(
-            '300ms cubic-bezier(1,0,1,1)',
-            style({ transform: 'translateY(0) translateX(90px)' })
-          ),
-          animate(
-            '300ms cubic-bezier(0,0,0,1)',
-            style({ transform: 'translateY(-30px) translateX(60px)' })
-          ),
-          animate(
-            '200ms cubic-bezier(1,0,1,1)',
-            style({ transform: 'translateY(0) translateX(30px)' })
-          ),
-          animate(
-            '100ms cubic-bezier(0,0,0,1)',
-            style({ transform: 'translateY(-13px) translateX(10px)' })
-          ),
-          animate(
-            '80ms cubic-bezier(1,0,1,1)',
-            style({ transform: 'translateY(0) translateX(0px)' })
-          ),
-          animate(
-            '700ms cubic-bezier(1,0,1,1)',
-            style({ transform: 'translateY(0) translateX(0px)' })
-          ),
-        ])
-      ),
-    ]),
-    trigger('slideIn', [
-      transition(
-        ':enter',
-        sequence([
-          style({ transform: 'translateY(-30px) translateX(-150px)' }),
-          animate(
-            '500ms cubic-bezier(0,0,0,1)',
-            style({ transform: 'translateX(-75px)' })
-          ),
-          animate(
-            '200ms cubic-bezier(1,0,1,1)',
-            style({ transform: 'translateX(0px)' })
-          ),
-          animate(
-            '100ms cubic-bezier(0,0,0,1)',
-            style({ transform: 'translateX(30px)' })
-          ),
-          animate(
-            '100ms cubic-bezier(1,0,1,1)',
-            style({ transform: 'translateX(-15px)' })
-          ),
-          animate(
-            '100ms cubic-bezier(0,0,0,1)',
-            style({ transform: 'translateX(5px)' })
-          ),
-          animate(
-            '80ms cubic-bezier(1,0,1,1)',
-            style({ transform: 'translateX(0px)' })
-          ),
-        ])
-      ),
-    ]),
-  ],
+  animations: [bounce, slideIn],
   templateUrl: './left-overlay.component.html',
   styleUrls: ['./left-overlay.component.scss'],
 })
@@ -109,7 +33,7 @@ export class LeftOverlayComponent extends Base implements OnInit {
   }
 
   ngOnInit(): void {
-    this.form = this.formService.resolve('addArticle')
+    this.form = this.formService.resolve('addArticle');
 
     this.locationService
       .getLocation()
@@ -194,7 +118,7 @@ export class LeftOverlayComponent extends Base implements OnInit {
   }
 
   resetState(): any {
-    this.formService.resetForm()
-    this.stateService.resetState()
+    this.formService.resetForm();
+    this.stateService.resetState();
   }
 }

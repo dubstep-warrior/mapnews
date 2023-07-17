@@ -1,24 +1,71 @@
-import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { fader, slider } from 'src/app/core/utilities/animations';
+import { animate, style, transition, trigger } from '@angular/animations';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { filter } from 'rxjs';
+import { Base } from 'src/app/core/directives/base.directive';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { rotate, slider } from 'src/app/core/utilities/animations';
 
 @Component({
   selector: 'app-access',
   templateUrl: './access.component.html',
-  animations: [ 
-    slider
+  animations: [
+    slider,
+    rotate
   ],
-  styleUrls: ['./access.component.scss']
+  styleUrls: ['./access.component.scss'],
 })
-export class AccessComponent implements AfterViewInit {
+export class AccessComponent extends Base implements OnInit, AfterViewInit {
+  authenticated: boolean = false;
+  currentRoute: string;
+  constructor(
+    private changeRef: ChangeDetectorRef,
+    private service: AuthService,
+    private router: Router
+  ) {
+    super();
+  }
 
-  constructor(private changeRef: ChangeDetectorRef){}
+  ngOnInit(): void {
+    this.service.authStatusSubject
+      .pipe(this.takeUntilDestroy())
+      .subscribe((status) => {
+        this.authenticated = status
+        console.log(status)
+      });
+
+    this.router.events
+      .pipe(
+        this.takeUntilDestroy(),
+        filter((event) => event instanceof NavigationEnd)
+      )
+      .subscribe((event) => {
+        console.log(event);
+        const strArr = (event as NavigationEnd)['url'].split('/');
+        this.currentRoute = strArr[strArr.length - 1];
+        console.log(strArr)
+      });
+  }
 
   ngAfterViewInit(): void {
     this.changeRef.detectChanges();
- }
+  }
 
-  prepareRoute(outlet: RouterOutlet) { 
-    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
+  prepareRoute(outlet: RouterOutlet) {
+    return (
+      outlet &&
+      outlet.activatedRouteData &&
+      outlet.activatedRouteData['animation']
+    );
+  }
+
+  resetState() {
+    console.log('animation ended')
+    this.router.navigate(['/'])
   }
 }
