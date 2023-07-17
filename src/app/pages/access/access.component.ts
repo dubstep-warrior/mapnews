@@ -1,11 +1,11 @@
 import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { slider } from 'src/app/core/utilities/animations';
+import { fader, slider } from 'src/app/core/utilities/animations';
 
 @Component({
   selector: 'app-access',
   templateUrl: './access.component.html',
-  animations: [
+  animations: [ 
     slider
   ],
   styleUrls: ['./access.component.scss']
@@ -18,8 +18,7 @@ export class AccessComponent implements AfterViewInit {
     this.changeRef.detectChanges();
  }
 
-  prepareRoute(outlet: RouterOutlet) {
-    console.log('child animation triggered')
+  prepareRoute(outlet: RouterOutlet) { 
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
   }
 }

@@ -2,11 +2,17 @@
   color: white;
 }
 
+:host {
+  height: 100%;
+  display: flex;
+}
+
 section {
-  min-width: 389px;
+  margin: auto;
+  width: 389px;
   display: flex;
   align-items: center;
-  flex-direction: column;
+  flex-direction: column; 
   gap: 96px;
 
   > * {

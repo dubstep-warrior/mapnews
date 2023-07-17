@@ -10,7 +10,7 @@ import { fader, slider } from './core/utilities/animations';
   selector: 'app-root',
   templateUrl: './app.component.html',
   animations: [
-    fader
+    slider
   ],
   styleUrls: ['./app.component.scss'],
 })

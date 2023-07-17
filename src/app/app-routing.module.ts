@@ -7,19 +7,32 @@ import { RegisterComponent } from './pages/register/register.component';
 import { ConfigResolver } from './core/resolvers/config.resolver';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, resolve: {
-    config: ConfigResolver
-  } },
+  {
+    path: '',
+    component: HomeComponent,
+    resolve: {
+      config: ConfigResolver,
+    },
+    data: { animation: 'isLeft' },
+  },
   {
     path: 'auth',
     component: AccessComponent,
     resolve: {
-      config: ConfigResolver
+      config: ConfigResolver,
     },
     children: [
-      { path: 'login', component: LoginComponent, data: { animation: 'isRight' } },
-      { path: 'register', component: RegisterComponent, data: { animation: 'isLeft' }},
-    ] 
+      {
+        path: 'login',
+        component: LoginComponent,
+        // data: { animation: 'isRight' },
+      },
+      {
+        path: 'register',
+        component: RegisterComponent,
+        data: { animation: 'isRight' },
+      },
+    ],
   },
 ];
 

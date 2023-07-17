@@ -2,8 +2,14 @@
   color: white;
 }
 
+:host {
+  height: 100%;
+  display: flex;
+}
+
 section {
-  min-width: 389px;
+  margin: auto;
+  max-width: 389px;
   display: flex;
   align-items: center;
   flex-direction: column;

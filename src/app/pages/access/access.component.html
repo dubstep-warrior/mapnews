@@ -1,8 +1,8 @@
 <section class="access" [@routeAnimations]="prepareRoute(outlet)">
-    <div class="button" [routerLink]="'/'">
-        <img class="icon" src="./../../../assets/images/close-white.png" alt="">
-    </div>
     <div>
         <router-outlet #outlet="outlet"></router-outlet>
+    </div>
+    <div class="button" [routerLink]="'/'">
+        <img class="icon" src="./../../../assets/images/close-white.png" alt="">
     </div>
 </section>
