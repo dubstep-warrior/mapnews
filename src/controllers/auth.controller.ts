@@ -18,6 +18,7 @@ class Auth {
 
   async apiLogin(req: Request, res: Response, next: NextFunction) {
     try {
+      console.log('login controller attempted')
       const token = await authService.userLogin(req);
       console.log("controller", token);
       res.json({
