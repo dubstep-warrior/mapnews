@@ -1,9 +1,13 @@
 // const Article = require("../models/Article");
 // const ImageKit = require("imagekit");
 // require("dotenv").config();
+import jwt from "jsonwebtoken";
+import { JwtPayload } from "../utils/interfaces/jwtpayload.interface";
 import Article from "../models/Article";
 import ImageKit from "imagekit";
 import * as dotenv from "dotenv";
+import User from "../models/User";
+import mongoose from "mongoose";
 dotenv.config();
 
 class ArticleService {
@@ -29,7 +33,9 @@ class ArticleService {
       let data = req.body;
       let imagekit_images = [];
 
-      // const token = req.headers
+      // const token = req.headers.authorization?.split(" ")[1];
+      // const payload = jwt.verify(token, process.env.SECRET_JWT_CODE!) as JwtPayload;
+      // const user = await User.findById(payload.id)
 
       for (const img of req.files) {
         try {
@@ -58,15 +64,41 @@ class ArticleService {
       };
     } catch (error) {
       console.log("error in service");
-      throw error
+      throw error;
     }
   }
-  async getArticlebyId(articleId: string) {
+  async resolveArticleLikes(req: any) {
+    const { articleId, userId } = req.body;
+    console.log("likeArticle called: ", articleId, userId);
+    const oidUserID = new mongoose.Types.ObjectId(JSON.parse(userId))
     try {
-      const singleArticleResponse = await Article.findById({ _id: articleId });
-      return singleArticleResponse;
+      const article = await Article.findOneAndUpdate(
+        { _id: articleId },
+        [{
+          $set: {
+            likes: {
+              $cond: [
+                { $in: [JSON.parse(userId), "$likes"] },
+                {
+                  $filter: {
+                    input: "$likes",
+                    cond: { $ne: ["$$this", JSON.parse(userId)] },
+                  },
+                },
+                { $concatArrays: ["$likes", [JSON.parse(userId)]] },
+              ],
+            },
+          },
+        }],
+        { returnDocument: "after" }
+      );
+
+      return {
+        ...article?.toObject(),
+        coordinates: (article?.location as any).coordinates,
+      };
     } catch (error) {
-      console.log(`Article not found. ${error}`);
+      throw `Article not found. ${error}`
     }
   }
 
@@ -93,4 +125,4 @@ class ArticleService {
 
   // }
 }
-export default new ArticleService()
+export default new ArticleService();

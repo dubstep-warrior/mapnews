@@ -45,9 +45,19 @@ const articleSchema = new Schema(
       default: Date.now(),
     },
 
-    posted_by: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: false },
+    posted_by: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: false,
+    },
+    likes: {
+      type: [
+        { type: mongoose.Schema.Types.ObjectId, ref: "User", required: false },
+      ],
+      required: false,
+    },
 
-    //   TO ADD MONTHLYVIEWCOUNT, LIKECOUNT, POSTED BY AND LIKES
+    //   TO ADD MONTHLYVIEWCOUNT, LIKECOUNT AND LIKES
   },
   { collection: "articles" }
 );

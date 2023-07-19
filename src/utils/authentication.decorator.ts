@@ -1,8 +1,10 @@
 import jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
+import mongoose from "mongoose";
+import { JwtPayload } from "./interfaces/jwtpayload.interface";
 dotenv.config();
 
-export const Auth = () => {
+export const Auth = (userAttName?: string) => {
   return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
     const originalMethod = descriptor.value;
 
@@ -16,10 +18,14 @@ export const Auth = () => {
       }
 
       try {
-        const decoded = jwt.verify(token, process.env.SECRET_JWT_CODE!);
+        const decoded = jwt.verify(token, process.env.SECRET_JWT_CODE!) as JwtPayload;
         // You can perform additional checks or operations here
         // based on the decoded token if needed
-        console.log(decoded);
+        console.log('decoded: ', decoded);
+        console.log(' args', req.body )
+        if(userAttName) {
+            req.body[userAttName] = JSON.stringify(new mongoose.Types.ObjectId(decoded.id));
+        }
 
         return originalMethod.apply(this, args);
       } catch (err) {

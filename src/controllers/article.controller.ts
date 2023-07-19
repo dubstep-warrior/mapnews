@@ -5,11 +5,12 @@ import Controller from "../utils/controller.decorator";
 import { Get, Post } from "../utils/handlers.decorator";
 import { Auth } from "../utils/authentication.decorator";
 
-@Controller('/articles')
+@Controller('/article')
 export default class Article { 
   constructor() { 
   }
-
+ 
+  // @Auth()
   @Get('')
   async apiGetAllArticles(req: Request, res: Response, next: NextFunction) {
    console.log('yes we tried')
@@ -28,11 +29,12 @@ export default class Article {
     }
   }
 
-  @Get('/:id')
-  async apiGetArticleById(req: Request, res: Response, next: NextFunction) {
-    try {
-      let id = req.params.id || '';
-      const article = await ArticleService.getArticlebyId(id);
+  @Auth('userId')
+  @Post('/like')
+  async resolveArticleLikes(req: Request, res: Response, next: NextFunction) {
+    try { 
+      const article = await ArticleService.resolveArticleLikes(req);
+      console.log(article)
       res.json({
         success: true,
         data: article,
@@ -41,8 +43,8 @@ export default class Article {
       res.status(500).json({ success: false, error: error });
     }
   }
-  
-  @Auth()
+
+  @Auth('posted_by')
   @Post('')
   async apiCreateArticle(req: Request, res: Response, next: NextFunction) {
     try {

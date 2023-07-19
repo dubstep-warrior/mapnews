@@ -52,7 +52,10 @@ class AuthService {
             }
           );
         }
-        return token;
+        return {
+          token,
+          user: user.toObject() 
+        };
       } else {
         throw "Something happened, please try again later";
       }
@@ -86,7 +89,7 @@ class AuthService {
       process.env.SECRET_JWT_CODE!
     );
     console.log(token);
-    return token;
+    return {token, user: user.toObject() };
   }
 
   // static async updateArticle(title, body, articleImage){
