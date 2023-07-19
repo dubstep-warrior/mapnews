@@ -78,14 +78,14 @@ class ArticleService {
           $set: {
             likes: {
               $cond: [
-                { $in: [JSON.parse(userId), "$likes"] },
+                { $in: [oidUserID, "$likes"] },
                 {
                   $filter: {
                     input: "$likes",
-                    cond: { $ne: ["$$this", JSON.parse(userId)] },
+                    cond: { $ne: ["$$this", oidUserID] },
                   },
                 },
-                { $concatArrays: ["$likes", [JSON.parse(userId)]] },
+                { $concatArrays: ["$likes", [oidUserID]] },
               ],
             },
           },
@@ -98,6 +98,7 @@ class ArticleService {
         coordinates: (article?.location as any).coordinates,
       };
     } catch (error) {
+      console.log(error)
       throw `Article not found. ${error}`
     }
   }
