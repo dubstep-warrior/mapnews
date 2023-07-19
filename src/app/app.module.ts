@@ -10,7 +10,7 @@ import { ArticleBoxComponent } from './components/article-box/article-box.compon
 import { MarkComponent } from './components/mark/mark.component';
 import { RightOverlayComponent } from './components/right-overlay/right-overlay.component';
 import { TagsComponent } from './components/tags/tags.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LeftOverlayComponent } from './components/left-overlay/left-overlay.component';
 import { MultiItemCarouselComponent } from './components/multi-item-carousel/multi-item-carousel.component';
  import { CarouselModule } from 'primeng/carousel';
@@ -23,6 +23,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { AccessComponent } from './pages/access/access.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { AuthInterceptor } from './core/interceptors/auth/auth.interceptor';
  
 
 @NgModule({
@@ -54,7 +55,13 @@ import { RegisterComponent } from './pages/register/register.component';
     ReactiveFormsModule,
     MatProgressSpinnerModule 
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

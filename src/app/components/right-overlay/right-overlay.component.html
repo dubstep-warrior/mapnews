@@ -9,8 +9,8 @@
                     <div>
                         {{ state.data.title | titlecase }}
                     </div>
-                    <div class="button" (click)="liked = !liked">
-                        <img class="icon" [src]="'../../../assets/images/star-' + (liked ? '' : 'un')  + 'liked.png'" alt="">
+                    <div *ngIf="authStatus?.loggedIn" class="button" (click)="clickLikeButton(state.data._id)">
+                        <img class="icon" [src]="'../../../assets/images/star-' + (state.data.likes?.includes(authStatus?.id) ? '' : 'un')  + 'liked.png'" alt="">
                     </div>
                 </div>
             </div>

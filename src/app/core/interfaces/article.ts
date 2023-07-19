@@ -1,6 +1,6 @@
 export interface Article {
     coordinates: Array<number>
-    id: String,
+    _id: String,
     title: String,
     description: String,
     tags?: Array<String>

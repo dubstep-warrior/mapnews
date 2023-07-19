@@ -11,7 +11,7 @@ import { Article } from '../../interfaces/article';
 })
 export class ArticleService {
   model: Subject<any>;
-  api: string = 'api/v1/articles';
+  api: string = 'api/v1/article';
   constructor(
     private service: ServerService,
     private formService: FormService,
@@ -54,7 +54,23 @@ export class ArticleService {
         data: res.data,
       });
     }
-    this.stateService.submitAttempted(res.success)
+    this.stateService.submitAttempted(res.success);
     return res;
+  }
+
+  async resolveArticleLikes(id: string) {  
+    const res = await this.service.post(`${this.api}/like`, {articleId: id});
+    console.log(res)
+    if (res && res.success) {
+      console.log('inside success')
+      this.model.next({
+        type: 'update',
+        data: res.data,
+      });
+
+      if(this.stateService.state.name == "articleDetails") {
+        this.stateService.model.next({name: this.stateService.state.name, data: res.data})
+      }
+    }
   }
 }

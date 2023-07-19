@@ -1,5 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { StateService } from './../../core/services/state/state.service';
+import { ArticleService } from 'src/app/core/services/article/article.service';
+import { Base } from 'src/app/core/directives/base.directive';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { AuthStatus } from 'src/app/core/interfaces/auth';
 
 
 @Component({
@@ -7,15 +11,24 @@ import { StateService } from './../../core/services/state/state.service';
   templateUrl: './right-overlay.component.html',
   styleUrls: ['./right-overlay.component.scss']
 })
-export class RightOverlayComponent {
+export class RightOverlayComponent extends Base implements OnInit {
   @Input() state: any;
-  liked: boolean = false
+  authStatus: AuthStatus;
+  constructor(private stateService: StateService, private articleService: ArticleService, private authService: AuthService) {
+    super()
+  }
 
-  constructor(private stateService: StateService) {
-
+  ngOnInit(): void {
+    this.authService.authStatusSubject.pipe(this.takeUntilDestroy()).subscribe(status => {
+      this.authStatus = status
+    })
   }
 
   exitArticleDetail(): void {
     this.stateService.resetState()
+  }
+
+  async clickLikeButton(id: string): Promise<void> { 
+    await this.articleService.resolveArticleLikes(id)
   }
 }

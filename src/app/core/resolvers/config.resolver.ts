@@ -16,7 +16,6 @@ export class ConfigResolver implements Resolve<boolean> {
   constructor(private formService: FormService){}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-
     return this.formService.retrieveFormConfig();
   }
 }

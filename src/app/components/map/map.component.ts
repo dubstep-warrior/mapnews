@@ -70,6 +70,9 @@ export class MapComponent extends Base implements OnInit, OnDestroy {
       console.log(data)
       if (data.type == 'article') {
         this.articles = [...this.articles, data.data]
+      } else if (data.type == 'update') {
+        console.log(data.data)
+        this.articles = this.articles.map(article => data.data?._id == article._id ? data.data : article);
       } else {
         this.articles = data.data
       }

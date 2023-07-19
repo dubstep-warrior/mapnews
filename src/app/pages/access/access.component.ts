@@ -35,7 +35,7 @@ export class AccessComponent extends Base implements OnInit, AfterViewInit {
     this.service.authStatusSubject
       .pipe(this.takeUntilDestroy())
       .subscribe((status) => {
-        this.authenticated = status
+        this.authenticated = status.loggedIn
         console.log(status)
       });
 

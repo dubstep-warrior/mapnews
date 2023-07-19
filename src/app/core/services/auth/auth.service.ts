@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { ServerService } from '../server/server.service';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import { AuthStatus, IUser } from '../../interfaces/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -10,12 +11,14 @@ import { BehaviorSubject } from 'rxjs';
 export class AuthService {
   api: string = 'api/v1/auth';
   authenticated: boolean = false;
-  authStatusSubject: BehaviorSubject<boolean>;
+  authStatusSubject: BehaviorSubject<AuthStatus>;
   token: string = '';
+  user: IUser | null;
   constructor(private service: ServerService, private router: Router) {
     this.token = localStorage.getItem('token');
-    this.authenticated = Boolean(this.token);
-    this.authStatusSubject = new BehaviorSubject(this.authenticated);
+    this.user = JSON.parse(localStorage.getItem(this.token)) as IUser;
+    this.authenticated = Boolean(this.token && this.user);
+    this.authStatusSubject = new BehaviorSubject({loggedIn: this.authenticated, id: this.user?._id ?? ''} as AuthStatus);
   }
 
   async register(form: FormGroup) {
@@ -28,8 +31,12 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem(this.token)
+    this.token = ''
+    this.user = null
     this.authenticated = false;
-    this.authStatusSubject.next(this.authenticated);
+    
+    this.authStatusSubject.next({loggedIn: this.authenticated});
   }
 
   async resolveSubmission(form: FormGroup, action: string) {
@@ -49,9 +56,11 @@ export class AuthService {
       this.authenticated = true;
       this.token = res.data;
       console.log(res);
-      localStorage.setItem('token', res.data);
+      // console.log(res)
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem(res.data.token, JSON.stringify(res.data.user))
       console.log(localStorage.getItem('token'));
-      this.authStatusSubject.next(this.authenticated);
+      this.authStatusSubject.next({loggedIn: this.authenticated, id: res.data.user._id});
     }
     return res;
   }
