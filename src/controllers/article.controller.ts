@@ -1,11 +1,15 @@
 // const ArticleService = require("../services/ArticleService")
 import ArticleService from "../services/ArticleService";
 import { Request, Response, NextFunction } from "express";
+import Controller from "../utils/controller.decorator";
+import { Get, Post } from "../utils/handlers.decorator";
 
-class Article { 
+@Controller('/articles')
+export default class Article { 
   constructor() { 
   }
 
+  @Get('')
   async apiGetAllArticles(req: Request, res: Response, next: NextFunction) {
    console.log('yes we tried')
     try {
@@ -23,6 +27,7 @@ class Article {
     }
   }
 
+  @Get('/:id')
   async apiGetArticleById(req: Request, res: Response, next: NextFunction) {
     try {
       let id = req.params.id || '';
@@ -36,6 +41,7 @@ class Article {
     }
   }
 
+  @Post('')
   async apiCreateArticle(req: Request, res: Response, next: NextFunction) {
     try {
       const createdArticle = await ArticleService.createArticle(req);
@@ -79,5 +85,4 @@ class Article {
   //          res.status(500).json({error: error})
   //       }
   // }
-}
-export default new Article();
+} 

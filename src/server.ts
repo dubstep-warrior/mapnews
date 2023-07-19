@@ -9,6 +9,8 @@ import mongoose, { ConnectOptions } from 'mongoose'
 // const cors = require("cors"); 
 import application from './application'
 import * as http from 'http';
+import 'reflect-metadata';
+
 const port = process.env.PORT || 8000;
 
 mongoose.connect(process.env.MONGODB_CLUSTER_URI!, {useNewUrlParser: true, useUnifiedTopology: true } as ConnectOptions)

@@ -1,7 +1,12 @@
 import authService from "../services/AuthService";
 import { Request, Response, NextFunction } from "express";
+import Controller from "../utils/controller.decorator";
+import { Post } from "../utils/handlers.decorator";
 
-class Auth {
+@Controller('/auth')
+export default class Auth {
+
+  @Post('/register')
   async apiRegister(req: Request, res: Response, next: NextFunction) {
     try {
       const createdUser = await authService.createUser(req);
@@ -16,6 +21,7 @@ class Auth {
     }
   }
 
+  @Post('/login')
   async apiLogin(req: Request, res: Response, next: NextFunction) {
     try {
       console.log('login controller attempted')
@@ -61,5 +67,4 @@ class Auth {
   //          res.status(500).json({error: error})
   //       }
   // }
-}
-export default new Auth();
+} 
