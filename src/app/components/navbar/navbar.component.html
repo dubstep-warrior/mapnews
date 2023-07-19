@@ -1,30 +1,27 @@
 <section (click)="$event.stopPropagation()">
   <div class="heading">
     <div>
-      <div *ngIf="authenticated; else access" class="button blue-btn" (click)="addArticle()">
+      <div [@slideInFromLeft] *ngIf="authenticated; else access" class="button blue-btn" (click)="addArticle()">
         Add Post
-      </div>
-      <!-- <div   class="button blue-btn" (click)="addArticle()">
-        Add Post
-      </div> -->
+      </div> 
       <ng-template #access>
-        <div class="button blue-btn" [routerLink]="'/auth/login'">
+        <div [@slideInFromLeft] class="button blue-btn" [routerLink]="'/auth/login'">
           Login/Sign up
         </div>
       </ng-template>
     </div>
     <div>
-      <div *ngFor="let item of menu" class="button" (click)="selected = item" [class.selected]="item == selected">
+      <div *ngFor="let item of menu.slice(0, authenticated ? menu.length : 2)" class="button" (click)="selected = item" [class.selected]="item == selected">
         <div>{{ item }}</div>
         <div></div>
       </div> 
     </div>
     <div>
       <div>
-        <img class="" src="https://placehold.co/46x46" alt="">
+        <img class="icon" src="./../../../assets/images/search.png" alt="">
       </div>
       <div *ngIf="authenticated">
-        <img class="icon" src="./../../../assets//images/notification.png" alt="">
+        <img class="icon" src="./../../../assets/images/notification.png" alt="">
       </div>
       <div *ngIf="authenticated" (click)="logout()">
         <img class="icon" src="./../../../assets/images/logout.png" alt="">
