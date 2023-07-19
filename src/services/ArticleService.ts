@@ -56,7 +56,7 @@ class ArticleService {
       };
     } catch (error) {
       console.log("error in service");
-      console.log(error);
+      throw error
     }
   }
   async getArticlebyId(articleId: string) {

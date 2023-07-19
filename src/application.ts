@@ -1,10 +1,10 @@
 // src/application.ts
 import express, { Application as ExApplication, NextFunction } from "express";
-import cors from "cors";
 import bodyParser from "body-parser";
 import articles from "./routes/article.routes"
 import auth from "./routes/auth.routes"
 import config from "./routes/config.routes"
+import cors from 'cors'
 
 class Application {
   private readonly _instance: ExApplication;
@@ -13,20 +13,28 @@ class Application {
   }
   constructor() {
     this._instance = express();
-    
-    // IMPORTANT: Enable CORS options before express.json()
-    const whitelist = ["http://localhost:4200"];
-    const corsOptions = {
-      origin: function (origin: any, callback: any) {
-        if (whitelist.indexOf(origin) !== -1) {
-          callback(null, true);
-        } else {
-          callback(new Error("Not allowed by CORS"));
-        }
-      },
-    };
 
-    this._instance.use(cors(corsOptions)); 
+    // IMPORTANT: CORS settings before express json
+    // const whitelist = ["*"];
+    // const corsOptions = {
+    //   origin: function (origin: any, callback: any) {
+    //     if (whitelist.indexOf(origin) !== -1) {
+    //       callback(null, true);
+    //     } else {
+    //       callback(new Error("Not allowed by CORS"));
+    //     }
+    //   },
+    // };
+
+    // this._instance.use(cors(corsOptions));
+
+    const allowCrossDomain = (req: any, res: any, next: any) => {
+      res.header(`Access-Control-Allow-Origin`, `*`);
+      res.header(`Access-Control-Allow-Methods`, `GET,PUT,POST,DELETE`);
+      res.header(`Access-Control-Allow-Headers`, `Content-Type`);
+      next();
+    };
+    this._instance.use(allowCrossDomain);
 
     this._instance.use(express.json());
     this._instance.use(express.urlencoded({ extended: true }));
@@ -34,7 +42,7 @@ class Application {
     this._instance.use(bodyParser.urlencoded({ extended: false }));
     this._instance.use(bodyParser.json());
 
-    this.registerRouters(); 
+    this.registerRouters();   
     
   }
   private registerRouters() {
