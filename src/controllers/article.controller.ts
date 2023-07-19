@@ -3,6 +3,7 @@ import ArticleService from "../services/ArticleService";
 import { Request, Response, NextFunction } from "express";
 import Controller from "../utils/controller.decorator";
 import { Get, Post } from "../utils/handlers.decorator";
+import { Auth } from "../utils/authentication.decorator";
 
 @Controller('/articles')
 export default class Article { 
@@ -17,7 +18,7 @@ export default class Article {
       if (!articles) {
         res.status(404).json("There are no article published yet!");
       }
-      console.log(articles)
+      // console.log(articles)
       res.json({
         success: true,
         data: articles,
@@ -40,7 +41,8 @@ export default class Article {
       res.status(500).json({ success: false, error: error });
     }
   }
-
+  
+  @Auth()
   @Post('')
   async apiCreateArticle(req: Request, res: Response, next: NextFunction) {
     try {

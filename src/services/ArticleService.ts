@@ -29,6 +29,8 @@ class ArticleService {
       let data = req.body;
       let imagekit_images = [];
 
+      // const token = req.headers
+
       for (const img of req.files) {
         try {
           const res = await this.imageKit.upload({
