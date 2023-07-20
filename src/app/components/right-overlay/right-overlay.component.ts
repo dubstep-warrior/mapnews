@@ -8,12 +8,11 @@ import { FormDirective } from 'src/app/core/directives/form.directive';
   styleUrls: ['./right-overlay.component.scss'],
 })
 export class RightOverlayComponent extends FormDirective implements OnInit {
-  authStatus: AuthStatus; 
+  authStatus: AuthStatus;
 
-  constructor( 
-  ) {
+  constructor() {
     super();
-    this.formType = 'search'
+    this.formType = 'search';
   }
 
   override ngOnInit(): void {
@@ -27,13 +26,17 @@ export class RightOverlayComponent extends FormDirective implements OnInit {
 
   async clickLikeButton(id: string): Promise<void> {
     await this.articleService.resolveArticleLikes(id);
-  } 
+  }
 
   async submit(): Promise<void> {
-    console.log(event)
-    console.log('submit search')
-    const res = await this.articleService.getArticles('search', this.form.value)
-    console.log(res)
+    const res = await this.articleService.getArticles(
+      'search',
+      this.form.value
+    );
     // TODO reset form when successful lmao
+    if (res && res.success) {
+      this.formService.resetForm();
+      this.stateService.resetState();
+    }
   }
 }

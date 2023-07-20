@@ -7,7 +7,7 @@ export interface State {
     | 'submittingArticle'
     | 'submitAttempted'
     | 'addArticleLocation'
-    | 'search';
+    | 'search' 
   data?: any;
 }
 

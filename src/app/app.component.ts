@@ -44,7 +44,7 @@ export class AppComponent extends Base implements OnInit {
         'articleDetails',
         'addArticleLocation',
         'submittingArticle',
-        'submitAttempted',
+        'submitAttempted'
       ].includes(this.state?.name) || ['/auth/login','/auth/register'].includes(this.currentURL)
     )
       return;

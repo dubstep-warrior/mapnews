@@ -1,4 +1,4 @@
-<app-navbar [authenticated]="authenticated"></app-navbar>
+<app-navbar [authenticated]="authenticated" [state]="state"></app-navbar>
 <app-right-overlay
   [@slideInFromRight]
   *ngIf="['articleDetails', 'search'].includes(state?.name)"

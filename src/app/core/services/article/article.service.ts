@@ -33,11 +33,13 @@ export class ArticleService {
     if (res && res.success) {
       this.model.next({
         type: 'articles',
+        state:  key,
         data: res.data,
-      });
+      }); 
     } else {
       console.log(res.error);
     }
+    return res
   }
 
   async report(form: FormGroup) {
