@@ -27,6 +27,10 @@ export class NavbarComponent implements OnChanges {
     this.service.addArticle()
   }
 
+  searchArticle() {
+    this.service.searchArticle()
+  }
+
   logout() {
     this.authService.logout()
   }

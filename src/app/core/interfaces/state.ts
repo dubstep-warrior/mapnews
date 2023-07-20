@@ -6,6 +6,7 @@ export interface State {
     | 'addArticle'
     | 'submittingArticle'
     | 'submitAttempted'
-    | 'addArticleLocation';
+    | 'addArticleLocation'
+    | 'search';
   data?: any;
 }

@@ -1,0 +1,39 @@
+:host {
+  width: 100%;
+}
+
+section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .titleContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+
+    div {
+      display: flex;
+      align-items: center;
+    }
+
+    > div {
+      align-items: center;
+
+      > div {
+        align-items: center;
+
+        &.category {
+          margin-right: 16px;
+        }
+
+        > div:first-child {
+          margin-right: 12px;
+          font-size: 24px;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}

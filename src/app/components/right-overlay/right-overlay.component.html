@@ -1,30 +1,23 @@
-<section (click)="$event.stopPropagation()">
-    <div *ngIf="state.name == 'articleDetails'">
-        <div>
-            <div>
-                <div class="category">
-                    <img class="icon" src="https://placehold.co/30x30" alt="">
-                </div>
-                <div>
-                    <div>
-                        {{ state.data.title | titlecase }}
-                    </div>
-                    <div *ngIf="authStatus?.loggedIn" class="button" (click)="clickLikeButton(state.data._id)">
-                        <img class="icon" [src]="'../../../assets/images/star-' + (state.data.likes?.includes(authStatus?.id) ? '' : 'un')  + 'liked.png'" alt="">
-                    </div>
-                </div>
-            </div>
-            <div class="button" (click)="exitArticleDetail()">
-                <img class="icon" src="./../../assets/images/close.png" alt="">
-            </div>
-        </div> 
-        <app-tags [tags]="state.data.tags" [currentState]="state"></app-tags>
-        <div>
-            <!-- <img [src]="state.data.images[0]" alt=""> -->
-            <app-image-gallery [images]="state.data.images"></app-image-gallery>
-        </div>
-        <div>
-            {{ state.data.description | titlecase }}
-        </div>
-    </div>
+<section
+  (click)="$event.stopPropagation()"
+  [class]="state.name"
+>
+  <app-article-details
+    *ngIf="state.name == 'articleDetails'"
+    [article]="state.data"
+    [state]="state"
+    [authStatus]="authStatus"
+    (resolveLike)="clickLikeButton($event)" 
+  ></app-article-details>
+  <app-right-overlay-container *ngIf="state.name == 'search'">
+    <h2 title>Search</h2>
+    <app-article-form
+    body
+    [form]="form"
+    [type]="state.name"
+    (keyup.enter)="$event.preventDefault()"
+    (submit)="submit()"
+    (addTag)="addTag($event); $event.preventDefault()" 
+  ></app-article-form>
+  </app-right-overlay-container>
 </section>

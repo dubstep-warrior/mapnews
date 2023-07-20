@@ -1,11 +1,6 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { Base } from 'src/app/core/directives/base.directive';
-import { LocationService } from 'src/app/core/services/location/location.service';
-import { StateService } from 'src/app/core/services/state/state.service';
-import { FormGroup, FormControl } from '@angular/forms';
-import { FormService } from 'src/app/core/services/form/form.service';
-import { ArticleService } from 'src/app/core/services/article/article.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { bounce, slideIn } from 'src/app/core/utilities/animations';
+import { FormDirective } from 'src/app/core/directives/form.directive';
 
 @Component({
   selector: 'app-left-overlay',
@@ -13,28 +8,17 @@ import { bounce, slideIn } from 'src/app/core/utilities/animations';
   templateUrl: './left-overlay.component.html',
   styleUrls: ['./left-overlay.component.scss'],
 })
-export class LeftOverlayComponent extends Base implements OnInit {
-  @Input() state: any;
+export class LeftOverlayComponent extends FormDirective implements OnInit {
   @ViewChild('tags') inputTags: any;
-  liked: boolean = false;
-  currentCoordinates: any;
-  currentMouseCoordinates: any;
+  currentCoordinates: any; 
   locationMouseMode: boolean = false;
-  animationState = false;
-  form: FormGroup;
-
-  constructor(
-    private stateService: StateService,
-    private articleService: ArticleService,
-    private locationService: LocationService,
-    private formService: FormService
-  ) {
+ 
+  constructor() {
     super();
+    this.formType = 'addArticle'
   }
 
-  ngOnInit(): void {
-    this.form = this.formService.resolve('addArticle');
-
+  override ngOnInit(): void {
     this.locationService
       .getLocation()
       .pipe(this.takeUntilDestroy())
@@ -48,32 +32,24 @@ export class LeftOverlayComponent extends Base implements OnInit {
 
     this.locationService.mouseLocationCoordinates
       .pipe(this.takeUntilDestroy())
-      .subscribe((data) => {
-        this.currentMouseCoordinates = JSON.parse(data);
+      .subscribe((data) => { 
         if (['addArticleLocation'].includes(this.state?.name)) {
           this.form.get('location').setValue({
             coordinates: [
-              this.currentMouseCoordinates.lng,
-              this.currentMouseCoordinates.lat,
+              JSON.parse(data).lng,
+              JSON.parse(data).lat,
             ],
           });
         }
       });
+
+      super.ngOnInit();
   }
 
   exitOverlay(): void {
     this.stateService.resetState();
   }
-
-  addTag(event: any) {
-    // console.log(event.target.value)
-    // console.log(this.state.data.get('tags'))
-    this.form
-      .get('tags')
-      .setValue([...this.form.get('tags').value, event.target.value]);
-    console.log(this.form.get('tags').value);
-    this.inputTags.nativeElement.value = '';
-  }
+ 
 
   setLoc(type?: String): any {
     if (type && type == 'current') {
@@ -113,6 +89,8 @@ export class LeftOverlayComponent extends Base implements OnInit {
   }
 
   async submit(): Promise<void> {
+
+    console.log('submit called')
     const res = await this.articleService.report(this.form);
     console.log(res);
   }

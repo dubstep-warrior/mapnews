@@ -1,34 +1,36 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { StateService } from './../../core/services/state/state.service';
-import { ArticleService } from 'src/app/core/services/article/article.service';
-import { Base } from 'src/app/core/directives/base.directive';
-import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { Component, OnInit } from '@angular/core';
 import { AuthStatus } from 'src/app/core/interfaces/auth';
-
+import { FormDirective } from 'src/app/core/directives/form.directive';
 
 @Component({
   selector: 'app-right-overlay',
   templateUrl: './right-overlay.component.html',
-  styleUrls: ['./right-overlay.component.scss']
+  styleUrls: ['./right-overlay.component.scss'],
 })
-export class RightOverlayComponent extends Base implements OnInit {
-  @Input() state: any;
-  authStatus: AuthStatus;
-  constructor(private stateService: StateService, private articleService: ArticleService, private authService: AuthService) {
-    super()
+export class RightOverlayComponent extends FormDirective implements OnInit {
+  authStatus: AuthStatus; 
+
+  constructor( 
+  ) {
+    super();
+    this.formType = 'search'
   }
 
-  ngOnInit(): void {
-    this.authService.authStatusSubject.pipe(this.takeUntilDestroy()).subscribe(status => {
-      this.authStatus = status
-    })
+  override ngOnInit(): void {
+    this.authService.authStatusSubject
+      .pipe(this.takeUntilDestroy())
+      .subscribe((status) => {
+        this.authStatus = status;
+      });
+    super.ngOnInit();
   }
 
-  exitArticleDetail(): void {
-    this.stateService.resetState()
-  }
+  async clickLikeButton(id: string): Promise<void> {
+    await this.articleService.resolveArticleLikes(id);
+  } 
 
-  async clickLikeButton(id: string): Promise<void> { 
-    await this.articleService.resolveArticleLikes(id)
+  async submit(): Promise<void> {
+    console.log(event)
+    console.log('submit search')
   }
 }

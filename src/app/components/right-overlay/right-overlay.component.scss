@@ -1,7 +1,18 @@
 section {
-  width: 533px;
-  background-color: white; 
-  height: 100%;
+  &.search {
+    width: 424px;
+    background-color: #d9d9d9;
+    padding: 12px 24px;
+    display: flex;
+    min-height: 100%;
+  }
+
+  &.articleDetails {
+    width: 533px;
+    background-color: white;
+    height: 100%;
+    padding: 24px 36px;
+  }
 
   > div {
     padding: 24px 36px;
@@ -13,12 +24,12 @@ section {
     }
 
     > * {
-        margin-bottom: 16px;
+      margin-bottom: 16px;
     }
 
     > div {
       align-items: center;
-      justify-content: space-between; 
+      justify-content: space-between;
 
       > div {
         align-items: center;
@@ -40,18 +51,18 @@ section {
     }
 
     > .tags {
-        justify-content: flex-start;
-        gap: 8px;
-        flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: 8px;
+      flex-wrap: wrap;
 
-        > div {
-            margin-right: 8px;
-            padding: 4px 18px;
-            background-color: black;
-            color: white;
-            font-size: 16px;
-            border-radius: 12px;
-        }
+      > div {
+        margin-right: 8px;
+        padding: 4px 18px;
+        background-color: black;
+        color: white;
+        font-size: 16px;
+        border-radius: 12px;
+      }
     }
 
     > :nth-last-child(2) {
@@ -61,7 +72,7 @@ section {
     }
 
     > :last-child {
-        text-align: left;
+      text-align: left;
     }
   }
 }

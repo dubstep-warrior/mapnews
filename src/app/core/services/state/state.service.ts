@@ -14,6 +14,12 @@ export class StateService {
   state: State = {name: "neutral"}; 
   model: Subject<any> = new Subject();
 
+  searchArticle() {
+    this.state.name = 'search'
+    this.state.data = {}
+    this.stateBroadcast()
+  }
+
   openArticleDetails(article: Article) {
     this.state.name = 'articleDetails'
     this.state.data = article

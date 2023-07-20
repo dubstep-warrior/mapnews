@@ -1,4 +1,4 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, Injector } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -13,10 +13,10 @@ import { TagsComponent } from './components/tags/tags.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LeftOverlayComponent } from './components/left-overlay/left-overlay.component';
 import { MultiItemCarouselComponent } from './components/multi-item-carousel/multi-item-carousel.component';
- import { CarouselModule } from 'primeng/carousel';
- import { GalleriaModule } from 'primeng/galleria';
+import { CarouselModule } from 'primeng/carousel';
+import { GalleriaModule } from 'primeng/galleria';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ImageGalleryComponent } from './components/image-gallery/image-gallery.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -24,8 +24,12 @@ import { LoginComponent } from './pages/login/login.component';
 import { AccessComponent } from './pages/access/access.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { AuthInterceptor } from './core/interceptors/auth/auth.interceptor';
- 
+import { ArticleFormComponent } from './components/article-form/article-form.component';
+import { FormDirective } from './core/directives/form.directive';
+import { ArticleDetailsComponent } from './components/article-details/article-details.component';
+import { RightOverlayContainerComponent } from './components/right-overlay-container/right-overlay-container.component';
 
+export let AppInjector: Injector;
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,9 +43,13 @@ import { AuthInterceptor } from './core/interceptors/auth/auth.interceptor';
     MultiItemCarouselComponent,
     ImageGalleryComponent,
     HomeComponent,
-    LoginComponent, 
+    LoginComponent,
     AccessComponent,
-    RegisterComponent, 
+    RegisterComponent,
+    ArticleFormComponent,
+    FormDirective,
+    ArticleDetailsComponent,
+    RightOverlayContainerComponent,
   ],
   imports: [
     HttpClientModule,
@@ -53,16 +61,20 @@ import { AuthInterceptor } from './core/interceptors/auth/auth.interceptor';
     GalleriaModule,
     FormsModule,
     ReactiveFormsModule,
-    MatProgressSpinnerModule 
+    MatProgressSpinnerModule,
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true
-    }
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private injector: Injector) {
+    AppInjector = this.injector;
+  }
+}

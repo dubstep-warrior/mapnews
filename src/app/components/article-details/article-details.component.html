@@ -1,0 +1,36 @@
+<app-right-overlay-container>
+  <div class='title' title>
+    <div class="category">
+      <img class="icon" src="https://placehold.co/30x30" alt="" />
+    </div>
+    <div>
+      <div>
+        {{ article.title | titlecase }}
+      </div>
+      <div
+        *ngIf="authStatus?.loggedIn"
+        class="button"
+        (click)="clickLikeButton(article._id)"
+      >
+        <img
+          class="icon"
+          [src]="
+            '../../../assets/images/star-' +
+            (article.likes?.includes(authStatus?.id) ? '' : 'un') +
+            'liked.png'
+          "
+          alt=""
+        />
+      </div>
+    </div>
+  </div>
+  <div class="body" body>
+    <app-tags [tags]="article.tags" [currentState]="state"></app-tags>
+    <div>
+      <app-image-gallery [images]="article.images"></app-image-gallery>
+    </div>
+    <div>
+      {{ article.description | titlecase }}
+    </div>
+  </div>
+</app-right-overlay-container>

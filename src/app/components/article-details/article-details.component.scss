@@ -1,0 +1,45 @@
+.title {
+  display: flex;
+  align-items: center;
+
+  > div {
+    display: flex;
+    align-items: center;
+
+    &.category {
+      margin-right: 16px;
+    }
+
+    > div:first-child {
+      margin-right: 12px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+  }
+
+  .button {
+    display: flex;
+
+    img {
+        margin: auto;
+    }
+  }
+}
+
+.body {
+  * {
+    margin-bottom: 16px;
+  }
+
+  > :nth-last-child(2) {
+    margin-top: 16px;
+
+    > app-image-gallery {
+      width: 100%;
+    }
+  }
+
+  > :last-child {
+    text-align: left;
+  }
+}
