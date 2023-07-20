@@ -27,7 +27,7 @@ export class ArticleService {
     this.model = new Subject();
   }
 
-  async getArticles(key: string = 'relevant', params: any = {}) {
+  async getArticles(key: string = 'relevant', params: any = null) {
     const res = await this.service.get(`${this.api}${this.navMapping[key]}`, params);
     console.log(res);
     if (res && res.success) {

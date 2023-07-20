@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 
 @Injectable({
@@ -13,27 +13,35 @@ export class ServerService {
   }
 
   private async request(method: string, url: string, data?: any) {
-    const requestData: any = {
+    const options: any = {
       body: data,
       responseType: 'json',
       observe: 'body',
       headers: {},
+    };
+
+    if (method == 'GET' && data) {
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/json'); 
+      const params = new HttpParams().append('data', JSON.stringify(data));
+      options['headers'] = headers;
+      options['params'] = params
     }
-    if (method == 'GET') requestData['headers']['params'] = data
-    const result = this.http.request(method, url, requestData);
+    const result = this.http.request(method, url, options);
+    console.log(url);
     return new Promise((resolve, reject) => {
       result.subscribe(resolve, reject);
     }).catch(() => {
       return { success: false };
     });
-  } 
+  }
 
-  get(api: string, params: any = {}): any {
-    return this.request('GET', `${this.url}/${api}`, params)
+  get(api: string, params: any = null): any {
+    return this.request('GET', `${this.url}/${api}`, params);
   }
 
   post(api: string, event: any): any {
-    return this.request('POST', `${this.url}/${api}`, event)
+    return this.request('POST', `${this.url}/${api}`, event);
   }
 
   // getProducts(): any {
