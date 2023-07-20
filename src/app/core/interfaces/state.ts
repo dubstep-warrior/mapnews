@@ -10,3 +10,5 @@ export interface State {
     | 'search';
   data?: any;
 }
+
+ 

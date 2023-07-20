@@ -1,5 +1,5 @@
 <app-right-overlay-container>
-  <div class='title' title>
+  <div class="title" title>
     <div class="category">
       <img class="icon" src="https://placehold.co/30x30" alt="" />
     </div>
@@ -9,8 +9,11 @@
       </div>
       <div
         *ngIf="authStatus?.loggedIn"
-        class="button"
+        class="hover"
         (click)="clickLikeButton(article._id)"
+        (mousedown)="favouriteActive = true"
+        (mouseup)="favouriteActive = false"
+        [class.active]="favouriteActive"
       >
         <img
           class="icon"

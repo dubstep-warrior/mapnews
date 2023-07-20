@@ -1,7 +1,7 @@
 <mgl-marker 
     [lngLat]="[article['coordinates'][0], article['coordinates'][1]]"
   >
-    <div *ngIf="article?._id; else displayOnly" class="marker" (click)="stateService.selectArticle(article); $event.stopPropagation()">
+    <div *ngIf="article?._id; else displayOnly" class="marker" (click)="stateService.resolveState('selectedArticle', article); $event.stopPropagation()">
       <img [src]="'./../../assets/images/' + type + '.png'" />
     </div>
     <ng-template #displayOnly> 

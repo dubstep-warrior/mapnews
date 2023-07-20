@@ -11,19 +11,19 @@
       </ng-template>
     </div>
     <div>
-      <div (click)="resolveMenuOption(item)"  *ngFor="let item of menu.slice(0, authenticated ? menu.length : 2)" class="button" (click)="selected = item" [class.selected]="item == selected">
+      <div (click)="resolveMenuOption(item)"  *ngFor="let item of menu.slice(0, authenticated ? menu.length : 2)" class="menu-item" (click)="selected = item" [class.selected]="item == selected">
         <div>{{ item }}</div>
         <div></div>
       </div> 
     </div>
     <div>
-      <div (click)="searchArticle()">
+      <div class="button" (click)="searchArticle()">
         <img class="icon" src="./../../../assets/images/search.png" alt="">
       </div>
-      <div *ngIf="authenticated">
+      <div class="button" *ngIf="authenticated">
         <img class="icon" src="./../../../assets/images/notification.png" alt="">
       </div>
-      <div *ngIf="authenticated" (click)="logout()">
+      <div class="button" *ngIf="authenticated" (click)="logout()">
         <img class="icon" src="./../../../assets/images/logout.png" alt="">
       </div>
     </div>

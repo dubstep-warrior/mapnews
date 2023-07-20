@@ -12,6 +12,7 @@ export class ArticleDetailsComponent {
   @Input() article: Article | any;
   @Input() state: State;
   @Input() authStatus: AuthStatus;
+  favouriteActive: boolean = false;
 
   @Output() resolveLike = new EventEmitter<string>(); 
 

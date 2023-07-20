@@ -58,8 +58,8 @@ export class LeftOverlayComponent extends FormDirective implements OnInit {
       });
     } else {
       this.locationMouseMode = !this.locationMouseMode;
-      if (this.locationMouseMode) this.stateService.selectArticleLocation();
-      else this.stateService.addArticle();
+      if (this.locationMouseMode) this.stateService.resolveState('addArticleLocation');
+      else this.stateService.resolveState('addArticle');
     }
   }
 

@@ -12,49 +12,11 @@ export class StateService {
   } 
 
   state: State = {name: "neutral"}; 
-  model: Subject<any> = new Subject();
+  model: Subject<any> = new Subject();  
 
-  searchArticle() {
-    this.state.name = 'search'
-    this.state.data = {}
-    this.stateBroadcast()
-  }
-
-  openArticleDetails(article: Article) {
-    this.state.name = 'articleDetails'
-    this.state.data = article
-    this.stateBroadcast()
-  }
-
-  selectArticle(article: Article) {
-    this.state.name = 'selectedArticle'
-    this.state.data = article
-    this.stateBroadcast()
-  }
-
-  selectArticleLocation() {
-    this.state.name = 'addArticleLocation' 
-    this.stateBroadcast()
-  }
-
-  addArticle() {
-    console.log('addart state called')
-    this.state.data = {}
-    this.state.name = 'addArticle'
-    this.stateBroadcast()
-  }
-
-  submittingArticle() {
-    this.state.name = 'submittingArticle'
-    this.state.data = {}
-    this.stateBroadcast()
-  }
-
-  submitAttempted(success: boolean) {
-    this.state.name = "submitAttempted"
-    this.state.data = {
-      success: success
-    }
+  resolveState(stateName: State['name'], data?: any) {
+    this.state.name = stateName
+    this.state.data = data
     this.stateBroadcast()
   }
 

@@ -5,7 +5,7 @@ section {
 .heading {
   margin: 0;
   padding: 0px;
-  background-color: rgba(0, 0, 0, 0.271);
+  background-color: rgba(0, 0, 0, 0.527);
   color: white;
   inset: 0 0 auto 0;
   height: 64px;
@@ -61,16 +61,11 @@ section {
       overflow: hidden;
       margin-right: 8px;
       cursor: pointer;
-      display: flex;
-      background-color: #d9d9d9;
+      display: flex; 
 
       img {
         margin: auto;
-      }
-
-      &:hover {
-        background-color: #a3a3a3;
-      }
+      } 
     }
   }
 }

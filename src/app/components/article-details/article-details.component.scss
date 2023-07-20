@@ -2,10 +2,12 @@
   display: flex;
   align-items: center;
 
-  > div {
+  div {
     display: flex;
     align-items: center;
+  }
 
+  > div {
     &.category {
       margin-right: 16px;
     }
@@ -17,11 +19,13 @@
     }
   }
 
-  .button {
-    display: flex;
+  .hover.active {
+    width: 35px;
+    height: 35px;
 
     img {
-        margin: auto;
+      width: 35px;
+      height: 35px;
     }
   }
 }

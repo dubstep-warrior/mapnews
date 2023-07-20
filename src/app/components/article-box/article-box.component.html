@@ -5,7 +5,7 @@
   <div class="article-box" (click)="$event.stopPropagation()">
     <div class="article-box-heading">
       <div>{{ currentState.data.title }}</div>
-      <div class="button" (click)="service.openArticleDetails(currentState.data); $event.stopPropagation()">
+      <div class="hover" (click)="service.resolveState('articleDetails', currentState.data); $event.stopPropagation()">
         <img class="icon" src="../../../assets/images/right-arrow.svg" alt="">
       </div>
     </div>

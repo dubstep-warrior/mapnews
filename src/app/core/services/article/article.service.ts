@@ -53,7 +53,7 @@ export class ArticleService {
         }
       }
     });
-    this.stateService.submittingArticle();
+    this.stateService.resolveState('submittingArticle');
     const res = await this.service.post(this.api, formData);
     if (res && res.success) {
       this.model.next({
@@ -61,7 +61,7 @@ export class ArticleService {
         data: res.data,
       });
     }
-    this.stateService.submitAttempted(res.success);
+    this.stateService.resolveState('submitAttempted', {success: res.success});
     return res;
   }
 

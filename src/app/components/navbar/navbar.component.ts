@@ -27,11 +27,11 @@ export class NavbarComponent implements OnChanges {
   ngOnChanges() {}
 
   addArticle() {
-    this.service.addArticle();
+    this.service.resolveState('addArticle');
   }
 
   searchArticle() {
-    this.service.searchArticle();
+    this.service.resolveState(this.service.state.name == 'search' ? 'neutral' : 'search');
   }
 
   logout() {
