@@ -42,8 +42,8 @@
     <div class="description-section" *ngIf="type == 'add'">
       <h2>Description</h2>
       <div>
-        <textarea formControlName="description" maxlength="280"></textarea>
-        <div>280/280 remaining</div>
+        <textarea formControlName="description" [maxlength]="descMaxLength" (ngModelChange)="textAreaRemaining = descMaxLength - form.get('description').value.length"></textarea>
+        <div>{{ textAreaRemaining + '/' + descMaxLength + ' remaining' }}</div>
       </div>
     </div>
     <div class="image-section" *ngIf="type == 'add'">

@@ -13,13 +13,14 @@ export class ArticleFormComponent {
   @Input() form: FormGroup; 
   @Input() locationMouseMode?: boolean
   @Input() type: string;
+  @Input() descMaxLength: number = 280
 
   @Output() submit = new EventEmitter<void>();
   @Output() imageDrop = new EventEmitter<any>()
   @Output() addImage = new EventEmitter<any>();
   @Output() addTag = new EventEmitter<any>();
   @Output() setLoc = new EventEmitter<string>();
-
+  textAreaRemaining: number = this.descMaxLength;
   
   async submitClicked(): Promise<void> { 
     this.submit.emit()
@@ -40,5 +41,5 @@ export class ArticleFormComponent {
 
   locationSet($event?: string): void {
     this.setLoc.emit($event)
-  }
+  } 
 }
