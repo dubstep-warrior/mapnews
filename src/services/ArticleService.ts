@@ -1,13 +1,8 @@
-// const Article = require("../models/Article");
-// const ImageKit = require("imagekit");
-// require("dotenv").config();
-import jwt from "jsonwebtoken";
-import { JwtPayload } from "../utils/interfaces/jwtpayload.interface";
 import Article from "../models/Article";
 import ImageKit from "imagekit";
 import * as dotenv from "dotenv";
-import User from "../models/User";
-import mongoose from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
+import { FilterResolver } from "../utils/filters/ArticleService.resolution-filters";
 dotenv.config();
 
 class ArticleService {
@@ -16,6 +11,10 @@ class ArticleService {
     privateKey: process.env.IMAGEKIT_PRIVATE_KEY!,
     urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT!,
   });
+ 
+
+  constructor() { 
+  }
 
   async getAllArticles() {
     try {
@@ -24,18 +23,15 @@ class ArticleService {
         return { ...article, coordinates: article.location.coordinates };
       });
     } catch (error) {
-      console.log(`Could not fetch articles ${error}`);
+      console.log(error);
+      throw error;
     }
   }
 
   async createArticle(req: any) {
     try {
       let data = req.body;
-      let imagekit_images = [];
-
-      // const token = req.headers.authorization?.split(" ")[1];
-      // const payload = jwt.verify(token, process.env.SECRET_JWT_CODE!) as JwtPayload;
-      // const user = await User.findById(payload.id)
+      let imagekit_images = []; 
 
       for (const img of req.files) {
         try {
@@ -70,26 +66,28 @@ class ArticleService {
   async resolveArticleLikes(req: any) {
     const { articleId, userId } = req.body;
     console.log("likeArticle called: ", articleId, userId);
-    const oidUserID = new mongoose.Types.ObjectId(JSON.parse(userId))
+    const oidUserID = new mongoose.Types.ObjectId(JSON.parse(userId));
     try {
       const article = await Article.findOneAndUpdate(
         { _id: articleId },
-        [{
-          $set: {
-            likes: {
-              $cond: [
-                { $in: [oidUserID, "$likes"] },
-                {
-                  $filter: {
-                    input: "$likes",
-                    cond: { $ne: ["$$this", oidUserID] },
+        [
+          {
+            $set: {
+              likes: {
+                $cond: [
+                  { $in: [oidUserID, "$likes"] },
+                  {
+                    $filter: {
+                      input: "$likes",
+                      cond: { $ne: ["$$this", oidUserID] },
+                    },
                   },
-                },
-                { $concatArrays: ["$likes", [oidUserID]] },
-              ],
+                  { $concatArrays: ["$likes", [oidUserID]] },
+                ],
+              },
             },
           },
-        }],
+        ],
         { returnDocument: "after" }
       );
 
@@ -98,8 +96,46 @@ class ArticleService {
         coordinates: (article?.location as any).coordinates,
       };
     } catch (error) {
-      console.log(error)
-      throw `Article not found. ${error}`
+      console.log(error);
+      throw `Article not found. ${error}`;
+    }
+  }
+
+  async resolveArticles(req: any) { 
+
+    const options: any = {}
+    if ("userId" in req.body) options['id'] = new mongoose.Types.ObjectId(JSON.parse(req.body["userId"]))
+    try {
+      console.log(req.path);
+      const allArticles = await Article.find(
+        FilterResolver(req.path, options)
+      ).lean();
+      console.log(allArticles);
+      return allArticles.map((article: any) => {
+        return { ...article, coordinates: article.location.coordinates };
+      });
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
+  async resolveArticleSearch(req: any) { 
+    try {
+      console.log(req.path);
+      console.log(req.params)
+      console.log(req.body)
+      // const allArticles = await Article.find(
+      //   this.filterMapping(req.path, req.params)
+      // ).lean();
+      // console.log(allArticles);
+      // return allArticles.map((article: any) => {
+      //   return { ...article, coordinates: article.location.coordinates };
+      // });
+      return []
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
   }
 
