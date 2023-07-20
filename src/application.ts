@@ -51,10 +51,8 @@ class Application {
 
     this.registerRouters();
   }
-  private registerRouters() {
-    // this._instance.use("/api/v1/config", config);
-    // this._instance.use("/api/v1/articles", articles);
-    // this._instance.use("/api/v1/auth", auth);
+  
+  private registerRouters() { 
     const info: Array<{ api: string; handler: string }> = [];
 
     controllers.forEach((controllerClass) => {

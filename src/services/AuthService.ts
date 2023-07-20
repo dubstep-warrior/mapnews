@@ -13,15 +13,14 @@ class AuthService {
     urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT!,
   });
 
-  // see if can refactor
+  // TODO see if can refactor
   async createUser(req: Request) {
     try {
       let data = req.body;
       const newUser: any = {};
       Object.keys(data).forEach((key) => {
         newUser[key] = data[key];
-      });
-      console.log(newUser);
+      }); 
       if (newUser.password !== newUser.confirmPassword) {
         throw new Error("Passwords do not match!");
       }
@@ -54,7 +53,7 @@ class AuthService {
         }
         return {
           token,
-          user: user.toObject() 
+          user: user.toObject(),
         };
       } else {
         throw "Something happened, please try again later";
@@ -73,7 +72,6 @@ class AuthService {
     });
 
     if (["email", "password"].some((element) => !(element in currentUser))) {
-      // return not all params filled
       throw new Error("Not all parameters filled");
     }
     const user = await User.findOne({ email: currentUser["email"] });
@@ -88,31 +86,7 @@ class AuthService {
       { id: user._id, email: user.email },
       process.env.SECRET_JWT_CODE!
     );
-    console.log(token);
-    return {token, user: user.toObject() };
+    return { token, user: user.toObject() };
   }
-
-  // static async updateArticle(title, body, articleImage){
-  //         try {
-  //             const updateResponse =  await Article.updateOne(
-  //                 {title, body, articleImage},
-  //                 {$set: {date: new Date.now()}});
-
-  //                 return updateResponse;
-  //         } catch (error) {
-  //             console.log(`Could not update Article ${error}` );
-
-  //     }
-  // }
-
-  // static async deleteArticle(articleId){
-  //     try {
-  //         const deletedResponse = await Article.findOneAndDelete(articleId);
-  //         return deletedResponse;
-  //     } catch (error) {
-  //         console.log(`Could  ot delete article ${error}`);
-  //     }
-
-  // }
 }
 export default new AuthService();

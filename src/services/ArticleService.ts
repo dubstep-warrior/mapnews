@@ -11,10 +11,8 @@ class ArticleService {
     privateKey: process.env.IMAGEKIT_PRIVATE_KEY!,
     urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT!,
   });
- 
 
-  constructor() { 
-  }
+  constructor() {}
 
   async getAllArticles() {
     try {
@@ -31,7 +29,7 @@ class ArticleService {
   async createArticle(req: any) {
     try {
       let data = req.body;
-      let imagekit_images = []; 
+      let imagekit_images = [];
 
       for (const img of req.files) {
         try {
@@ -64,8 +62,7 @@ class ArticleService {
     }
   }
   async resolveArticleLikes(req: any) {
-    const { articleId, userId } = req.body;
-    console.log("likeArticle called: ", articleId, userId);
+    const { articleId, userId } = req.body; 
     const oidUserID = new mongoose.Types.ObjectId(JSON.parse(userId));
     try {
       const article = await Article.findOneAndUpdate(
@@ -101,16 +98,16 @@ class ArticleService {
     }
   }
 
-  async resolveArticles(req: any) { 
-
-    const options: any = {}
-    if ("userId" in req.body) options['id'] = new mongoose.Types.ObjectId(JSON.parse(req.body["userId"]))
+  async resolveArticles(req: any) {
+    const options: any = {};
+    if ("userId" in req.body)
+      options["id"] = new mongoose.Types.ObjectId(
+        JSON.parse(req.body["userId"])
+      );
     try {
-      console.log(req.path);
       const allArticles = await Article.find(
         FilterResolver(req.path, options)
       ).lean();
-      console.log(allArticles);
       return allArticles.map((article: any) => {
         return { ...article, coordinates: article.location.coordinates };
       });
@@ -120,19 +117,15 @@ class ArticleService {
     }
   }
 
-  async resolveArticleSearch(req: any) { 
-    console.log('search service called')
+  async resolveArticleSearch(req: any) {
     try {
-      console.log(req.path);
-      console.log(req.query) 
-      const options = JSON.parse(req.query.data)
+      const options = JSON.parse(req.query.data);
       const allArticles = await Article.find(
         FilterResolver(req.path, options)
       ).lean();
-      console.log(allArticles);
       return allArticles.map((article: any) => {
         return { ...article, coordinates: article.location.coordinates };
-      }); 
+      });
     } catch (error) {
       console.log(error);
       throw error;

@@ -6,20 +6,15 @@ import { Get, Post } from "../utils/handlers.decorator";
 import { Auth } from "../utils/authentication.decorator";
  
 @Controller('/article')
-export default class Article { 
-  constructor() { 
-  }
- 
-  // @Auth()
+export default class Article {  
+  
   @Get('')
-  async apiGetAllArticles(req: Request, res: Response, next: NextFunction) {
-   console.log('yes we tried')
+  async apiGetAllArticles(req: Request, res: Response, next: NextFunction) { 
     try {
       const articles = await ArticleService.getAllArticles();
       if (!articles) {
         res.status(404).json("There are no article published yet!");
-      }
-      // console.log(articles)
+      } 
       res.json({
         success: true,
         data: articles,
@@ -33,8 +28,7 @@ export default class Article {
   @Post('/like')
   async resolveArticleLikes(req: Request, res: Response, next: NextFunction) {
     try { 
-      const article = await ArticleService.resolveArticleLikes(req);
-      console.log(article)
+      const article = await ArticleService.resolveArticleLikes(req); 
       res.json({
         success: true,
         data: article,
@@ -53,54 +47,29 @@ export default class Article {
         success: true,
         data: createdArticle,
       });
-    } catch (error) {
-      console.log("error caught heres");
-      console.log(error);
+    } catch (error) { 
       res.status(500).json({ success: false, error: error });
     }
   }
 
   @Auth('userId', true)
   @Get('/favourites', '/self', '/new', '/relevant', '/search')
-  async apiResolveArticles(req: Request, res: Response, next: NextFunction) {
-    console.log('search controller called')
+  async apiResolveArticles(req: Request, res: Response, next: NextFunction) { 
     try {
       const method = req.path == '/search' ? 'resolveArticleSearch' : 'resolveArticles'
-      const articles = await ArticleService[method](req) as Array<any>;
-      console.log('yes we tried')
+      const articles = await ArticleService[method](req) as Array<any>; 
       if (!articles) {
         res.status(404).json("There are no article published yet!");
-      }
-      // console.log(articles)
+      } 
       res.json({
         success: true,
         data: articles,
       }); 
-    } catch (error) {
-      console.log('error in controller', error)
+    } catch (error) { 
       res.status(500).json({ success: false, error: error });
     }
-  }
-
-  // @Auth('userId')
-  // @Get('/self')
-  // async apiGetOwnArticles(req: Request, res: Response, next: NextFunction) {
-  //  console.log('yes we tried')
-  //   try {
-  //     const articles = await ArticleService.getOwnArticles(req);
-  //     if (!articles) {
-  //       res.status(404).json("There are no article published yet!");
-  //     }
-  //     // console.log(articles)
-  //     res.json({
-  //       success: true,
-  //       data: articles,
-  //     }); 
-  //   } catch (error) {
-  //     res.status(500).json({ success: false, error: error });
-  //   }
-  // }
-
+  } 
+  
   // static async apiUpdateArticle(req, res, next){
   //    try {
   //       const comment = {}

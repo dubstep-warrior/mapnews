@@ -9,8 +9,7 @@ export const FilterResolver = (path: string, options: any) => {
       },
     },
     "/relevant": { _id: { $exists: true } },
-    "/search": { tags: { "$all": options.tags }, category: options.category}
-    // TODO add filter for categories in search too
+    "/search": { tags: { "$all": options.tags }, category: options.category} 
   };
 
   return map[path];
