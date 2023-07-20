@@ -13,12 +13,14 @@ export class ServerService {
   }
 
   private async request(method: string, url: string, data?: any) {
-    const result = this.http.request(method, url, {
+    const requestData: any = {
       body: data,
       responseType: 'json',
       observe: 'body',
       headers: {},
-    });
+    }
+    if (method == 'GET') requestData['headers']['params'] = data
+    const result = this.http.request(method, url, requestData);
     return new Promise((resolve, reject) => {
       result.subscribe(resolve, reject);
     }).catch(() => {
@@ -26,8 +28,8 @@ export class ServerService {
     });
   } 
 
-  get(api: string): any {
-    return this.request('GET', `${this.url}/${api}`)
+  get(api: string, params: any = {}): any {
+    return this.request('GET', `${this.url}/${api}`, params)
   }
 
   post(api: string, event: any): any {

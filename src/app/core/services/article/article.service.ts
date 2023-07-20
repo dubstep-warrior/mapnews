@@ -12,6 +12,13 @@ import { Article } from '../../interfaces/article';
 export class ArticleService {
   model: Subject<any>;
   api: string = 'api/v1/article';
+  navMapping: any = {
+    favourites: '/favourites',
+    relevant: '/relevant',
+    new: '/new',
+    myposts: '/self',
+    search: '/search'
+  }
   constructor(
     private service: ServerService,
     private formService: FormService,
@@ -20,14 +27,14 @@ export class ArticleService {
     this.model = new Subject();
   }
 
-  async getArticles() {
-    const res = await this.service.get(this.api);
+  async getArticles(key: string = 'relevant', params: any = {}) {
+    const res = await this.service.get(`${this.api}${this.navMapping[key]}`, params);
+    console.log(res);
     if (res && res.success) {
       this.model.next({
         type: 'articles',
         data: res.data,
       });
-      console.log(res);
     } else {
       console.log(res.error);
     }

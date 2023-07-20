@@ -32,5 +32,7 @@ export class RightOverlayComponent extends FormDirective implements OnInit {
   async submit(): Promise<void> {
     console.log(event)
     console.log('submit search')
+    const res = await this.articleService.getArticles('search', this.form.value)
+    console.log(res)
   }
 }

@@ -11,7 +11,7 @@
       </ng-template>
     </div>
     <div>
-      <div *ngFor="let item of menu.slice(0, authenticated ? menu.length : 2)" class="button" (click)="selected = item" [class.selected]="item == selected">
+      <div (click)="resolveMenuOption(item)"  *ngFor="let item of menu.slice(0, authenticated ? menu.length : 2)" class="button" (click)="selected = item" [class.selected]="item == selected">
         <div>{{ item }}</div>
         <div></div>
       </div> 
