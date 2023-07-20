@@ -63,6 +63,7 @@ export default class Article {
   @Auth('userId', true)
   @Get('/favourites', '/self', '/new', '/relevant', '/search')
   async apiResolveArticles(req: Request, res: Response, next: NextFunction) {
+    console.log('search controller called')
     try {
       const method = req.path == '/search' ? 'resolveArticleSearch' : 'resolveArticles'
       const articles = await ArticleService[method](req) as Array<any>;

@@ -121,17 +121,18 @@ class ArticleService {
   }
 
   async resolveArticleSearch(req: any) { 
+    console.log('search service called')
     try {
       console.log(req.path);
-      console.log(req.params)
-      console.log(req.body)
-      // const allArticles = await Article.find(
-      //   this.filterMapping(req.path, req.params)
-      // ).lean();
-      // console.log(allArticles);
-      // return allArticles.map((article: any) => {
-      //   return { ...article, coordinates: article.location.coordinates };
-      // });
+      console.log(req.query) 
+      const options = JSON.parse(req.query.data)
+      const allArticles = await Article.find(
+        FilterResolver(req.path, options)
+      ).lean();
+      console.log(allArticles);
+      return allArticles.map((article: any) => {
+        return { ...article, coordinates: article.location.coordinates };
+      });
       return []
     } catch (error) {
       console.log(error);
