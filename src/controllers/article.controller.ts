@@ -4,7 +4,7 @@ import { Request, Response, NextFunction } from "express";
 import Controller from "../utils/controller.decorator";
 import { Get, Post } from "../utils/handlers.decorator";
 import { Auth } from "../utils/authentication.decorator";
-
+ 
 @Controller('/article')
 export default class Article { 
   constructor() { 

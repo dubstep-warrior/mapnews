@@ -1,3 +1,6 @@
 .env
 node_modules
 dist
+migrate.json
+migrations
+src/models/index.ts

@@ -14,4 +14,4 @@ export const FilterResolver = (path: string, options: any) => {
   };
 
   return map[path];
-};
+}; 

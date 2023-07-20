@@ -2,7 +2,7 @@ import Article from "../models/Article";
 import ImageKit from "imagekit";
 import * as dotenv from "dotenv";
 import mongoose, { ObjectId } from "mongoose";
-import { FilterResolver } from "../utils/filters/ArticleService.resolution-filters";
+import { FilterResolver } from "../utils/filters/article.resolvers";
 dotenv.config();
 
 class ArticleService {
@@ -132,8 +132,7 @@ class ArticleService {
       console.log(allArticles);
       return allArticles.map((article: any) => {
         return { ...article, coordinates: article.location.coordinates };
-      });
-      return []
+      }); 
     } catch (error) {
       console.log(error);
       throw error;
