@@ -2,7 +2,9 @@ import Article from "../models/Article";
 import ImageKit from "imagekit";
 import * as dotenv from "dotenv";
 import mongoose, { ObjectId } from "mongoose";
+import { Cache } from "../utils/cache.decorator";
 import { FilterResolver } from "../utils/filters/article.resolvers";
+import RedisClient from "../clients/redis.client";
 dotenv.config();
 
 class ArticleService {
@@ -78,6 +80,7 @@ class ArticleService {
     }
   }
 
+  @Cache()
   async resolveArticles(req: any) {
     const options: any = {};
     if ("userId" in req.body)
@@ -88,15 +91,19 @@ class ArticleService {
       const allArticles = await Article.find(
         FilterResolver(req.path, options)
       ).lean();
-      return allArticles.map((article: any) => {
+      
+      const articles = allArticles.map((article: any) => {
         return { ...article, coordinates: article.location.coordinates };
-      });
+      })
+
+      
+      return articles;
     } catch (error) {
       console.log(error);
       throw error;
     }
   }
-
+ 
   async resolveArticleSearch(req: any) {
     try {
       const options = JSON.parse(req.query.data);
