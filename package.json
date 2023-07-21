@@ -4,12 +4,10 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "start": "ts-node ./src/server.ts",
-    "postinstall": "tsc",
-    "watch-node": "nodemon dist/server.js",
-    "watch-ts": "tsc -w",
-    "dev": "ts-node-dev ./src/server.ts",
-    "devrun": "nodemon ./src/server.ts"
+    "tsstart": "nodemon ./src/server.ts",
+    "start": "node dist/server.js",
+    "tsc": "tsc",
+    "build": "tsc"
   },
   "author": "",
   "license": "ISC",
