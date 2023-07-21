@@ -6,13 +6,13 @@
   [center]="[startingCoordinates['lng'], startingCoordinates['lat']]"
   (mapMouseUp)="sendMouseCoordinates($event)"
   (click)="
-    ['addArticleLocation'].includes(state?.name)
+    ['addArticleLocation'].includes(state?.name) || ['addArticleLocation'].includes(prevState?.name)
       ? $event.stopPropagation()
       : null
   "
   #map
   [class.locationSelection]="['addArticleLocation'].includes(state?.name)"
->
+  >
   <app-mark *ngFor="let article of articles" [article]="article"></app-mark>
   <app-article-box></app-article-box>
   <app-mark

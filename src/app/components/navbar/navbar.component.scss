@@ -18,9 +18,13 @@ section {
     display: flex;
     align-items: center;
 
-    &:first-child > div {
-      margin-left: 14px;
-      padding: 8px 18px;
+    &:first-child {
+      min-width: 200px;
+      
+      > div {
+        margin-left: 14px;
+        padding: 8px 18px;
+      }
     }
 
     &:nth-child(2) > div {
@@ -54,18 +58,23 @@ section {
       }
     }
 
-    &:nth-child(3) > div {
-      border-radius: 50%;
-      width: 46px;
-      height: 46px;
-      overflow: hidden;
-      margin-right: 8px;
-      cursor: pointer;
-      display: flex; 
+    &:nth-child(3) {
+      min-width: 200px;
+      justify-content: end;
 
-      img {
-        margin: auto;
-      } 
+      > div {
+        border-radius: 50%;
+        width: 46px;
+        height: 46px;
+        overflow: hidden;
+        margin-right: 8px;
+        cursor: pointer;
+        display: flex; 
+  
+        img {
+          margin: auto;
+        } 
+      }
     }
-  }
+    }
 }

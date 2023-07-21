@@ -55,7 +55,7 @@ export class MapComponent extends Base implements OnInit, OnDestroy {
   startingCoordinates: any = { lng: 139.753, lat: 35.6844, zoom: 14 };
   articles: Article[] = [];
   state: State;
-
+  prevState: State;
   constructor(
     private service: ArticleService,
     private locationService: LocationService,
@@ -95,6 +95,7 @@ export class MapComponent extends Base implements OnInit, OnDestroy {
       });
 
     this.stateService.model.pipe(this.takeUntilDestroy()).subscribe((data) => {
+      this.prevState = this.state
       this.state = data;
     });
     await this.service.getArticles();

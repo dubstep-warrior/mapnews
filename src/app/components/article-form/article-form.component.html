@@ -11,13 +11,13 @@
     </div>
     <div class="title-section" *ngIf="type == 'add'">
       <h2>Title</h2>
-      <div>
+      <div class="input">
         <input formControlName="title" />
       </div>
     </div>
     <div class="tag-section">
       <h2>Tags</h2>
-      <div>
+      <div class="input">
         <input #tags (keyup.enter)="tagAdded($event); $event.preventDefault()" />
       </div>
       <div class="tags">
@@ -27,10 +27,12 @@
     <div class="location-section" *ngIf="type == 'add'">
       <h2>Location</h2>
       <div>
-        <input
+        <div class="input">
+          <input
           readonly
           [value]="form.get('location').value.coordinates.toString()"
         />
+        </div>
         <div (click)="locationSet('current')">
           <img class="" src="./../../../assets/images/current-loc.png" alt="" />
         </div>

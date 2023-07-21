@@ -39,7 +39,7 @@ export class LeftOverlayComponent extends FormDirective implements OnInit {
               JSON.parse(data).lng,
               JSON.parse(data).lat,
             ],
-          });
+          }); 
         }
       });
 

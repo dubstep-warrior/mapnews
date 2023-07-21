@@ -38,15 +38,19 @@ form {
   > .tag-section,
   > .location-section,
   .description-section {
+    .input {
+      flex-grow: 1;
+      
+      input {
+        padding: 12px 16px;
+        width: 100%;
+        border-width: 1px;
+      }
+    }
+
     > div {
       width: 100%;
       display: flex;
-
-      input {
-        padding: 12px 16px;
-        flex-grow: 1;
-        border-width: 1px;
-      }
 
       &.tags {
         margin-top: 18px;
@@ -62,13 +66,13 @@ form {
     }
   }
 
-  > .location-section > div > div {
+  > .location-section > div  > :not(:first-child) {
     border-radius: 50%;
     overflow: hidden;
     margin-left: 8px;
     cursor: pointer;
     background-color: white;
-    width: 46px;
+    min-width: 46px;
     height: 46px;
     border: 1px solid transparent;
     display: flex;

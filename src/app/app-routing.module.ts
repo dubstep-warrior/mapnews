@@ -9,31 +9,34 @@ import { ConfigResolver } from './core/resolvers/config.resolver';
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
-    resolve: {
-      config: ConfigResolver,
-    },
-    data: { animation: 'isLeft' },
-  },
-  {
-    path: 'auth',
-    component: AccessComponent,
     resolve: {
       config: ConfigResolver,
     },
     children: [
       {
-        path: 'login',
-        component: LoginComponent,
-        // data: { animation: 'isRight' },
+        path: '',
+        component: HomeComponent, 
+        data: { animation: 'home' },
       },
       {
-        path: 'register',
-        component: RegisterComponent,
-        data: { animation: 'isRight' },
+        path: 'auth',
+        component: AccessComponent, 
+        children: [
+          {
+            path: 'login',
+            component: LoginComponent,
+            data: { animation: 'login' },
+          },
+          {
+            path: 'register',
+            component: RegisterComponent,
+            data: { animation: 'register' },
+          },
+        ],
+        data: {animation: 'auth'}
       },
-    ],
-  },
+    ]
+  }
 ];
 
 @NgModule({

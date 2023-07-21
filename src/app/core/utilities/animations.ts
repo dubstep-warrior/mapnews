@@ -131,11 +131,11 @@ export const rotate = trigger('rotate', [
   ]),
 ]);
 
-export const slider = trigger('routeAnimations', [
-  transition('* => isLeft', slideTo('left')),
-  transition('* => isRight', slideTo('right')),
-  transition('isRight => *', slideTo('left')),
-  transition('isLeft => *', slideTo('right')),
+export const slider = trigger('routeAnimations', [ 
+  transition('home => auth' , slideTo('right')),
+  transition('auth => home' , slideTo('left')),
+  transition('login => register' , slideTo('right')),
+  transition('register => login' , slideTo('left'))
 ]);
 
 function slideTo(direction: string) {
@@ -210,3 +210,7 @@ export const slideInFromRight = trigger('slideInFromRight', [
     animate('200ms', style({ transform: 'translateX(100%)' })),
   ]),
 ]);
+
+
+
+

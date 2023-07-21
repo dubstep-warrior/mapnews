@@ -10,7 +10,7 @@ export class StateService {
 
   constructor() {  
   } 
-
+  prevState: State;
   state: State = {name: "neutral"}; 
   model: Subject<any> = new Subject();  
 
