@@ -1,4 +1,3 @@
-
 export const FilterResolver = (path: string, options: any) => {
   const map: any = {
     "/favourites": { likes: options.id },
@@ -9,8 +8,26 @@ export const FilterResolver = (path: string, options: any) => {
       },
     },
     "/relevant": { _id: { $exists: true } },
-    "/search": { tags: { "$all": options.tags }, category: options.category} 
+    "/search": { tags: { $all: options.tags }, category: options.category },
+    "/like": [
+      {
+        $set: {
+          likes: {
+            $cond: [
+              { $in: [options.id, "$likes"] },
+              {
+                $filter: {
+                  input: "$likes",
+                  cond: { $ne: ["$$this", options.id] },
+                },
+              },
+              { $concatArrays: ["$likes", [options.id]] },
+            ],
+          },
+        },
+      },
+    ],
   };
 
   return map[path];
-}; 
+};

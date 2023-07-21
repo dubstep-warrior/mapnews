@@ -28,23 +28,18 @@ class ArticleService {
 
   async createArticle(req: any) {
     try {
-      let data = req.body;
-      let imagekit_images = [];
+      const data = req.body;
 
-      for (const img of req.files) {
-        try {
-          const res = await this.imageKit.upload({
-            file: img.buffer.toString("base64"),
-            fileName: img.originalname,
-            folder: "Articles",
-          });
-          imagekit_images.push(res.url);
-        } catch (err) {
-          console.error(err);
-        }
-      }
+      const imageUploads = req.files.map((img: any) =>
+        this.imageKit.upload({
+          file: img.buffer.toString("base64"),
+          fileName: img.originalname,
+          folder: "Articles",
+        })
+      );
+
       const newArticle: any = {
-        images: imagekit_images,
+        images: (await Promise.all(imageUploads)).map((res) => res.url),
       };
 
       Object.keys(data).forEach((key) => {
@@ -61,30 +56,15 @@ class ArticleService {
       throw error;
     }
   }
+
   async resolveArticleLikes(req: any) {
-    const { articleId, userId } = req.body; 
-    const oidUserID = new mongoose.Types.ObjectId(JSON.parse(userId));
+    const { articleId, userId } = req.body;
     try {
       const article = await Article.findOneAndUpdate(
         { _id: articleId },
-        [
-          {
-            $set: {
-              likes: {
-                $cond: [
-                  { $in: [oidUserID, "$likes"] },
-                  {
-                    $filter: {
-                      input: "$likes",
-                      cond: { $ne: ["$$this", oidUserID] },
-                    },
-                  },
-                  { $concatArrays: ["$likes", [oidUserID]] },
-                ],
-              },
-            },
-          },
-        ],
+        FilterResolver(req.path, {
+          id: new mongoose.Types.ObjectId(JSON.parse(userId)),
+        }),
         { returnDocument: "after" }
       );
 
