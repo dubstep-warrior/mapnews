@@ -1,15 +1,16 @@
-<section>
-  <div>
-    <h2>MapNews</h2>
-  </div>
-  <div>
+<app-access-container>
+  <div form>
     <form [formGroup]="form">
       <input formControlName="email" type="text" placeholder="Email" />
-      <input formControlName="password" type="password" placeholder="Password" />
+      <input
+        formControlName="password"
+        type="password"
+        placeholder="Password"
+      />
     </form>
   </div>
-  <div>
+  <div actions>
     <div (click)="submit()" class="button blue-btn">Login</div>
     <div [routerLink]="'/auth/register'">No account? Sign up here</div>
   </div>
-</section>
+</app-access-container>

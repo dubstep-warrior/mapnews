@@ -1,8 +1,5 @@
-<section *ngIf="!authenticated">
-  <div>
-    <h2>MapNews</h2>
-  </div>
-  <div>
+<app-access-container>
+  <div upload class="upload">
     <label for="image">
       <input
         (change)="addImage($event)"
@@ -17,19 +14,21 @@
       <div>Add Profile Photo</div>
     </label>
   </div>
-  <div>
-    <form [formGroup]="form">
-      <input formControlName="email" type="text" placeholder="Email" />
-      <input formControlName="password" type="password" placeholder="Password" />
-      <input
-        formControlName="confirmPassword"
-        type="password"
-        placeholder="Confirm Password"
-      />
-    </form>
+  <div form>
+    <div>
+      <form [formGroup]="form">
+        <input formControlName="email" type="text" placeholder="Email" />
+        <input formControlName="password" type="password" placeholder="Password" />
+        <input
+          formControlName="confirmPassword"
+          type="password"
+          placeholder="Confirm Password"
+        />
+      </form>
+    </div>
   </div>
-  <div>
+  <div actions>
     <div (click)="submit()" class="button blue-btn">Register</div>
     <div [routerLink]="'/auth/login'">Have an existing account? Login here!</div>
   </div>
-</section>
+</app-access-container>
