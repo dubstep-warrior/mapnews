@@ -1,14 +1,13 @@
 version: "3.0"
 services:
-  app:
-    container_name: app
+  app: 
     image: mapnews-backend:latest
     ports:
       - 8000:8000
     environment:
       - SERVICE_PORTS=8000
     deploy:
-      replicas: 20
+      replicas: 5
       update_config:
         parallelism: 5
         delay: 10s
@@ -37,4 +36,4 @@ services:
 
 networks:
   web:
-    driver: overlay
+    driver: overlay 
