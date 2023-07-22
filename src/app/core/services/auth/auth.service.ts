@@ -4,6 +4,7 @@ import { ServerService } from '../server/server.service';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { AuthStatus, IUser } from '../../interfaces/auth';
+import { WebSocketService } from '../ws/web-socket.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,10 +15,11 @@ export class AuthService {
   authStatusSubject: BehaviorSubject<AuthStatus>;
   token: string = '';
   user: IUser | null;
-  constructor(private service: ServerService, private router: Router) {
+  constructor(private service: ServerService, private wsService: WebSocketService) {
     this.token = localStorage.getItem('token');
     this.user = JSON.parse(localStorage.getItem(this.token)) as IUser;
     this.authenticated = Boolean(this.token && this.user);
+    if(this.authenticated) this.wsService.connect()  
     this.authStatusSubject = new BehaviorSubject({loggedIn: this.authenticated, id: this.user?._id ?? ''} as AuthStatus);
   }
 
@@ -35,7 +37,7 @@ export class AuthService {
     this.token = ''
     this.user = null
     this.authenticated = false;
-    
+    this.wsService.closeConnection();
     this.authStatusSubject.next({loggedIn: this.authenticated});
   }
 
@@ -59,8 +61,10 @@ export class AuthService {
       // console.log(res)
       localStorage.setItem('token', res.data.token);
       localStorage.setItem(res.data.token, JSON.stringify(res.data.user))
+      this.wsService.connect();
       console.log(localStorage.getItem('token'));
       this.authStatusSubject.next({loggedIn: this.authenticated, id: res.data.user._id});
+
     }
     return res;
   }
