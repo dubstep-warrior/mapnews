@@ -4,7 +4,7 @@
       <div
         [@slideInFromLeft]
         *ngIf="authenticated; else access"
-        class="button blue-btn"
+        class="button blue-btn not-mobile"
         (click)="addArticle()"
       >
         Add Post
@@ -12,18 +12,21 @@
       <ng-template #access>
         <div
           [@slideInFromLeft]
-          class="button blue-btn"
+          class="button blue-btn not-mobile"
           [routerLink]="'/auth/login'"
         >
           Login/Sign up
         </div>
       </ng-template>
+      <div class="mobile button" (click)="mobileMenu = !mobileMenu">
+        <img class="icon" src="./../../../assets/images/menu.png" alt="" />
+      </div>
     </div>
-    <div>
+    <div class="not-mobile">
       <div
         (click)="resolveMenuOption(item)"
         *ngFor="let item of menu.slice(0, authenticated ? menu.length : 2)"
-        class="menu-item" 
+        class="menu-item"
         [class.selected]="item == selected && articleState !== 'search'"
       >
         <div>{{ item }}</div>
@@ -41,9 +44,46 @@
           alt=""
         />
       </div>
-      <div class="button" *ngIf="authenticated" (click)="logout()">
+      <div class="button not-mobile" *ngIf="authenticated" (click)="logout()">
         <img class="icon" src="./../../../assets/images/logout.png" alt="" />
       </div>
+    </div>
+  </div>
+  <div class="mobile-menu" [class.appear]="mobileMenu">
+    <div>
+      <div
+        (click)="resolveMenuOption(item)"
+        *ngFor="let item of menu.slice(0, authenticated ? menu.length : 2)"
+        class="menu-item"
+        [class.selected]="item == selected && articleState !== 'search'"
+      >
+        <div>{{ item }}</div>
+        <div></div>
+      </div>
+    </div>
+
+    <div>
+      <div
+        [@slideInFromLeft]
+        *ngIf="authenticated; else access"
+        class="button blue-btn"
+        (click)="addArticle()"
+      >
+        Add Post
+      </div>
+      <ng-template #access>
+        <div
+          [@slideInFromLeft]
+          class="button blue-btn"
+          [routerLink]="'/auth/login'"
+        >
+          Login/Sign up
+        </div>
+      </ng-template>
+    </div>
+
+    <div class="button blue-btn" *ngIf="authenticated" (click)="logout()">
+      Logout
     </div>
   </div>
 </section>

@@ -1,3 +1,5 @@
+@use "mixins" as *;
+
 section {
   position: relative;
 }
@@ -20,7 +22,7 @@ section {
 
     &:first-child {
       min-width: 200px;
-      
+
       > div {
         margin-left: 14px;
         padding: 8px 18px;
@@ -61,20 +63,50 @@ section {
     &:nth-child(3) {
       min-width: 200px;
       justify-content: end;
+    }
+  }
+}
 
-      > div {
-        border-radius: 50%;
-        width: 46px;
-        height: 46px;
-        overflow: hidden;
-        margin-right: 8px;
-        cursor: pointer;
-        display: flex; 
-  
-        img {
-          margin: auto;
-        } 
-      }
-    }
-    }
+.button:not(.blue-btn) {
+  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  overflow: hidden;
+  margin-right: 8px;
+  cursor: pointer;
+  display: flex;
+
+  img {
+    margin: auto;
+  }
+}
+
+.not-mobile {
+  @include screen-small {
+    display: none !important;
+  }
+}
+
+.mobile {
+  display: none !important;
+
+  @include screen-small {
+    display: flex !important;
+  }
+
+  &.button {
+    padding: 0 0 !important;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.mobile-menu {
+  display: none;
+
+  &.appear {
+    position: absolute;
+    inset: 0 0 0 0;
+    background-color: rgba(31, 31, 31, 0.413);
+  }
 }

@@ -20,6 +20,7 @@ export class NavbarComponent extends Base implements OnInit{
   menu = ['Relevant', 'New', 'Favourites', 'My Posts'];
   @Input() authenticated: boolean = false; 
   articleState: string = 'relevant';
+  mobileMenu: boolean = false;
 
   constructor(
     private service: StateService,
