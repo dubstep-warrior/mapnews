@@ -13,12 +13,13 @@
         <div
           [@slideInFromLeft]
           class="button blue-btn not-mobile"
+          (click)="mobileMenu = false"
           [routerLink]="'/auth/login'"
         >
           Login/Sign up
         </div>
       </ng-template>
-      <div class="mobile button" (click)="mobileMenu = !mobileMenu">
+      <div class="mobile button" (click)="resolveMobileMenu()">
         <img class="icon" src="./../../../assets/images/menu.png" alt="" />
       </div>
     </div>
@@ -57,23 +58,23 @@
         class="menu-item"
         [class.selected]="item == selected && articleState !== 'search'"
       >
-        <div>{{ item }}</div>
-        <div></div>
+        <div>
+          <img class="icon" [src]="'./../../../assets/images/' + (item.replaceAll(' ', '') | lowercase) + '.png'" alt="">
+        </div>
+        <div>{{ item }}</div> 
       </div>
     </div>
 
     <div>
-      <div
-        [@slideInFromLeft]
-        *ngIf="authenticated; else access"
+      <div 
+        *ngIf="authenticated; else mobileAccess"
         class="button blue-btn"
         (click)="addArticle()"
       >
         Add Post
       </div>
-      <ng-template #access>
-        <div
-          [@slideInFromLeft]
+      <ng-template #mobileAccess>
+        <div 
           class="button blue-btn"
           [routerLink]="'/auth/login'"
         >
@@ -82,8 +83,10 @@
       </ng-template>
     </div>
 
-    <div class="button blue-btn" *ngIf="authenticated" (click)="logout()">
-      Logout
+    <div>
+      <div class="button blue-btn" *ngIf="authenticated" (click)="logout()">
+        Logout
+      </div>
     </div>
   </div>
 </section>

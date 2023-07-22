@@ -39,22 +39,30 @@ export class NavbarComponent extends Base implements OnInit{
   }
 
   addArticle() {
+    this.mobileMenu = false
     this.service.resolveState('addArticle');
   }
 
   searchArticle() {
+    this.mobileMenu = false
     this.service.resolveState(this.service.state.name == 'search' ? 'neutral' : 'search');
   }
 
-  logout() {
+  logout() { 
     this.authService.logout();
   }
 
   async resolveMenuOption(item: string): Promise<void> {
+    this.mobileMenu = false
     this.selected = item
     this.service.resetState()
     const key = item.toLowerCase().replaceAll(' ', '');
     const res = await this.articleService.getArticles(key);
     console.log(res)
+  }
+
+  resolveMobileMenu() { 
+    this.mobileMenu = !this.mobileMenu
+    this.service.resetState()
   }
 }
