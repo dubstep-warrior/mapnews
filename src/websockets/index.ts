@@ -4,7 +4,7 @@ import WebSocket from "ws";
 export default async (expressServer: any) => {
   const websocketServer = new WebSocket.Server({
     noServer: true,
-    path: "/websockets",
+    path: "/ws",
   });
 
   expressServer.on("upgrade", (request: any, socket: any, head: any) => {
