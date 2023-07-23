@@ -27,7 +27,7 @@ import { AuthInterceptor } from './core/interceptors/auth/auth.interceptor';
 import { ArticleFormComponent } from './components/article-form/article-form.component';
 import { FormDirective } from './core/directives/form.directive';
 import { ArticleDetailsComponent } from './components/article-details/article-details.component';
-import { RightOverlayContainerComponent } from './components/right-overlay-container/right-overlay-container.component';
+import { RightOverlayContainerComponent } from './components/shared/right-overlay-container/right-overlay-container.component';
 import { AccessContainerComponent } from './components/shared/access-container/access-container.component';
 
 export let AppInjector: Injector;

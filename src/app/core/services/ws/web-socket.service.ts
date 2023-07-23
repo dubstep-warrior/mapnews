@@ -19,8 +19,7 @@ export class WebSocketService {
       console.log('WS CONNECTION CALLED ', this.connection$)
       this.connection$.subscribe((data) => {
         console.log('web socket data: ', data)
-      })
-      this.connection$.next('i got in')
+      }) 
       return this.connection$;
     }
   }

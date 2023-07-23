@@ -19,5 +19,9 @@ mgl-map {
     }
 }
 
+::ng-deep .maplibregl-ctrl.maplibregl-ctrl-attrib {
+  display: none;
+}
+
  
  
