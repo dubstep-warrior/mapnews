@@ -3,3 +3,4 @@ node_modules
 dist 
 migrations
 src/models/index.ts
+migrate.json

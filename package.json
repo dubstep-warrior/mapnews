@@ -30,6 +30,7 @@
     "redis": "^4.6.7",
     "redis-om": "^0.4.0",
     "reflect-metadata": "^0.1.13",
+    "ts-migrate-mongoose": "^3.1.9",
     "ws": "^8.13.0",
     "yargs": "^17.7.2"
   },
