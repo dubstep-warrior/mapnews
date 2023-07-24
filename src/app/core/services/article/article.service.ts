@@ -25,22 +25,20 @@ export class ArticleService {
     private service: ServerService,
     private formService: FormService,
     private stateService: StateService,
-    private locationService: LocationService
+    private locationService: LocationService,
   ) {
     this.model = new Subject();
-    this.locationService.getLocation().subscribe(data => {
+    this.locationService.getLocation().subscribe((data) => {
       this.location = {
         longtitude: data.longitude,
         latitude: data.latitude,
-      }
-    })
+      };
+    });
 
-    
-    console.log('BEGIN', navigator.geolocation)
+    console.log('BEGIN', navigator.geolocation);
     if (navigator.geolocation) {
-      
       navigator.geolocation.getCurrentPosition((data) => {
-        console.log('yes exist', data)
+        console.log('yes exist', data);
         this.location = {
           longtitude: data.coords.longitude,
           latitude: data.coords.latitude,
@@ -52,7 +50,7 @@ export class ArticleService {
   }
 
   async getArticles(key: string = 'relevant', params: any = this.location) {
-    console.log('GETTING ARTICLES', key, params)
+    console.log('GETTING ARTICLES', key, params);
     const res = await this.service.get(
       `${this.api}${this.navMapping[key]}`,
       params,
