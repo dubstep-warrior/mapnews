@@ -55,9 +55,8 @@ export default async (expressServer: any) => {
         // ['selectedArticle', 'articleDetails']
         if (parsedMessage.name == "location") {
           currentUser[parsedMessage.name] = parsedMessage.data;
-        } else{
+        } else {
           console.log(parsedMessage);
-
         }
         websocketConnection.send(
           JSON.stringify({ message: "There be gold in them thar hills." }),

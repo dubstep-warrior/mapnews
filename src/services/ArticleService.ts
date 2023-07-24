@@ -83,10 +83,9 @@ class ArticleService {
   // TODO to renable caching after fixing geospatial queries
   // @Cache()
   async resolveArticles(req: any) {
-    const options: any = { 
-    };
+    const options: any = {};
     // console.log(JSON.parse(req.query.data))
-    console.log(req.query)
+    console.log(req.query);
     if ("userId" in req.body)
       options["id"] = new mongoose.Types.ObjectId(
         JSON.parse(req.body["userId"]),
