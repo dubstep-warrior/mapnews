@@ -10,17 +10,10 @@ export class LocationService {
 
   getLocation(): Observable<any> {
     return new Observable((observer: Observer<any>) => {
-      if (window.navigator && window.navigator.geolocation) {
-        window.navigator.geolocation.getCurrentPosition(
-          (position) => {
-            observer.next(position);
-            observer.complete();
-          },
-          (error) => observer.error(error),
-        );
-      } else {
-        observer.error('Unsupported Browser');
-      }
+      navigator.geolocation.watchPosition(pos => {
+        console.log('change detected')
+        observer.next(pos.coords)
+      })
     });
   }
 

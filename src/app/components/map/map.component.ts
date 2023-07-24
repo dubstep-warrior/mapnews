@@ -86,8 +86,8 @@ export class MapComponent extends Base implements OnInit, OnDestroy {
       .subscribe((data) => {
         console.log('rep', data);
         this.startingCoordinates = {
-          lng: data.coords.longitude,
-          lat: data.coords.latitude,
+          lng: data.longitude,
+          lat: data.latitude,
         };
 
         this.startingCoordinates = {

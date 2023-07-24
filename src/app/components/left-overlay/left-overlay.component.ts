@@ -25,8 +25,8 @@ export class LeftOverlayComponent extends FormDirective implements OnInit {
       .subscribe((data) => {
         console.log('rep', data);
         this.currentCoordinates = {
-          lng: data.coords.longitude,
-          lat: data.coords.latitude,
+          lng: data.longitude,
+          lat: data.latitude,
         };
       });
 
