@@ -9,7 +9,8 @@
     "tsc": "tsc",
     "build": "tsc",
     "start-deployment": "docker build -t mapnews-backend:latest . && docker stack deploy --compose-file docker-compose.yml mapnews-backend",
-    "stop-deployment": "docker stack rm mapnews-backend"
+    "stop-deployment": "docker stack rm mapnews-backend",
+    "format": "npx prettier --write ."
   },
   "author": "",
   "license": "ISC",
@@ -27,6 +28,7 @@
     "mongoose": "^7.3.2",
     "multer": "^1.4.5-lts.1",
     "parse-duration": "^1.1.0",
+    "prettier": "^3.0.0",
     "redis": "^4.6.7",
     "redis-om": "^0.4.0",
     "reflect-metadata": "^0.1.13",
@@ -40,6 +42,7 @@
     "@types/express": "^4.17.17",
     "@types/jsonwebtoken": "^9.0.2",
     "@types/multer": "^1.4.7",
+    "husky": "^8.0.3",
     "nodemon": "^3.0.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.1.6"
