@@ -48,7 +48,7 @@ import { trigger, style, animate, transition } from '@angular/animations';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
 })
-export class MapComponent extends Base implements OnInit, OnDestroy {
+export class MapComponent extends Base implements AfterViewInit, OnDestroy {
   map: Map | undefined;
   @ViewChild('map')
   private mapContainer!: ElementRef<HTMLElement>;
@@ -65,7 +65,7 @@ export class MapComponent extends Base implements OnInit, OnDestroy {
     super();
   }
 
-  async ngOnInit() {
+  async ngAfterViewInit() {
     this.service.model.pipe(this.takeUntilDestroy()).subscribe((data) => {
       console.log(data);
       if (data.type == 'article') {
@@ -101,7 +101,6 @@ export class MapComponent extends Base implements OnInit, OnDestroy {
       this.prevState = this.state;
       this.state = data;
     });
-    await this.service.getArticles();
   }
 
   sendMouseCoordinates(event: any) {

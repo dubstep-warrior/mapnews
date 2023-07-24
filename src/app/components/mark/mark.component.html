@@ -11,7 +11,14 @@
   </div>
   <ng-template #displayOnly>
     <div class="marker">
-      <img [class]="type" [src]="type == 'self' ? './../../assets/images/current-loc.gif' : './../../assets/images/' + type + '.png'" />
+      <img
+        [class]="type"
+        [src]="
+          type == 'self'
+            ? './../../assets/images/current-loc.gif'
+            : './../../assets/images/' + type + '.png'
+        "
+      />
     </div>
   </ng-template>
 </mgl-marker>

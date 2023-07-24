@@ -14,7 +14,11 @@
   #map
   [class.locationSelection]="['addArticleLocation'].includes(state?.name)"
 >
-  <app-mark *ngFor="let article of articles" [article]="article" [type]="article.category"></app-mark>
+  <app-mark
+    *ngFor="let article of articles"
+    [article]="article"
+    [type]="article.category"
+  ></app-mark>
   <app-article-box></app-article-box>
   <app-mark
     [@locationDrop]
@@ -27,7 +31,10 @@
       coordinates: formService.form?.get('location')?.value?.coordinates
     }"
   ></app-mark>
-  <app-mark [type]="'self'" [article]="{
-    coordinates: [currentCoordinates['lng'], currentCoordinates['lat']]
-  }"></app-mark>
+  <app-mark
+    [type]="'self'"
+    [article]="{
+      coordinates: [currentCoordinates['lng'], currentCoordinates['lat']]
+    }"
+  ></app-mark>
 </mgl-map>

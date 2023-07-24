@@ -5,6 +5,7 @@ import { StateService } from '../state/state.service';
 import { FormGroup } from '@angular/forms';
 import { FormService } from '../form/form.service';
 import { Article } from '../../interfaces/article';
+import { LocationService } from '../location/location.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,7 @@ import { Article } from '../../interfaces/article';
 export class ArticleService {
   model: Subject<any>;
   api: string = 'api/v1/article';
+  location: any;
   navMapping: any = {
     favourites: '/favourites',
     relevant: '/relevant',
@@ -23,11 +25,34 @@ export class ArticleService {
     private service: ServerService,
     private formService: FormService,
     private stateService: StateService,
+    private locationService: LocationService
   ) {
     this.model = new Subject();
+    this.locationService.getLocation().subscribe(data => {
+      this.location = {
+        longtitude: data.longitude,
+        latitude: data.latitude,
+      }
+    })
+
+    
+    console.log('BEGIN', navigator.geolocation)
+    if (navigator.geolocation) {
+      
+      navigator.geolocation.getCurrentPosition((data) => {
+        console.log('yes exist', data)
+        this.location = {
+          longtitude: data.coords.longitude,
+          latitude: data.coords.latitude,
+        };
+
+        this.getArticles();
+      });
+    }
   }
 
-  async getArticles(key: string = 'relevant', params: any = null) {
+  async getArticles(key: string = 'relevant', params: any = this.location) {
+    console.log('GETTING ARTICLES', key, params)
     const res = await this.service.get(
       `${this.api}${this.navMapping[key]}`,
       params,
