@@ -37,21 +37,27 @@ export default async (expressServer: any) => {
 
   websocketServer.on(
     "connection",
-    function connection(websocketConnection: any, connectionRequest: any, user: any) {
+    function connection(
+      websocketConnection: any,
+      connectionRequest: any,
+      user: any,
+    ) {
       const [_path, params] = connectionRequest?.url?.split("?") as any;
       const connectionParams = params;
       // NOTE: connectParams are not used here but good to understand how to get
       // to them if you need to pass data with the connection to identify it (e.g., a userId).
       // consoley.log(connectionRequest);
-      const currentUser = {...user}; 
+      const currentUser = { ...user };
 
       websocketConnection.on("message", (message: any) => {
         const parsedMessage = JSON.parse(message);
 
         // ['selectedArticle', 'articleDetails']
-        console.log(parsedMessage);
-        if(parsedMessage.type == 'location') {
-          currentUser[parsedMessage.type] = parsedMessage.data 
+        if (parsedMessage.name == "location") {
+          currentUser[parsedMessage.name] = parsedMessage.data;
+        } else{
+          console.log(parsedMessage);
+
         }
         websocketConnection.send(
           JSON.stringify({ message: "There be gold in them thar hills." }),
