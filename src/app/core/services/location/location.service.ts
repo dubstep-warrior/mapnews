@@ -10,10 +10,10 @@ export class LocationService {
 
   getLocation(): Observable<any> {
     return new Observable((observer: Observer<any>) => {
-      navigator.geolocation.watchPosition(pos => {
-        console.log('change detected')
-        observer.next(pos.coords)
-      })
+      navigator.geolocation.watchPosition((pos) => {
+        console.log('change detected');
+        observer.next(pos.coords);
+      });
     });
   }
 
