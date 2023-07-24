@@ -52,7 +52,7 @@ export class MapComponent extends Base implements OnInit, OnDestroy {
   map: Map | undefined;
   @ViewChild('map')
   private mapContainer!: ElementRef<HTMLElement>;
-  startingCoordinates: any = { lng: 139.753, lat: 35.6844, zoom: 14 };
+  currentCoordinates: any = { lng: 139.753, lat: 35.6844, zoom: 14 };
   articles: Article[] = [];
   state: State;
   prevState: State;
@@ -85,15 +85,16 @@ export class MapComponent extends Base implements OnInit, OnDestroy {
       .pipe(this.takeUntilDestroy())
       .subscribe((data) => {
         console.log('rep', data);
-        this.startingCoordinates = {
+        this.currentCoordinates = {
+          ...this.currentCoordinates,
           lng: data.longitude,
           lat: data.latitude,
         };
 
-        this.startingCoordinates = {
-          lng: 103.77431291838502,
-          lat: 1.3295169515211853,
-        };
+        // this.startingCoordinates = {
+        //   lng: 103.77431291838502,
+        //   lat: 1.3295169515211853,
+        // };
       });
 
     this.stateService.model.pipe(this.takeUntilDestroy()).subscribe((data) => {

@@ -15,7 +15,11 @@ export class WebSocketService {
     if (this.connection$) {
       return this.connection$;
     } else {
-      this.connection$ = webSocket(`${environment.ws_endpoint_mapnews_backend_api}?authentication=${localStorage.getItem('token')}`);
+      this.connection$ = webSocket(
+        `${
+          environment.ws_endpoint_mapnews_backend_api
+        }?authentication=${localStorage.getItem('token')}`,
+      );
       console.log('WS CONNECTION CALLED ', this.connection$);
       this.connection$.subscribe((data) => {
         console.log('web socket data: ', data);
