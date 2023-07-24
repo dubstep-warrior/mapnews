@@ -111,6 +111,14 @@ export class MapComponent extends Base implements AfterViewInit, OnDestroy {
     }
   }
 
+
+  async retrieveArticles(event: any) {
+    console.log('zoom ended: ', event.target.style.z)
+    // await this.service.getArticles('current', {
+    //   distance: ((-1923 * event.target.style.z) + 34000)
+    // })
+  }
+
   override ngOnDestroy() {
     this.map?.remove();
     super.ngOnDestroy();

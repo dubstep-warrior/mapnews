@@ -19,7 +19,7 @@ export class ServerService {
       observe: 'body',
       headers: {},
     };
-
+    console.log('BEFORE APPEND:', url);
     if (method == 'GET' && data) {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');

@@ -12,6 +12,7 @@
       : null
   "
   #map
+  (zoomEnd)="retrieveArticles($event)"
   [class.locationSelection]="['addArticleLocation'].includes(state?.name)"
 >
   <app-mark

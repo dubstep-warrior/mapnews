@@ -14,6 +14,7 @@ export class ArticleService {
   model: Subject<any>;
   api: string = 'api/v1/article';
   location: any;
+  current: string = 'relevant';
   navMapping: any = {
     favourites: '/favourites',
     relevant: '/relevant',
@@ -44,16 +45,18 @@ export class ArticleService {
           latitude: data.coords.latitude,
         };
 
-        this.getArticles();
+        this.getArticles('relevant');
       });
     }
   }
 
-  async getArticles(key: string = 'relevant', params: any = this.location) {
-    console.log('GETTING ARTICLES', key, params);
+  async getArticles(key: string, params?: any) {
+    this.current = key == 'current' ? this.current : key
+    console.log('YES WE ARE')
+    console.log('GETTING ARTICLES', {...this.location,...params});
     const res = await this.service.get(
-      `${this.api}${this.navMapping[key]}`,
-      params,
+      `${this.api}${this.navMapping[this.current]}`, 
+      {...this.location,...params}
     );
     console.log(res);
     if (res && res.success) {
