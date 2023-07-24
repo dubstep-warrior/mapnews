@@ -7,7 +7,17 @@ export const FilterResolver = (path: string, options: any) => {
         $gte: new Date(new Date().getTime() - 5 * 24 * 60 * 60 * 1000),
       },
     },
-    "/relevant": { _id: { $exists: true } },
+    "/relevant": { 
+      location: {
+        $near: {
+          $maxDistance: options.distance ?? 7000,
+          $geometry: {
+            type: "Point",
+            coordinates: [options.longtitude, options.latitude]
+          }
+        } 
+      }
+     },
     "/search": { tags: { $all: options.tags }, category: options.category },
     "/like": [
       {
