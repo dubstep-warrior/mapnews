@@ -1,4 +1,6 @@
 import WebSocket from "ws";
+import jwt, { JwtPayload } from "jsonwebtoken";
+
 // import {queryString} from "query-string";
 
 export default async (expressServer: any) => {
@@ -8,10 +10,29 @@ export default async (expressServer: any) => {
   });
 
   expressServer.on("upgrade", (request: any, socket: any, head: any) => {
-    websocketServer.handleUpgrade(request, socket, head, (websocket) => {
-      console.log("server being upgraded");
-      websocketServer.emit("connection", websocket, request);
-    });
+    console.log("server being upgraded");
+    // console.log(request.query);
+    // console.log(request)
+    const [_path, params] = request?.url?.split("?") as any;
+
+    const urlParams = new URLSearchParams(params);
+    console.log(urlParams.get("authentication"));
+
+    try {
+      const decoded = jwt.verify(
+        urlParams.get("authentication")!,
+        process.env.SECRET_JWT_CODE!
+      ) as JwtPayload;
+
+      if (decoded) {
+        console.log("JWT verification succeeded")
+        websocketServer.handleUpgrade(request, socket, head, (websocket) => {
+          websocketServer.emit("connection", websocket, request);
+        });
+      }
+    } catch (err) {
+      console.log("JWT verification failed: ", err)
+    }
   });
 
   websocketServer.on(
@@ -21,7 +42,7 @@ export default async (expressServer: any) => {
       const connectionParams = params;
       // NOTE: connectParams are not used here but good to understand how to get
       // to them if you need to pass data with the connection to identify it (e.g., a userId).
-      console.log(connectionParams);
+      // consoley.log(connectionRequest);
 
       websocketConnection.on("message", (message: any) => {
         const parsedMessage = JSON.parse(message);
@@ -29,11 +50,15 @@ export default async (expressServer: any) => {
         // ['selectedArticle', 'articleDetails']
         console.log(parsedMessage?.name ?? "");
         websocketConnection.send(
-          JSON.stringify({ message: "There be gold in them thar hills." }),
+          JSON.stringify({ message: "There be gold in them thar hills." })
         );
       });
-    },
+    }
   );
+
+  websocketServer.on("disconnect", () => {
+    console.log("disconnected");
+  });
 
   return websocketServer;
 };
