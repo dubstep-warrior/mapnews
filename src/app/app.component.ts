@@ -9,16 +9,17 @@ import { fader, slider } from './core/utilities/animations';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  animations: [
-    slider
-  ],
+  animations: [slider],
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent extends Base implements OnInit {
   title = 'MapNews';
   state: State;
   currentURL: string;
-  constructor(private stateService: StateService, private router: Router) {
+  constructor(
+    private stateService: StateService,
+    private router: Router,
+  ) {
     super();
   }
 
@@ -27,14 +28,15 @@ export class AppComponent extends Base implements OnInit {
       this.state = state;
       console.log(this.state.name);
     });
-  
-    this.router.events.pipe(
-      this.takeUntilDestroy(),
-      filter(event => event instanceof NavigationEnd),
-  )
-      .subscribe(event => {
-          console.log(event);
-          this.currentURL = (event as NavigationEnd)['url']
+
+    this.router.events
+      .pipe(
+        this.takeUntilDestroy(),
+        filter((event) => event instanceof NavigationEnd),
+      )
+      .subscribe((event) => {
+        console.log(event);
+        this.currentURL = (event as NavigationEnd)['url'];
       });
   }
 
@@ -44,14 +46,19 @@ export class AppComponent extends Base implements OnInit {
         'articleDetails',
         'addArticleLocation',
         'submittingArticle',
-        'submitAttempted'
-      ].includes(this.state?.name) || ['/auth/login','/auth/register'].includes(this.currentURL)
+        'submitAttempted',
+      ].includes(this.state?.name) ||
+      ['/auth/login', '/auth/register'].includes(this.currentURL)
     )
       return;
     this.stateService.resetState();
   }
 
   prepareRoute(outlet: RouterOutlet) {
-    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
+    return (
+      outlet &&
+      outlet.activatedRouteData &&
+      outlet.activatedRouteData['animation']
+    );
   }
 }

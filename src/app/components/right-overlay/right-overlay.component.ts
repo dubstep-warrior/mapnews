@@ -31,7 +31,7 @@ export class RightOverlayComponent extends FormDirective implements OnInit {
   async submit(): Promise<void> {
     const res = await this.articleService.getArticles(
       'search',
-      this.form.value
+      this.form.value,
     );
     // TODO reset form when successful lmao
     if (res && res.success) {

@@ -10,7 +10,7 @@
 
   &::-webkit-scrollbar {
     display: none;
-  } 
+  }
 
   @include screen-small {
     width: 100%;
@@ -40,7 +40,7 @@ section {
 
     * {
       width: 100%;
-    } 
+    }
   }
 
   ::ng-deep form * {

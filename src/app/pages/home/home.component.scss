@@ -1,20 +1,21 @@
 @use "mixins" as *;
 
-app-left-overlay, app-right-overlay { 
-    position: absolute;
-    inset: 64px auto 0 0;
-    overflow: scroll;
-    // display: flex;
-  
-    &::-webkit-scrollbar {
-      display: none;
-    } 
-    
-    @include screen-small {
-      inset: 62px 0 0 0 !important;
-    }
+app-left-overlay,
+app-right-overlay {
+  position: absolute;
+  inset: 64px auto 0 0;
+  overflow: scroll;
+  // display: flex;
+
+  &::-webkit-scrollbar {
+    display: none;
   }
-  
-  app-right-overlay {
-      inset: 64px 0 0 auto;
+
+  @include screen-small {
+    inset: 62px 0 0 0 !important;
   }
+}
+
+app-right-overlay {
+  inset: 64px 0 0 auto;
+}

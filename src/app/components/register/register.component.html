@@ -9,7 +9,10 @@
         style="display: none"
       />
       <div>
-        <img [src]="previewImg ?? './../../../assets/images/profile.png'" alt="" />
+        <img
+          [src]="previewImg ?? './../../../assets/images/profile.png'"
+          alt=""
+        />
       </div>
       <div>Add Profile Photo</div>
     </label>
@@ -18,7 +21,11 @@
     <div>
       <form [formGroup]="form">
         <input formControlName="email" type="text" placeholder="Email" />
-        <input formControlName="password" type="password" placeholder="Password" />
+        <input
+          formControlName="password"
+          type="password"
+          placeholder="Password"
+        />
         <input
           formControlName="confirmPassword"
           type="password"
@@ -29,6 +36,8 @@
   </div>
   <div actions>
     <div (click)="submit()" class="button blue-btn">Register</div>
-    <div [routerLink]="'/auth/login'">Have an existing account? Login here!</div>
+    <div [routerLink]="'/auth/login'">
+      Have an existing account? Login here!
+    </div>
   </div>
 </app-access-container>

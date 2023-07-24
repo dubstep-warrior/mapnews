@@ -22,10 +22,10 @@ export class ServerService {
 
     if (method == 'GET' && data) {
       let headers = new Headers();
-      headers.append('Content-Type', 'application/json'); 
+      headers.append('Content-Type', 'application/json');
       const params = new HttpParams().append('data', JSON.stringify(data));
       options['headers'] = headers;
-      options['params'] = params
+      options['params'] = params;
     }
     const result = this.http.request(method, url, options);
     console.log(url);

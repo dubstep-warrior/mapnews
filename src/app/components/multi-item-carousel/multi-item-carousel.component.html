@@ -1,17 +1,22 @@
 <div class="content-section implementation carousel-demo">
-    <div class="card" [class.notCarousel]="images.length < 3">
-        <p-carousel *ngIf="images.length > 2; else display" [value]="images" styleClass="custom-carousel" [numVisible]="3" [numScroll]="getNumScroll(images.length)"
-          >
-            <ng-template let-image pTemplate="item">
-              <div class="item card">
-                <img src="{{image.preview_uri}}" class="card-img-top" alt="..."> 
-              </div>
-            </ng-template> 
-        </p-carousel> 
-        <ng-template #display>
-          <div *ngFor="let image of images" class="item card">
-            <img [src]="image.preview_uri" class="card-img-top" alt="..."> 
-          </div>
-        </ng-template>
-    </div>
+  <div class="card" [class.notCarousel]="images.length < 3">
+    <p-carousel
+      *ngIf="images.length > 2; else display"
+      [value]="images"
+      styleClass="custom-carousel"
+      [numVisible]="3"
+      [numScroll]="getNumScroll(images.length)"
+    >
+      <ng-template let-image pTemplate="item">
+        <div class="item card">
+          <img src="{{ image.preview_uri }}" class="card-img-top" alt="..." />
+        </div>
+      </ng-template>
+    </p-carousel>
+    <ng-template #display>
+      <div *ngFor="let image of images" class="item card">
+        <img [src]="image.preview_uri" class="card-img-top" alt="..." />
+      </div>
+    </ng-template>
   </div>
+</div>

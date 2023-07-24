@@ -1,15 +1,29 @@
-<mgl-marker 
+<mgl-marker
   *ngIf="currentState?.name == 'selectedArticle'"
-  [lngLat]="[currentState.data['coordinates'][0], currentState.data['coordinates'][1]]"
+  [lngLat]="[
+    currentState.data['coordinates'][0],
+    currentState.data['coordinates'][1]
+  ]"
 >
   <div class="article-box" (click)="$event.stopPropagation()">
     <div class="article-box-heading">
       <div>{{ currentState.data.title }}</div>
-      <div class="hover" (click)="service.resolveState('articleDetails', currentState.data); $event.stopPropagation()">
-        <img class="icon" src="../../../assets/images/right-arrow.svg" alt="">
+      <div
+        class="hover"
+        (click)="
+          service.resolveState('articleDetails', currentState.data);
+          $event.stopPropagation()
+        "
+      >
+        <img class="icon" src="../../../assets/images/right-arrow.svg" alt="" />
       </div>
     </div>
-    <img [src]="currentState.data?.images?.[0] ?? 'https://placehold.co/250x100'" />
-    <app-tags [tags]="currentState.data.tags" [currentState]="currentState"></app-tags>
+    <img
+      [src]="currentState.data?.images?.[0] ?? 'https://placehold.co/250x100'"
+    />
+    <app-tags
+      [tags]="currentState.data.tags"
+      [currentState]="currentState"
+    ></app-tags>
   </div>
 </mgl-marker>

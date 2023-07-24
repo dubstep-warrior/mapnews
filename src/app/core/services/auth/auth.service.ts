@@ -15,12 +15,18 @@ export class AuthService {
   authStatusSubject: BehaviorSubject<AuthStatus>;
   token: string = '';
   user: IUser | null;
-  constructor(private service: ServerService, private wsService: WebSocketService) {
+  constructor(
+    private service: ServerService,
+    private wsService: WebSocketService,
+  ) {
     this.token = localStorage.getItem('token');
     this.user = JSON.parse(localStorage.getItem(this.token)) as IUser;
     this.authenticated = Boolean(this.token && this.user);
-    if(this.authenticated) this.wsService.connect()  
-    this.authStatusSubject = new BehaviorSubject({loggedIn: this.authenticated, id: this.user?._id ?? ''} as AuthStatus);
+    if (this.authenticated) this.wsService.connect();
+    this.authStatusSubject = new BehaviorSubject({
+      loggedIn: this.authenticated,
+      id: this.user?._id ?? '',
+    } as AuthStatus);
   }
 
   async register(form: FormGroup) {
@@ -33,12 +39,12 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('token');
-    localStorage.removeItem(this.token)
-    this.token = ''
-    this.user = null
+    localStorage.removeItem(this.token);
+    this.token = '';
+    this.user = null;
     this.authenticated = false;
     this.wsService.closeConnection();
-    this.authStatusSubject.next({loggedIn: this.authenticated});
+    this.authStatusSubject.next({ loggedIn: this.authenticated });
   }
 
   async resolveSubmission(form: FormGroup, action: string) {
@@ -60,11 +66,13 @@ export class AuthService {
       console.log(res);
       // console.log(res)
       localStorage.setItem('token', res.data.token);
-      localStorage.setItem(res.data.token, JSON.stringify(res.data.user))
+      localStorage.setItem(res.data.token, JSON.stringify(res.data.user));
       this.wsService.connect();
       console.log(localStorage.getItem('token'));
-      this.authStatusSubject.next({loggedIn: this.authenticated, id: res.data.user._id});
-
+      this.authStatusSubject.next({
+        loggedIn: this.authenticated,
+        id: res.data.user._id,
+      });
     }
     return res;
   }

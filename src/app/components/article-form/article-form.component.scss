@@ -1,5 +1,5 @@
 :host {
-    width: 100%;
+  width: 100%;
 }
 
 form {
@@ -40,7 +40,7 @@ form {
   .description-section {
     .input {
       flex-grow: 1;
-      
+
       input {
         padding: 12px 16px;
         width: 100%;
@@ -66,7 +66,7 @@ form {
     }
   }
 
-  > .location-section > div  > :not(:first-child) {
+  > .location-section > div > :not(:first-child) {
     border-radius: 50%;
     overflow: hidden;
     margin-left: 8px;

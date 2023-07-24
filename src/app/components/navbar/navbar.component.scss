@@ -117,23 +117,23 @@ section {
       flex-direction: column;
       padding: 0 0 24px;
     }
-  
+
     > div {
       margin-bottom: 24px;
     }
-  
+
     > :first-child {
       display: flex;
-      flex-direction: column;  
+      flex-direction: column;
       flex-grow: 1;
-  
+
       > div {
         font-size: 24px;
         padding: 12px 24px;
         color: white;
-        display: flex; 
+        display: flex;
         align-items: center;
-  
+
         > :first-child {
           margin-right: 16px;
         }
@@ -147,7 +147,7 @@ section {
         }
       }
     }
-  
+
     > :not(:first-child) {
       padding: 0 12px;
       margin-bottom: 12px;

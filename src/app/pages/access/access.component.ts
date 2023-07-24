@@ -14,10 +14,7 @@ import { rotate, slider } from 'src/app/core/utilities/animations';
 @Component({
   selector: 'app-access',
   templateUrl: './access.component.html',
-  animations: [
-    slider,
-    rotate
-  ],
+  animations: [slider, rotate],
   styleUrls: ['./access.component.scss'],
 })
 export class AccessComponent extends Base implements OnInit, AfterViewInit {
@@ -26,7 +23,7 @@ export class AccessComponent extends Base implements OnInit, AfterViewInit {
   constructor(
     private changeRef: ChangeDetectorRef,
     private service: AuthService,
-    private router: Router
+    private router: Router,
   ) {
     super();
   }
@@ -35,20 +32,20 @@ export class AccessComponent extends Base implements OnInit, AfterViewInit {
     this.service.authStatusSubject
       .pipe(this.takeUntilDestroy())
       .subscribe((status) => {
-        this.authenticated = status.loggedIn
-        console.log(status)
+        this.authenticated = status.loggedIn;
+        console.log(status);
       });
 
     this.router.events
       .pipe(
         this.takeUntilDestroy(),
-        filter((event) => event instanceof NavigationEnd)
+        filter((event) => event instanceof NavigationEnd),
       )
       .subscribe((event) => {
         console.log(event);
         const strArr = (event as NavigationEnd)['url'].split('/');
         this.currentRoute = strArr[strArr.length - 1];
-        console.log(strArr)
+        console.log(strArr);
       });
   }
 
@@ -65,7 +62,7 @@ export class AccessComponent extends Base implements OnInit, AfterViewInit {
   }
 
   resetState() {
-    console.log('animation ended')
-    this.router.navigate(['/'])
+    console.log('animation ended');
+    this.router.navigate(['/']);
   }
 }

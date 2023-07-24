@@ -25,13 +25,13 @@ export class FormService {
   resetForm() {
     this.form.reset();
     this.formObjSchema = {};
-    this.currentFormName = ''
+    this.currentFormName = '';
   }
 
   resolve(name: string) {
     if (this.currentFormName == name) return this.form;
     const formConfig: any = this.formConfigurations.find(
-      (config) => config.name == name
+      (config) => config.name == name,
     );
     const formGroupObject: any = {};
     Object.keys(formConfig.form).forEach((key) => {

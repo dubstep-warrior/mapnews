@@ -8,9 +8,8 @@ describe('RightOverlayContainerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RightOverlayContainerComponent ]
-    })
-    .compileComponents();
+      declarations: [RightOverlayContainerComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(RightOverlayContainerComponent);
     component = fixture.componentInstance;

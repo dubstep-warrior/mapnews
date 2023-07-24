@@ -36,7 +36,7 @@ import { trigger, style, animate, transition } from '@angular/animations';
             position: 'absolute',
             top: '0px',
             opacity: 1,
-          })
+          }),
         ),
       ]),
       transition(':leave', [
@@ -60,21 +60,23 @@ export class MapComponent extends Base implements OnInit, OnDestroy {
     private service: ArticleService,
     private locationService: LocationService,
     private stateService: StateService,
-    public formService: FormService
+    public formService: FormService,
   ) {
     super();
   }
 
   async ngOnInit() {
     this.service.model.pipe(this.takeUntilDestroy()).subscribe((data) => {
-      console.log(data)
+      console.log(data);
       if (data.type == 'article') {
-        this.articles = [...this.articles, data.data]
+        this.articles = [...this.articles, data.data];
       } else if (data.type == 'update') {
-        console.log(data.data)
-        this.articles = this.articles.map(article => data.data?._id == article._id ? data.data : article);
+        console.log(data.data);
+        this.articles = this.articles.map((article) =>
+          data.data?._id == article._id ? data.data : article,
+        );
       } else {
-        this.articles = data.data
+        this.articles = data.data;
       }
     });
 
@@ -95,7 +97,7 @@ export class MapComponent extends Base implements OnInit, OnDestroy {
       });
 
     this.stateService.model.pipe(this.takeUntilDestroy()).subscribe((data) => {
-      this.prevState = this.state
+      this.prevState = this.state;
       this.state = data;
     });
     await this.service.getArticles();
@@ -104,7 +106,7 @@ export class MapComponent extends Base implements OnInit, OnDestroy {
   sendMouseCoordinates(event: any) {
     if (['addArticleLocation'].includes(this.state?.name)) {
       this.locationService.setMouseCoordinates(
-        JSON.stringify(event.lngLat.wrap())
+        JSON.stringify(event.lngLat.wrap()),
       );
     }
   }

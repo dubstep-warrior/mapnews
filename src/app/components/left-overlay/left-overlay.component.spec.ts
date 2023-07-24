@@ -8,9 +8,8 @@ describe('LeftOverlayComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LeftOverlayComponent ]
-    })
-    .compileComponents();
+      declarations: [LeftOverlayComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LeftOverlayComponent);
     component = fixture.componentInstance;

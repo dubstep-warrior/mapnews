@@ -80,7 +80,8 @@ code {
   }
 
   @include screen-small {
-    &:hover, &:active {
+    &:hover,
+    &:active {
       background-color: rgb(220, 218, 215) !important;
     }
   }

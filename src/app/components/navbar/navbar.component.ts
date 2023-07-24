@@ -15,54 +15,58 @@ import {
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent extends Base implements OnInit{
+export class NavbarComponent extends Base implements OnInit {
   selected = 'Relevant';
   menu = ['Relevant', 'New', 'Favourites', 'My Posts'];
-  @Input() authenticated: boolean = false; 
+  @Input() authenticated: boolean = false;
   articleState: string = 'relevant';
   mobileMenu: boolean = false;
 
   constructor(
     private service: StateService,
     private authService: AuthService,
-    private articleService: ArticleService
+    private articleService: ArticleService,
   ) {
-    super()
-  } 
+    super();
+  }
 
   ngOnInit(): void {
-      this.articleService.model.pipe(this.takeUntilDestroy()).subscribe(data => {
+    this.articleService.model
+      .pipe(this.takeUntilDestroy())
+      .subscribe((data) => {
         if ('state' in data) {
-          this.articleState = data.state
+          this.articleState = data.state;
         }
-      })
+      });
   }
 
   addArticle() {
-    this.mobileMenu = false
+    this.mobileMenu = false;
     this.service.resolveState('addArticle');
   }
 
   searchArticle() {
-    this.mobileMenu = false
-    this.service.resolveState(this.service.state.name == 'search' ? 'neutral' : 'search');
+    this.mobileMenu = false;
+    this.service.resolveState(
+      this.service.state.name == 'search' ? 'neutral' : 'search',
+    );
   }
 
-  logout() { 
+  logout() {
     this.authService.logout();
   }
 
   async resolveMenuOption(item: string): Promise<void> {
-    this.mobileMenu = false
-    this.selected = item
-    this.service.resetState()
+    this.mobileMenu = false;
+    this.selected = item;
+    this.service.resetState();
     const key = item.toLowerCase().replaceAll(' ', '');
     const res = await this.articleService.getArticles(key);
-    console.log(res)
+    console.log(res);
   }
 
-  resolveMobileMenu() { 
-    this.mobileMenu = !this.mobileMenu
-    this.service.resetState()
+  resolveMobileMenu() {
+    this.mobileMenu = !this.mobileMenu;
+    this.service.resetState();
   }
 }

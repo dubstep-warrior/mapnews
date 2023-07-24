@@ -19,7 +19,7 @@ export const fader = trigger('routeAnimations', [
           opacity: 0,
         }),
       ],
-      { optional: true }
+      { optional: true },
     ),
     // Animate the new page in
     query(
@@ -27,20 +27,20 @@ export const fader = trigger('routeAnimations', [
       [
         animate(
           '600ms ease',
-          style({ opacity: 1, transform: 'scale(1) translateY(0)' })
+          style({ opacity: 1, transform: 'scale(1) translateY(0)' }),
         ),
       ],
-      { optional: true }
+      { optional: true },
     ),
     query(
       ':leave',
       [
         animate(
           '600ms ease',
-          style({ opacity: 0, transform: 'scale(1) translateY(0)' })
+          style({ opacity: 0, transform: 'scale(1) translateY(0)' }),
         ),
       ],
-      { optional: true }
+      { optional: true },
     ),
   ]),
 ]);
@@ -52,33 +52,33 @@ export const bounce = trigger('bounce', [
       style({ transform: 'translateY(-30px) translateX(150px)' }),
       animate(
         '100ms cubic-bezier(0,0,0,1)',
-        style({ transform: 'translateY(-14px) translateX(120px)' })
+        style({ transform: 'translateY(-14px) translateX(120px)' }),
       ),
       animate(
         '300ms cubic-bezier(1,0,1,1)',
-        style({ transform: 'translateY(0) translateX(90px)' })
+        style({ transform: 'translateY(0) translateX(90px)' }),
       ),
       animate(
         '300ms cubic-bezier(0,0,0,1)',
-        style({ transform: 'translateY(-30px) translateX(60px)' })
+        style({ transform: 'translateY(-30px) translateX(60px)' }),
       ),
       animate(
         '200ms cubic-bezier(1,0,1,1)',
-        style({ transform: 'translateY(0) translateX(30px)' })
+        style({ transform: 'translateY(0) translateX(30px)' }),
       ),
       animate(
         '100ms cubic-bezier(0,0,0,1)',
-        style({ transform: 'translateY(-13px) translateX(10px)' })
+        style({ transform: 'translateY(-13px) translateX(10px)' }),
       ),
       animate(
         '80ms cubic-bezier(1,0,1,1)',
-        style({ transform: 'translateY(0) translateX(0px)' })
+        style({ transform: 'translateY(0) translateX(0px)' }),
       ),
       animate(
         '700ms cubic-bezier(1,0,1,1)',
-        style({ transform: 'translateY(0) translateX(0px)' })
+        style({ transform: 'translateY(0) translateX(0px)' }),
       ),
-    ])
+    ]),
   ),
 ]);
 
@@ -89,29 +89,29 @@ export const slideIn = trigger('slideIn', [
       style({ transform: 'translateY(-30px) translateX(-150px)' }),
       animate(
         '500ms cubic-bezier(0,0,0,1)',
-        style({ transform: 'translateX(-75px)' })
+        style({ transform: 'translateX(-75px)' }),
       ),
       animate(
         '200ms cubic-bezier(1,0,1,1)',
-        style({ transform: 'translateX(0px)' })
+        style({ transform: 'translateX(0px)' }),
       ),
       animate(
         '100ms cubic-bezier(0,0,0,1)',
-        style({ transform: 'translateX(30px)' })
+        style({ transform: 'translateX(30px)' }),
       ),
       animate(
         '100ms cubic-bezier(1,0,1,1)',
-        style({ transform: 'translateX(-15px)' })
+        style({ transform: 'translateX(-15px)' }),
       ),
       animate(
         '100ms cubic-bezier(0,0,0,1)',
-        style({ transform: 'translateX(5px)' })
+        style({ transform: 'translateX(5px)' }),
       ),
       animate(
         '80ms cubic-bezier(1,0,1,1)',
-        style({ transform: 'translateX(0px)' })
+        style({ transform: 'translateX(0px)' }),
       ),
-    ])
+    ]),
   ),
 ]);
 
@@ -126,16 +126,16 @@ export const rotate = trigger('rotate', [
     }),
     animate(
       '1000ms ease',
-      style({ transform: 'rotate(0deg)', width: '0px', height: '0px' })
+      style({ transform: 'rotate(0deg)', width: '0px', height: '0px' }),
     ),
   ]),
 ]);
 
-export const slider = trigger('routeAnimations', [ 
-  transition('home => auth' , slideTo('right')),
-  transition('auth => home' , slideTo('left')),
-  transition('login => register' , slideTo('right')),
-  transition('register => login' , slideTo('left'))
+export const slider = trigger('routeAnimations', [
+  transition('home => auth', slideTo('right')),
+  transition('auth => home', slideTo('left')),
+  transition('login => register', slideTo('right')),
+  transition('register => login', slideTo('left')),
 ]);
 
 function slideTo(direction: string) {
@@ -153,7 +153,7 @@ function slideTo(direction: string) {
           height: '100%',
         }),
       ],
-      optional
+      optional,
     ),
     query(
       ':enter',
@@ -167,13 +167,13 @@ function slideTo(direction: string) {
           height: '100%',
         }),
       ],
-      { optional: true }
+      { optional: true },
     ),
     group([
       query(
         ':leave',
         [animate('600ms', style({ [direction]: '100%' }))],
-        optional
+        optional,
       ),
       query(':enter', [animate('600ms', style({ [direction]: '0%' }))], {
         optional: true,
@@ -210,7 +210,3 @@ export const slideInFromRight = trigger('slideInFromRight', [
     animate('200ms', style({ transform: 'translateX(100%)' })),
   ]),
 ]);
-
-
-
-

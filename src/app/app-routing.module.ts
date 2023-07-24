@@ -15,12 +15,12 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: HomeComponent, 
+        component: HomeComponent,
         data: { animation: 'home' },
       },
       {
         path: 'auth',
-        component: AccessComponent, 
+        component: AccessComponent,
         children: [
           {
             path: 'login',
@@ -33,10 +33,10 @@ const routes: Routes = [
             data: { animation: 'register' },
           },
         ],
-        data: {animation: 'auth'}
+        data: { animation: 'auth' },
       },
-    ]
-  }
+    ],
+  },
 ];
 
 @NgModule({

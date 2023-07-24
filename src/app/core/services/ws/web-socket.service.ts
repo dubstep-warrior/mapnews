@@ -4,22 +4,22 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WebSocketService {
-  connection$: WebSocketSubject<any>;  
+  connection$: WebSocketSubject<any>;
 
-  constructor() {} 
+  constructor() {}
 
   connect(): Observable<any> {
     if (this.connection$) {
       return this.connection$;
     } else {
       this.connection$ = webSocket(environment.ws_endpoint_mapnews_backend_api);
-      console.log('WS CONNECTION CALLED ', this.connection$)
+      console.log('WS CONNECTION CALLED ', this.connection$);
       this.connection$.subscribe((data) => {
-        console.log('web socket data: ', data)
-      }) 
+        console.log('web socket data: ', data);
+      });
       return this.connection$;
     }
   }
@@ -43,5 +43,5 @@ export class WebSocketService {
 
   ngOnDestroy() {
     this.closeConnection();
-  } 
+  }
 }

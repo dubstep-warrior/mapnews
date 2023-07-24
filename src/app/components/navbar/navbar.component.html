@@ -59,14 +59,22 @@
         [class.selected]="item == selected && articleState !== 'search'"
       >
         <div>
-          <img class="icon" [src]="'./../../../assets/images/' + (item.replaceAll(' ', '') | lowercase) + '.png'" alt="">
+          <img
+            class="icon"
+            [src]="
+              './../../../assets/images/' +
+              (item.replaceAll(' ', '') | lowercase) +
+              '.png'
+            "
+            alt=""
+          />
         </div>
-        <div>{{ item }}</div> 
+        <div>{{ item }}</div>
       </div>
     </div>
 
     <div>
-      <div 
+      <div
         *ngIf="authenticated; else mobileAccess"
         class="button blue-btn"
         (click)="addArticle()"
@@ -74,10 +82,7 @@
         Add Post
       </div>
       <ng-template #mobileAccess>
-        <div 
-          class="button blue-btn"
-          [routerLink]="'/auth/login'"
-        >
+        <div class="button blue-btn" [routerLink]="'/auth/login'">
           Login/Sign up
         </div>
       </ng-template>

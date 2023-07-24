@@ -9,21 +9,21 @@ import { LocationService } from '../services/location/location.service';
 import { StateService } from '../services/state/state.service';
 
 @Directive({
-  selector: '[appForm]'
+  selector: '[appForm]',
 })
-export class FormDirective extends Base implements OnInit { 
+export class FormDirective extends Base implements OnInit {
   @Input() state: any;
   form: FormGroup;
 
-  formService: FormService
-  articleService: ArticleService
-  authService: AuthService
-  locationService: LocationService
-  stateService: StateService
+  formService: FormService;
+  articleService: ArticleService;
+  authService: AuthService;
+  locationService: LocationService;
+  stateService: StateService;
 
   formType: 'search' | 'addArticle' | 'register' | 'login';
-  constructor() { 
-    super()
+  constructor() {
+    super();
     this.formService = AppInjector.get(FormService);
     this.articleService = AppInjector.get(ArticleService);
     this.authService = AppInjector.get(AuthService);
@@ -31,15 +31,15 @@ export class FormDirective extends Base implements OnInit {
     this.stateService = AppInjector.get(StateService);
   }
 
-  ngOnInit(): void { 
-    this.form = this.formService.resolve(this.formType)
+  ngOnInit(): void {
+    this.form = this.formService.resolve(this.formType);
   }
- 
+
   addTag(event: any) {
     this.form
       .get('tags')
       .setValue([...this.form.get('tags').value, event.target.value]);
     console.log(this.form.get('tags').value);
-    console.log('tag added')
+    console.log('tag added');
   }
 }

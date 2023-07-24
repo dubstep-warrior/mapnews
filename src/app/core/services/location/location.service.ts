@@ -6,8 +6,7 @@ import { Observable, Observer, Subject } from 'rxjs';
 })
 export class LocationService {
   constructor() {}
-  mouseLocationCoordinates: Subject<any> = new Subject()
-  
+  mouseLocationCoordinates: Subject<any> = new Subject();
 
   getLocation(): Observable<any> {
     return new Observable((observer: Observer<any>) => {
@@ -17,7 +16,7 @@ export class LocationService {
             observer.next(position);
             observer.complete();
           },
-          (error) => observer.error(error)
+          (error) => observer.error(error),
         );
       } else {
         observer.error('Unsupported Browser');
@@ -26,6 +25,6 @@ export class LocationService {
   }
 
   setMouseCoordinates(coordinates: any): any {
-    this.mouseLocationCoordinates.next(coordinates)
-  };
+    this.mouseLocationCoordinates.next(coordinates);
+  }
 }

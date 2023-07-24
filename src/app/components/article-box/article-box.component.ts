@@ -7,17 +7,17 @@ import { StateService } from './../../core/services/state/state.service';
 @Component({
   selector: 'app-article-box',
   templateUrl: './article-box.component.html',
-  styleUrls: ['./article-box.component.scss']
+  styleUrls: ['./article-box.component.scss'],
 })
-export class ArticleBoxComponent extends Base implements OnInit{ 
-  currentState: State
-  constructor(public service: StateService){
-    super()
-  } 
+export class ArticleBoxComponent extends Base implements OnInit {
+  currentState: State;
+  constructor(public service: StateService) {
+    super();
+  }
 
   ngOnInit(): void {
-      this.service.model.pipe(this.takeUntilDestroy()).subscribe((state) => {
-        this.currentState = state
-      })
+    this.service.model.pipe(this.takeUntilDestroy()).subscribe((state) => {
+      this.currentState = state;
+    });
   }
 }

@@ -1,45 +1,40 @@
- 
-
- .content-section {
-
-    .card {
-        .item {
-            margin-right: 16px;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        &.notCarousel {
-            display: flex; 
-        }
+.content-section {
+  .card {
+    .item {
+      margin-right: 16px;
+      border-radius: 12px;
+      overflow: hidden;
     }
 
-    img {
-        height: 80px;
-        width: 130px;
-     }
-
-    ::ng-deep .p-carousel-container {
-        position: relative;
-
-        .p-ripple {
-            position: absolute !important;
-            margin: 0;
-            padding: 12px 6px;
-            height: 100%;
-            background-color: #f9f9f998;
-            border-radius: 0;
-            z-index: 999;
-    
-            &.p-carousel-next {
-                right: 0
-            }
-         }
+    &.notCarousel {
+      display: flex;
     }
+  }
 
-    ::ng-deep .p-carousel-indicators {
-        display: none;
+  img {
+    height: 80px;
+    width: 130px;
+  }
+
+  ::ng-deep .p-carousel-container {
+    position: relative;
+
+    .p-ripple {
+      position: absolute !important;
+      margin: 0;
+      padding: 12px 6px;
+      height: 100%;
+      background-color: #f9f9f998;
+      border-radius: 0;
+      z-index: 999;
+
+      &.p-carousel-next {
+        right: 0;
+      }
     }
+  }
 
-     
- }
+  ::ng-deep .p-carousel-indicators {
+    display: none;
+  }
+}

@@ -17,29 +17,32 @@ export class ArticleService {
     relevant: '/relevant',
     new: '/new',
     myposts: '/self',
-    search: '/search'
-  }
+    search: '/search',
+  };
   constructor(
     private service: ServerService,
     private formService: FormService,
-    private stateService: StateService
+    private stateService: StateService,
   ) {
     this.model = new Subject();
   }
 
   async getArticles(key: string = 'relevant', params: any = null) {
-    const res = await this.service.get(`${this.api}${this.navMapping[key]}`, params);
+    const res = await this.service.get(
+      `${this.api}${this.navMapping[key]}`,
+      params,
+    );
     console.log(res);
     if (res && res.success) {
       this.model.next({
         type: 'articles',
-        state:  key,
+        state: key,
         data: res.data,
-      }); 
+      });
     } else {
       console.log(res.error);
     }
-    return res
+    return res;
   }
 
   async report(form: FormGroup) {
@@ -63,22 +66,25 @@ export class ArticleService {
         data: res.data,
       });
     }
-    this.stateService.resolveState('submitAttempted', {success: res.success});
+    this.stateService.resolveState('submitAttempted', { success: res.success });
     return res;
   }
 
-  async resolveArticleLikes(id: string) {  
-    const res = await this.service.post(`${this.api}/like`, {articleId: id});
-    console.log(res)
+  async resolveArticleLikes(id: string) {
+    const res = await this.service.post(`${this.api}/like`, { articleId: id });
+    console.log(res);
     if (res && res.success) {
-      console.log('inside success')
+      console.log('inside success');
       this.model.next({
         type: 'update',
         data: res.data,
       });
 
-      if(this.stateService.state.name == "articleDetails") {
-        this.stateService.model.next({name: this.stateService.state.name, data: res.data})
+      if (this.stateService.state.name == 'articleDetails') {
+        this.stateService.model.next({
+          name: this.stateService.state.name,
+          data: res.data,
+        });
       }
     }
   }

@@ -1,13 +1,13 @@
-@use "mixins" as *; 
+@use "mixins" as *;
 
 :host {
   height: 100%;
   display: flex;
 
   @include screen-small {
-    width: 100%
+    width: 100%;
   }
-}  
+}
 
 .upload {
   width: auto;
@@ -20,17 +20,17 @@
 
     > div:not(:last-child) {
       background-color: #cccccc;
-        border-radius: 50%;
-        overflow: hidden;
-        width: 120px;
-        height: 120px;
-        margin-bottom: 8px;
-        display: flex;
+      border-radius: 50%;
+      overflow: hidden;
+      width: 120px;
+      height: 120px;
+      margin-bottom: 8px;
+      display: flex;
 
-        img {
-          width: 80%;
-          margin: auto;
-        }
+      img {
+        width: 80%;
+        margin: auto;
+      }
     }
 
     > :last-child {

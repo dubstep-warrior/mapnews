@@ -1,21 +1,18 @@
 <section class="gallery-section">
   <p-galleria
-  [thumbnailsPosition]="position"
-  [responsiveOptions]="responsiveOptions"
-  [containerStyle]="{ 'max-width': '100%' }"
-  [numVisible]="3"
-  [value]="images"
->
-  <ng-template pTemplate="item" let-item>
-    <img
-      [src]="item" 
-    />
-  </ng-template>
-  <ng-template pTemplate="thumbnail" let-item>
-    <div class="grid grid-nogutter justify-content-center">
-      <img [src]="item"
-      style="max-width: 130px; overflow: hidden;" />
-    </div>
-  </ng-template>
-</p-galleria>
+    [thumbnailsPosition]="position"
+    [responsiveOptions]="responsiveOptions"
+    [containerStyle]="{ 'max-width': '100%' }"
+    [numVisible]="3"
+    [value]="images"
+  >
+    <ng-template pTemplate="item" let-item>
+      <img [src]="item" />
+    </ng-template>
+    <ng-template pTemplate="thumbnail" let-item>
+      <div class="grid grid-nogutter justify-content-center">
+        <img [src]="item" style="max-width: 130px; overflow: hidden" />
+      </div>
+    </ng-template>
+  </p-galleria>
 </section>

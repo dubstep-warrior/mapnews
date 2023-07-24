@@ -3,35 +3,35 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'app-image-gallery',
   templateUrl: './image-gallery.component.html',
-  styleUrls: ['./image-gallery.component.scss']
+  styleUrls: ['./image-gallery.component.scss'],
 })
 export class ImageGalleryComponent {
-  @Input() images: Array<any>
-  position: "bottom" | "top" | "left" | "right" = 'bottom';
+  @Input() images: Array<any>;
+  position: 'bottom' | 'top' | 'left' | 'right' = 'bottom';
 
   positionOptions = [
     {
-        label: 'Bottom',
-        value: 'bottom'
+      label: 'Bottom',
+      value: 'bottom',
     },
     {
-        label: 'Top',
-        value: 'top'
+      label: 'Top',
+      value: 'top',
     },
     {
-        label: 'Left',
-        value: 'left'
+      label: 'Left',
+      value: 'left',
     },
     {
-        label: 'Right',
-        value: 'right'
-    }
-];
+      label: 'Right',
+      value: 'right',
+    },
+  ];
 
-responsiveOptions: any[] = [
+  responsiveOptions: any[] = [
     {
-        breakpoint: '1024px',
-        numVisible: 3
-    } 
-];
+      breakpoint: '1024px',
+      numVisible: 3,
+    },
+  ];
 }

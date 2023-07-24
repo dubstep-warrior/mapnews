@@ -10,12 +10,12 @@ import { FormDirective } from 'src/app/core/directives/form.directive';
 })
 export class LeftOverlayComponent extends FormDirective implements OnInit {
   @ViewChild('tags') inputTags: any;
-  currentCoordinates: any; 
+  currentCoordinates: any;
   locationMouseMode: boolean = false;
- 
+
   constructor() {
     super();
-    this.formType = 'addArticle'
+    this.formType = 'addArticle';
   }
 
   override ngOnInit(): void {
@@ -32,24 +32,20 @@ export class LeftOverlayComponent extends FormDirective implements OnInit {
 
     this.locationService.mouseLocationCoordinates
       .pipe(this.takeUntilDestroy())
-      .subscribe((data) => { 
+      .subscribe((data) => {
         if (['addArticleLocation'].includes(this.state?.name)) {
           this.form.get('location').setValue({
-            coordinates: [
-              JSON.parse(data).lng,
-              JSON.parse(data).lat,
-            ],
-          }); 
+            coordinates: [JSON.parse(data).lng, JSON.parse(data).lat],
+          });
         }
       });
 
-      super.ngOnInit();
+    super.ngOnInit();
   }
 
   exitOverlay(): void {
     this.stateService.resetState();
   }
- 
 
   setLoc(type?: String): any {
     if (type && type == 'current') {
@@ -58,7 +54,8 @@ export class LeftOverlayComponent extends FormDirective implements OnInit {
       });
     } else {
       this.locationMouseMode = !this.locationMouseMode;
-      if (this.locationMouseMode) this.stateService.resolveState('addArticleLocation');
+      if (this.locationMouseMode)
+        this.stateService.resolveState('addArticleLocation');
       else this.stateService.resolveState('addArticle');
     }
   }
@@ -89,8 +86,7 @@ export class LeftOverlayComponent extends FormDirective implements OnInit {
   }
 
   async submit(): Promise<void> {
-
-    console.log('submit called')
+    console.log('submit called');
     const res = await this.articleService.report(this.form);
     console.log(res);
   }

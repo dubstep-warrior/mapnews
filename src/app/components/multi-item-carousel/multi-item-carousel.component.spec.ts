@@ -8,9 +8,8 @@ describe('MultiItemCarouselComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MultiItemCarouselComponent ]
-    })
-    .compileComponents();
+      declarations: [MultiItemCarouselComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MultiItemCarouselComponent);
     component = fixture.componentInstance;

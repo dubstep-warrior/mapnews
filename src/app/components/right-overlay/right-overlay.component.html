@@ -1,23 +1,20 @@
-<section
-  (click)="$event.stopPropagation()"
-  [class]="state.name"
->
+<section (click)="$event.stopPropagation()" [class]="state.name">
   <app-article-details
     *ngIf="state.name == 'articleDetails'"
     [article]="state.data"
     [state]="state"
     [authStatus]="authStatus"
-    (resolveLike)="clickLikeButton($event)" 
+    (resolveLike)="clickLikeButton($event)"
   ></app-article-details>
   <app-right-overlay-container *ngIf="state.name == 'search'">
     <h2 title>Search</h2>
     <app-article-form
-    body
-    [form]="form"
-    [type]="state.name"
-    (keyup.enter)="$event.preventDefault()"
-    (submit)="submit()"
-    (addTag)="addTag($event); $event.preventDefault()" 
-  ></app-article-form>
+      body
+      [form]="form"
+      [type]="state.name"
+      (keyup.enter)="$event.preventDefault()"
+      (submit)="submit()"
+      (addTag)="addTag($event); $event.preventDefault()"
+    ></app-article-form>
   </app-right-overlay-container>
 </section>

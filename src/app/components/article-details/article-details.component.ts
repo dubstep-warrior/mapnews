@@ -14,9 +14,9 @@ export class ArticleDetailsComponent {
   @Input() authStatus: AuthStatus;
   favouriteActive: boolean = false;
 
-  @Output() resolveLike = new EventEmitter<string>(); 
+  @Output() resolveLike = new EventEmitter<string>();
 
   clickLikeButton(id: string) {
     this.resolveLike.emit(id);
-  } 
+  }
 }

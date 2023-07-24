@@ -4,7 +4,10 @@ import { Base } from 'src/app/core/directives/base.directive';
 import { StateService } from 'src/app/core/services/state/state.service';
 import { State } from 'src/app/core/interfaces/state';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
-import { slideInFromLeft, slideInFromRight } from 'src/app/core/utilities/animations';
+import {
+  slideInFromLeft,
+  slideInFromRight,
+} from 'src/app/core/utilities/animations';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +18,10 @@ import { slideInFromLeft, slideInFromRight } from 'src/app/core/utilities/animat
 export class HomeComponent extends Base implements OnInit {
   state: State;
   authenticated: boolean;
-  constructor(private service: StateService, private authService: AuthService) {
+  constructor(
+    private service: StateService,
+    private authService: AuthService,
+  ) {
     super();
   }
 
@@ -28,7 +34,7 @@ export class HomeComponent extends Base implements OnInit {
     this.authService.authStatusSubject
       .pipe(this.takeUntilDestroy())
       .subscribe((status) => {
-        console.log(status)
+        console.log(status);
         this.authenticated = status.loggedIn;
       });
   }
