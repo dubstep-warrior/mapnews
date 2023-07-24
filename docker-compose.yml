@@ -1,6 +1,6 @@
 version: "3.0"
 services:
-  app: 
+  app:
     image: mapnews-backend:latest
     ports:
       - 8000:8000
@@ -36,4 +36,4 @@ services:
 
 networks:
   web:
-    driver: overlay 
+    driver: overlay

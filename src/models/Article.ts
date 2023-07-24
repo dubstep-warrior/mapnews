@@ -59,7 +59,7 @@ const articleSchema = new Schema(
 
     //   TO ADD MONTHLYVIEWCOUNT, LIKECOUNT AND LIKES
   },
-  { collection: "articles" }
+  { collection: "articles" },
 );
 
 const Article = mongoose.model("Article", articleSchema);

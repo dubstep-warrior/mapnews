@@ -37,7 +37,7 @@ class ArticleService {
           file: img.buffer.toString("base64"),
           fileName: img.originalname,
           folder: "Articles",
-        })
+        }),
       );
 
       const newArticle: any = {
@@ -67,7 +67,7 @@ class ArticleService {
         FilterResolver(req.path, {
           id: new mongoose.Types.ObjectId(JSON.parse(userId)),
         }),
-        { returnDocument: "after" }
+        { returnDocument: "after" },
       );
 
       return {
@@ -85,30 +85,29 @@ class ArticleService {
     const options: any = {};
     if ("userId" in req.body)
       options["id"] = new mongoose.Types.ObjectId(
-        JSON.parse(req.body["userId"])
+        JSON.parse(req.body["userId"]),
       );
     try {
       const allArticles = await Article.find(
-        FilterResolver(req.path, options)
+        FilterResolver(req.path, options),
       ).lean();
-      
+
       const articles = allArticles.map((article: any) => {
         return { ...article, coordinates: article.location.coordinates };
-      })
+      });
 
-      
       return articles;
     } catch (error) {
       console.log(error);
       throw error;
     }
   }
- 
+
   async resolveArticleSearch(req: any) {
     try {
       const options = JSON.parse(req.query.data);
       const allArticles = await Article.find(
-        FilterResolver(req.path, options)
+        FilterResolver(req.path, options),
       ).lean();
       return allArticles.map((article: any) => {
         return { ...article, coordinates: article.location.coordinates };

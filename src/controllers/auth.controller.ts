@@ -3,10 +3,9 @@ import { Request, Response, NextFunction } from "express";
 import Controller from "../utils/controller.decorator";
 import { Post } from "../utils/handlers.decorator";
 
-@Controller('/auth')
+@Controller("/auth")
 export default class Auth {
-
-  @Post('/register')
+  @Post("/register")
   async apiRegister(req: Request, res: Response, next: NextFunction) {
     try {
       const createdUser = await authService.createUser(req);
@@ -21,10 +20,10 @@ export default class Auth {
     }
   }
 
-  @Post('/login')
+  @Post("/login")
   async apiLogin(req: Request, res: Response, next: NextFunction) {
     try {
-      console.log('login controller attempted')
+      console.log("login controller attempted");
       const token = await authService.userLogin(req);
       console.log("controller", token);
       res.json({
@@ -36,5 +35,5 @@ export default class Auth {
       console.log(error);
       res.status(500).json({ success: false, error: error });
     }
-  } 
-} 
+  }
+}

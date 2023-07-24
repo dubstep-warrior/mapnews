@@ -1,6 +1,6 @@
 // src/application.ts
 import express, { Application as ExApplication, Handler } from "express";
-import bodyParser from "body-parser"; 
+import bodyParser from "body-parser";
 import cors from "cors";
 
 import { controllers } from "./controllers";
@@ -51,8 +51,8 @@ class Application {
 
     this.registerRouters();
   }
-  
-  private registerRouters() { 
+
+  private registerRouters() {
     const info: Array<{ api: string; handler: string }> = [];
 
     controllers.forEach((controllerClass) => {
@@ -60,29 +60,31 @@ class Application {
         new controllerClass() as any;
       const basePath: string = Reflect.getMetadata(
         MetadataKeys.BASE_PATH,
-        controllerClass
+        controllerClass,
       );
       const routers: IRouter[] = Reflect.getMetadata(
         MetadataKeys.ROUTERS,
-        controllerClass
+        controllerClass,
       );
       const exRouter = express.Router();
       console.log(routers);
       routers.forEach(({ method, path, handlerName }) => {
         if (handlerName == "apiCreateArticle") {
           exRouter[method](
-            path, this.upload.array("images", 12),
-            controllerInstance[String(handlerName)].bind(controllerInstance)
+            path,
+            this.upload.array("images", 12),
+            controllerInstance[String(handlerName)].bind(controllerInstance),
           );
         } else if (handlerName == "apiRegister") {
           exRouter[method](
-            path, this.upload.single('profile_img'),
-            controllerInstance[String(handlerName)].bind(controllerInstance)
+            path,
+            this.upload.single("profile_img"),
+            controllerInstance[String(handlerName)].bind(controllerInstance),
           );
         } else {
           exRouter[method](
             path,
-            controllerInstance[String(handlerName)].bind(controllerInstance)
+            controllerInstance[String(handlerName)].bind(controllerInstance),
           );
         }
 

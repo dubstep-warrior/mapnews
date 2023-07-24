@@ -20,7 +20,7 @@ class AuthService {
       const newUser: any = {};
       Object.keys(data).forEach((key) => {
         newUser[key] = data[key];
-      }); 
+      });
       if (newUser.password !== newUser.confirmPassword) {
         throw new Error("Passwords do not match!");
       }
@@ -32,7 +32,7 @@ class AuthService {
       if (user) {
         const token = JsonWebToken.sign(
           { id: user._id, email: user.email },
-          process.env.SECRET_JWT_CODE!
+          process.env.SECRET_JWT_CODE!,
         );
 
         if (req.file) {
@@ -48,7 +48,7 @@ class AuthService {
                 user.profile_img = res.url;
                 user.save();
               }
-            }
+            },
           );
         }
         return {
@@ -84,7 +84,7 @@ class AuthService {
     }
     const token = JsonWebToken.sign(
       { id: user._id, email: user.email },
-      process.env.SECRET_JWT_CODE!
+      process.env.SECRET_JWT_CODE!,
     );
     return { token, user: user.toObject() };
   }

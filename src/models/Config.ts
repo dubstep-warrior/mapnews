@@ -12,7 +12,7 @@ const configSchema = new Schema(
       required: true,
     },
   },
-  { collection: "form" }
+  { collection: "form" },
 );
 
 const Config = mongoose.model("Config", configSchema);

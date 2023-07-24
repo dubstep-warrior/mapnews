@@ -23,11 +23,11 @@ export const Auth = (userAttName?: string, articleResolution?: boolean) => {
       try {
         const decoded = jwt.verify(
           token,
-          process.env.SECRET_JWT_CODE!
+          process.env.SECRET_JWT_CODE!,
         ) as JwtPayload;
         if (userAttName) {
           req.body[userAttName] = JSON.stringify(
-            new mongoose.Types.ObjectId(decoded.id)
+            new mongoose.Types.ObjectId(decoded.id),
           );
         }
 

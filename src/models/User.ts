@@ -19,7 +19,7 @@ const userSchema = new Schema(
       required: false,
     },
   },
-  { collection: "users" }
+  { collection: "users" },
 );
 
 const User = mongoose.model("User", userSchema);

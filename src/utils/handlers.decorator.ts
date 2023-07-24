@@ -1,9 +1,9 @@
-import { MetadataKeys } from './metadata.keys';
-import 'reflect-metadata'
+import { MetadataKeys } from "./metadata.keys";
+import "reflect-metadata";
 
 export enum Methods {
-  GET = 'get',
-  POST = 'post',
+  GET = "get",
+  POST = "post",
 }
 export interface IRouter {
   method: Methods;
@@ -14,16 +14,22 @@ const methodDecoratorFactory = (method: Methods) => {
   return (...paths: string[]): MethodDecorator => {
     return (target, propertyKey) => {
       const controllerClass = target.constructor;
-      const routers: IRouter[] =   Reflect.hasMetadata(MetadataKeys.ROUTERS, controllerClass) ?
-        Reflect.getMetadata(MetadataKeys.ROUTERS, controllerClass) : [];
-      paths.forEach(path => routers.push({
-        method,
-        path,
-        handlerName: propertyKey,
-      }))
+      const routers: IRouter[] = Reflect.hasMetadata(
+        MetadataKeys.ROUTERS,
+        controllerClass,
+      )
+        ? Reflect.getMetadata(MetadataKeys.ROUTERS, controllerClass)
+        : [];
+      paths.forEach((path) =>
+        routers.push({
+          method,
+          path,
+          handlerName: propertyKey,
+        }),
+      );
       Reflect.defineMetadata(MetadataKeys.ROUTERS, routers, controllerClass);
-    }
-  }
-}
+    };
+  };
+};
 export const Get = methodDecoratorFactory(Methods.GET);
 export const Post = methodDecoratorFactory(Methods.POST);

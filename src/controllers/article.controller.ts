@@ -62,7 +62,7 @@ export default class Article {
       if (!articles) {
         res.status(404).json("There are no article published yet!");
       }
-    
+
       res.json({
         success: true,
         data: articles,

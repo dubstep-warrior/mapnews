@@ -12,4 +12,3 @@ class ConfigService {
   }
 }
 export default new ConfigService();
-

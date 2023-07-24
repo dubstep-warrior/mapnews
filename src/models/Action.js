@@ -11,7 +11,7 @@ const actionSchema = Schema({
   time: {
     type: Date,
     default: Date.now(),
-  }
+  },
 });
 
 module.exports = Action = mongoose.model("Article", actionSchema);
