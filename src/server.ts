@@ -6,7 +6,7 @@ import mongoose, { ConnectOptions } from "mongoose";
 import application from "./application";
 import * as http from "http";
 import "reflect-metadata";
-import websockets from "./websockets";
+import websockets from "./websockets/index";
 
 const port = process.env.PORT || 8000;
 

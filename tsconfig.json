@@ -13,5 +13,6 @@
   },
   "ts-node": {
     "esm": true
-  }
+  },
+  "exclude": ["./migrations"]
 }

@@ -2,8 +2,9 @@ import WebSocket from "ws";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import RedisClient from "../clients/redis.client";
 // import {queryString} from "query-string";
+import * as http from "http";
 
-export default async (expressServer: any) => {
+export default async (expressServer: http.Server) => {
   const websocketServer = new WebSocket.Server({
     noServer: true,
     path: "/ws",
@@ -42,6 +43,7 @@ export default async (expressServer: any) => {
       connectionRequest: any,
       user: any,
     ) {
+      console.log('websocket connection')
       const [_path, params] = connectionRequest?.url?.split("?") as any;
       const connectionParams = params;
       // NOTE: connectParams are not used here but good to understand how to get
