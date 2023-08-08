@@ -6,11 +6,15 @@ import { FormGroup } from '@angular/forms';
 import { FormService } from '../form/form.service';
 import { Article } from '../../interfaces/article';
 import { LocationService } from '../location/location.service';
+import { WebSocketService } from '../ws/web-socket.service';
+import { AuthService } from '../auth/auth.service';
+import { AuthStatus } from '../../interfaces/auth';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ArticleService {
+  authStatus: AuthStatus;
   model: Subject<any>;
   api: string = 'api/v1/article';
   location: any;
@@ -25,8 +29,10 @@ export class ArticleService {
   constructor(
     private service: ServerService,
     private formService: FormService,
+    private authService: AuthService,
     private stateService: StateService,
     private locationService: LocationService,
+    private wsService: WebSocketService
   ) {
     this.model = new Subject();
     this.locationService.getLocation().subscribe((data) => {
@@ -48,6 +54,12 @@ export class ArticleService {
         this.getArticles('relevant');
       });
     }
+
+    this.authService.authStatusSubject
+      .pipe()
+      .subscribe((status) => {
+        this.authStatus = status;
+      });
   }
 
   async getArticles(key: string, params?: any) {
@@ -65,6 +77,11 @@ export class ArticleService {
         state: key,
         data: res.data,
       });
+
+      this.wsService.send({
+        name: 'searchedArticles',
+        data: params
+      })
     } else {
       console.log(res.error);
     }
@@ -91,6 +108,10 @@ export class ArticleService {
         type: 'article',
         data: res.data,
       });
+      this.wsService.send({
+        name: 'postedArticle',
+        data: res.data,
+      })
     }
     this.stateService.resolveState('submitAttempted', { success: res.success });
     return res;
@@ -106,6 +127,13 @@ export class ArticleService {
         data: res.data,
       });
 
+      if(res.data.likes?.includes(this.authStatus?.id)) {
+        this.wsService.send({
+          name: 'likedArticle',
+          data: res.data,
+        })
+      }
+       
       if (this.stateService.state.name == 'articleDetails') {
         this.stateService.model.next({
           name: this.stateService.state.name,
