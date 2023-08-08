@@ -84,14 +84,14 @@ class ArticleService {
   // @Cache()
   async resolveArticles(req: any) {
     const options: any = {
-      ...JSON.parse(req.query.data)
-    };  
+      ...JSON.parse(req.query.data),
+    };
     if ("userId" in req.body)
       options["id"] = new mongoose.Types.ObjectId(
         JSON.parse(req.body["userId"]),
       );
     try {
-      console.log(options)
+      console.log(options);
       const allArticles = await Article.find(
         FilterResolver(req.path, options),
       ).lean();

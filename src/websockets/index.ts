@@ -43,7 +43,7 @@ export default async (expressServer: http.Server) => {
       connectionRequest: any,
       user: any,
     ) {
-      console.log('websocket connection')
+      console.log("websocket connection");
       const [_path, params] = connectionRequest?.url?.split("?") as any;
       const connectionParams = params;
       // NOTE: connectParams are not used here but good to understand how to get
