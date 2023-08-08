@@ -111,9 +111,8 @@ export class MapComponent extends Base implements AfterViewInit, OnDestroy {
     }
   }
 
-
   async retrieveArticles(event: any) {
-    console.log('zoom ended: ', event.target.style.z)
+    console.log('zoom ended: ', event.target.style.z);
     // TODO maybe renable this on some other condition
     // await this.service.getArticles('current', {
     //   distance: ((-1923 * event.target.style.z) + 34000)

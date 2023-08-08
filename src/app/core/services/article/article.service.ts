@@ -32,7 +32,7 @@ export class ArticleService {
     private authService: AuthService,
     private stateService: StateService,
     private locationService: LocationService,
-    private wsService: WebSocketService
+    private wsService: WebSocketService,
   ) {
     this.model = new Subject();
     this.locationService.getLocation().subscribe((data) => {
@@ -55,20 +55,18 @@ export class ArticleService {
       });
     }
 
-    this.authService.authStatusSubject
-      .pipe()
-      .subscribe((status) => {
-        this.authStatus = status;
-      });
+    this.authService.authStatusSubject.pipe().subscribe((status) => {
+      this.authStatus = status;
+    });
   }
 
   async getArticles(key: string, params?: any) {
-    this.current = key == 'current' ? this.current : key
-    console.log('YES WE ARE')
-    console.log('GETTING ARTICLES', {...this.location,...params});
+    this.current = key == 'current' ? this.current : key;
+    console.log('YES WE ARE');
+    console.log('GETTING ARTICLES', { ...this.location, ...params });
     const res = await this.service.get(
-      `${this.api}${this.navMapping[this.current]}`, 
-      {...this.location,...params}
+      `${this.api}${this.navMapping[this.current]}`,
+      { ...this.location, ...params },
     );
     console.log(res);
     if (res && res.success) {
@@ -80,8 +78,8 @@ export class ArticleService {
 
       this.wsService.send({
         name: 'searchedArticles',
-        data: params
-      })
+        data: params,
+      });
     } else {
       console.log(res.error);
     }
@@ -111,7 +109,7 @@ export class ArticleService {
       this.wsService.send({
         name: 'postedArticle',
         data: res.data,
-      })
+      });
     }
     this.stateService.resolveState('submitAttempted', { success: res.success });
     return res;
@@ -127,13 +125,13 @@ export class ArticleService {
         data: res.data,
       });
 
-      if(res.data.likes?.includes(this.authStatus?.id)) {
+      if (res.data.likes?.includes(this.authStatus?.id)) {
         this.wsService.send({
           name: 'likedArticle',
           data: res.data,
-        })
+        });
       }
-       
+
       if (this.stateService.state.name == 'articleDetails') {
         this.stateService.model.next({
           name: this.stateService.state.name,
