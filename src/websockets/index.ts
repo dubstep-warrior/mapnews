@@ -50,15 +50,27 @@ export default async (expressServer: http.Server) => {
       // to them if you need to pass data with the connection to identify it (e.g., a userId).
       // consoley.log(connectionRequest);
       const currentUser = { ...user };
-
+      console.log("i am the current user:", currentUser);
       websocketConnection.on("message", (message: any) => {
         const parsedMessage = JSON.parse(message);
 
-        // ['selectedArticle', 'articleDetails']
+        // ['selectedArticle', 'articleDetails', 'likedArticle', 'postedArticle', 'searchedArticles']
         if (parsedMessage.name == "location") {
           currentUser[parsedMessage.name] = parsedMessage.data;
-        } else {
-          console.log(parsedMessage);
+        } else if (
+          [
+            "selectedArticle",
+            "articleDetails",
+            "likedArticle",
+            "postedArticle",
+            "searchedArticles",
+          ].includes(parsedMessage.name)
+        ) {
+          // console.log('parsedMessage:',parsedMessage);
+          RedisClient.LPUSH(
+            "actions",
+            JSON.stringify({ ...parsedMessage, time: new Date() }),
+          );
         }
         websocketConnection.send(
           JSON.stringify({ message: "There be gold in them thar hills." }),

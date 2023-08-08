@@ -91,7 +91,7 @@ class ArticleService {
         JSON.parse(req.body["userId"]),
       );
     try {
-      console.log(options);
+      // console.log(options);
       const allArticles = await Article.find(
         FilterResolver(req.path, options),
       ).lean();
