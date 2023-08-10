@@ -1,1 +1,1 @@
-* * * * * BASH_ENV=/etc/profile node /bin/update-actions.js  
+* * * * * node /app/src/update-actions.js

@@ -1,0 +1,17 @@
+{
+  "name": "cron",
+  "version": "1.0.0",
+  "description": "",
+  "main": "update-actions.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/update-actions.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "mongoose": "^7.4.2",
+    "redis": "^4.6.7"
+  }
+}
