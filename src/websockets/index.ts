@@ -78,6 +78,19 @@ export default async (expressServer: http.Server) => {
           // const job = await RedisClient.get('actions-job')
 
           RedisClient.LPUSH("actions", JSON.stringify(action));
+          if (
+            !["searchedArticles", "postedArticle"].includes(parsedMessage.name)
+          ) {
+            console.log(parsedMessage.data.id);
+            RedisClient.LPUSH(
+              "interactions",
+              JSON.stringify({
+                user: currentUser.id,
+                action: parsedMessage.name,
+                article: parsedMessage.data.id,
+              }),
+            );
+          }
         }
         websocketConnection.send(
           JSON.stringify({ message: "There be gold in them thar hills." }),

@@ -6,7 +6,7 @@
   "main": "update_actions.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/update_actions.js"
+    "start": "node src/cron.js"
   },
   "author": "",
   "license": "ISC",
