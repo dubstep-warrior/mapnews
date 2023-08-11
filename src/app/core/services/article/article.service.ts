@@ -75,11 +75,13 @@ export class ArticleService {
         state: key,
         data: res.data,
       });
-
-      this.wsService.send({
-        name: 'searchedArticles',
-        data: params,
-      });
+      if (!!params) {
+        console.log('sending out searched articles');
+        this.wsService.send({
+          name: 'searchedArticles',
+          data: params,
+        });
+      }
     } else {
       console.log(res.error);
     }
