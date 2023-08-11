@@ -2,16 +2,18 @@
   "name": "cron",
   "version": "1.0.0",
   "description": "",
-  "main": "update-actions.js",
+  "type": "module",
+  "main": "update_actions.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/update-actions.js"
+    "start": "node src/update_actions.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.3.1",
-    "mongoose": "^7.4.2",
+    "mongodb": "^5.7.0",
+    "node-cron": "^3.0.2",
     "redis": "^4.6.7"
   }
 }

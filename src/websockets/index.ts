@@ -66,11 +66,18 @@ export default async (expressServer: http.Server) => {
             "searchedArticles",
           ].includes(parsedMessage.name)
         ) {
+          console.log(parsedMessage);
+          const action = {
+            user: currentUser.id,
+            action: parsedMessage.name,
+            category: parsedMessage.data.category,
+            tags: parsedMessage.data.tags,
+            time: new Date(),
+          };
           // console.log('parsedMessage:',parsedMessage);
-          RedisClient.LPUSH(
-            "actions",
-            JSON.stringify({ ...parsedMessage, time: new Date() }),
-          );
+          // const job = await RedisClient.get('actions-job')
+
+          RedisClient.LPUSH("actions", JSON.stringify(action));
         }
         websocketConnection.send(
           JSON.stringify({ message: "There be gold in them thar hills." }),
