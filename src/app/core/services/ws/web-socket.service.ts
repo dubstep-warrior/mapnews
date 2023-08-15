@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { NotificationService } from '../notification/notification.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,7 @@ import { environment } from 'src/environments/environment';
 export class WebSocketService {
   connection$: WebSocketSubject<any>;
 
-  constructor() {}
+  constructor(private notificationService: NotificationService) {}
 
   connect(): Observable<any> {
     if (this.connection$) {
@@ -23,6 +24,7 @@ export class WebSocketService {
       console.log('WS CONNECTION CALLED ', this.connection$);
       this.connection$.subscribe((data) => {
         console.log('web socket data: ', data);
+        this.notificationService.addNotification(data);
       });
       return this.connection$;
     }

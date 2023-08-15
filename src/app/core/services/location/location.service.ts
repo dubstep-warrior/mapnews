@@ -18,7 +18,7 @@ export class LocationService {
           this.ws.send({
             name: 'location',
             data: {
-              longtitude: pos.coords.longitude,
+              longitude: pos.coords.longitude,
               latitude: pos.coords.latitude,
             },
           });
