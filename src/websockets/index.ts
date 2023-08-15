@@ -1,6 +1,6 @@
 import WebSocket from "ws";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import RedisClient from "../clients/redis.client";
+import RedisClient, { RedisSubscriber } from "../clients/redis.client";
 // import {queryString} from "query-string";
 import * as http from "http";
 
@@ -51,12 +51,21 @@ export default async (expressServer: http.Server) => {
       // consoley.log(connectionRequest);
       const currentUser = { ...user };
       console.log("i am the current user:", currentUser);
+
+      // RedisSub
+      RedisSubscriber.subscribe(currentUser.id, (message) => {
+        console.log(message); // 'message'
+        websocketConnection.send(message);
+      });
+
       websocketConnection.on("message", (message: any) => {
         const parsedMessage = JSON.parse(message);
 
         // ['selectedArticle', 'articleDetails', 'likedArticle', 'postedArticle', 'searchedArticles']
         if (parsedMessage.name == "location") {
           currentUser[parsedMessage.name] = parsedMessage.data;
+          console.log(currentUser);
+          RedisClient.RPUSH("locations", JSON.stringify(currentUser));
         } else if (
           [
             "selectedArticle",
@@ -90,11 +99,10 @@ export default async (expressServer: http.Server) => {
                 article: parsedMessage.data.id,
               }),
             );
+
+            // if(parsedMessage.data.)
           }
         }
-        websocketConnection.send(
-          JSON.stringify({ message: "There be gold in them thar hills." }),
-        );
       });
     },
   );

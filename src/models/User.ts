@@ -18,6 +18,17 @@ const userSchema = new Schema(
       type: String,
       required: false,
     },
+    location: {
+      type: {
+        type: String,
+        enum: ["Point"],
+        default: "Point",
+      },
+      coordinates: {
+        type: [Number],
+        index: "2dsphere", // Create a geospatial index for faster queries
+      },
+    },
   },
   { collection: "users" },
 );

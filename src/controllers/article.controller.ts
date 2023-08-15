@@ -4,7 +4,7 @@ import { Request, Response, NextFunction } from "express";
 import Controller from "../utils/controller.decorator";
 import { Get, Post } from "../utils/handlers.decorator";
 import { Auth } from "../utils/authentication.decorator";
-import RedisClient from "../clients/redis.client";
+import { RedisPublisher } from "../clients/redis.client";
 
 @Controller("/article")
 export default class Article {
@@ -43,6 +43,11 @@ export default class Article {
   async apiCreateArticle(req: Request, res: Response, next: NextFunction) {
     try {
       const createdArticle = await ArticleService.createArticle(req);
+
+      if (createdArticle.category == "emergency") {
+        RedisPublisher.publish("emergency", JSON.stringify(createdArticle));
+      }
+
       res.json({
         success: true,
         data: createdArticle,
