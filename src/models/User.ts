@@ -29,6 +29,9 @@ const userSchema = new Schema(
         index: "2dsphere", // Create a geospatial index for faster queries
       },
     },
+    usage: {
+      type: Object,
+    },
   },
   { collection: "users" },
 );
