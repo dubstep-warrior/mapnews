@@ -29,6 +29,7 @@ import { FormDirective } from './core/directives/form.directive';
 import { ArticleDetailsComponent } from './components/article-details/article-details.component';
 import { RightOverlayContainerComponent } from './components/shared/right-overlay-container/right-overlay-container.component';
 import { AccessContainerComponent } from './components/shared/access-container/access-container.component';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 
 export let AppInjector: Injector;
 @NgModule({
@@ -52,6 +53,7 @@ export let AppInjector: Injector;
     ArticleDetailsComponent,
     RightOverlayContainerComponent,
     AccessContainerComponent,
+    NotificationsComponent,
   ],
   imports: [
     HttpClientModule,

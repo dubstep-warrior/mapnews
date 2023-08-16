@@ -45,6 +45,11 @@ export class NavbarComponent extends Base implements OnInit {
     this.service.resolveState('addArticle');
   }
 
+  openNotifications() {
+    this.mobileMenu = false;
+    this.service.resolveState('notifications');
+  }
+
   searchArticle() {
     this.mobileMenu = false;
     this.service.resolveState(

@@ -38,7 +38,7 @@
       <div class="button" (click)="searchArticle()">
         <img class="icon" src="./../../../assets/images/search.png" alt="" />
       </div>
-      <div class="button" *ngIf="authenticated">
+      <div class="button" (click)="openNotifications()" *ngIf="authenticated">
         <img
           class="icon"
           src="./../../../assets/images/notification.png"

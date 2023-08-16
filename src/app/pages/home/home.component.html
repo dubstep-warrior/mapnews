@@ -16,3 +16,6 @@
   "
   [state]="state"
 ></app-left-overlay>
+<app-notifications
+  *ngIf="['notifications'].includes(state?.name) && authenticated"
+></app-notifications>
