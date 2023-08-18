@@ -76,13 +76,21 @@ export default async (expressServer: http.Server) => {
           ].includes(parsedMessage.name)
         ) {
           console.log(parsedMessage);
-          const action = {
+          const action: any = {
             user: currentUser.id,
             action: parsedMessage.name,
             category: parsedMessage.data.category,
             tags: parsedMessage.data.tags,
             time: new Date(),
           };
+
+          if (!!currentUser.location)
+            action["location"] = {
+              coordinates: [
+                currentUser.location.longitude,
+                currentUser.location.latitude,
+              ],
+            };
           // console.log('parsedMessage:',parsedMessage);
           // const job = await RedisClient.get('actions-job')
 

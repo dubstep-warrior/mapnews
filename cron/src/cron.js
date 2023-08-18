@@ -4,6 +4,7 @@ dotenv.config();
 import { MongoClient, ServerApiVersion, ObjectId } from "mongodb";
 import cron from "node-cron";
 import { InterestAggregation } from "./interest.aggregation.js";
+import { ActivityAggregation } from "./activity.aggregation.js";
 
 const RedisClient = createClient({
   url: process.env.REDIS_URL,
@@ -93,6 +94,7 @@ RedisSubscriber.subscribe("general", async (message) => {
 
   // Check if its worth creating notification
   // Check activity metrics in the area
+  // TODO: BUILD UP ACTIVITY AGGREGATION PIPELINE
 
   // Gather users
   const nearByusers = new Set(
@@ -115,6 +117,7 @@ RedisSubscriber.subscribe("general", async (message) => {
     ),
   );
 
+  // CURRENTLY USERS ARE NEARBY (ONLINE) AND INTERESTED, CHANGE SOON
   const users = nearByusers & interestedUser;
 
   if (!!users.length) {
@@ -276,15 +279,18 @@ cron.schedule("* * * * *", async function () {
 
 // FOR TESTING
 const test = async () => {
-  const nearByusers = await RedisClient.geoSearch(
-    "user-locations",
-    {
-      latitude: article.location.coordinates[1],
-      longitude: article.location.coordinates[0],
-    },
-    { radius: 5, unit: "km" },
+  const article = {
+    category: "emergency",
+    tags: ["test"],
+    location: { coordinates: [103.7868639, 1.3362486] },
+  };
+  const collection = client.db("mapnews").collection("actions");
+  console.log("running test");
+  const activities = new Set(
+    await collection.aggregate(ActivityAggregation(article)).toArray(),
   );
-  console.log(nearByusers);
+  console.log("finish run");
+  console.log(activities);
 };
 
-// test();
+test();
