@@ -3,6 +3,7 @@ import { createClient } from "redis";
 dotenv.config();
 import { MongoClient, ServerApiVersion, ObjectId } from "mongodb";
 import cron from "node-cron";
+import { InterestAggregation } from "./interest.aggregation.js";
 
 const RedisClient = createClient({
   url: process.env.REDIS_URL,
@@ -94,21 +95,32 @@ RedisSubscriber.subscribe("general", async (message) => {
   // Check activity metrics in the area
 
   // Gather users
-  const users = await RedisClient.geoSearch(
-    "user-locations",
-    {
-      latitude: article.location.coordinates[1],
-      longitude: article.location.coordinates[0],
-    },
-    { radius: 5, unit: "km" },
+  const nearByusers = new Set(
+    await RedisClient.geoSearch(
+      "user-locations",
+      {
+        latitude: article.location.coordinates[1],
+        longitude: article.location.coordinates[0],
+      },
+      { radius: 30, unit: "km" },
+    ),
   );
 
-  // CHECK USAGE/ACTIVITY METRICS IF IT MAKE SENSE
+  // Gather users that will find this interesting
+  const collection = client.db("mapnews").collection("users");
+
+  const interestedUser = new Set(
+    (await collection.aggregate(InterestAggregation(article)).toArray()).map(
+      (user) => user._id,
+    ),
+  );
+
+  const users = nearByusers & interestedUser;
 
   if (!!users.length) {
     console.log(users);
     console.log(article.posted_by);
-    notification["users"] = users
+    notification["users"] = [...users]
       .filter((userID) => userID !== article.posted_by)
       .map((userID) => new ObjectId(userID));
 
@@ -124,7 +136,8 @@ RedisSubscriber.subscribe("general", async (message) => {
 });
 
 // ACTION UPDATE CRON
-cron.schedule("*/30 * * * *", async function () {
+// per 30 mins -> */30 * * * *
+cron.schedule("* * * * *", async function () {
   const key = "actions";
   console.log(`Starting cron job on ${key}`);
   // const userData = {};
@@ -156,42 +169,53 @@ cron.schedule("* * * * *", async function () {
 
   const collection = client.db("mapnews").collection("actions");
 
-  const data = collection.find();
+  const data = await collection.find().toArray();
+  console.log("actions data from user metrics", data);
   const userData = {};
-  for await (const doc of data) {
-    if (doc.user in userData) {
-      userData[doc.user][doc.category] =
-        doc.category in userData[doc.user]
-          ? userData[doc.user][doc.category] + 1
+  for (const doc of data) {
+    const user = doc.user.toHexString();
+    if (user in userData) {
+      userData[user]["category"][doc.category] =
+        doc.category in userData[user]["category"]
+          ? userData[user]["category"][doc.category] + 1
           : 1;
     } else {
-      userData[doc.user] = {
-        [doc.category]: 1,
+      userData[user] = {
+        category: {
+          [doc.category]: 1,
+        },
         tags: {},
       };
     }
 
     for (let tag of doc.tags) {
-      userData[doc.user]["tags"][tag] =
-        tag in userData[doc.user]["tags"] ? userData[doc.user]["tags"] + 1 : 1;
+      userData[user]["tags"][tag] =
+        tag in userData[user]["tags"] ? userData[user]["tags"][tag] + 1 : 1;
     }
   }
 
-  client
-    .db("mapnews")
-    .collection("users")
-    .bulkWrite(
-      userData.map((userID) => {
-        return {
-          updateOne: {
-            filter: { _id: ObjectId(userID) },
-            update: { usage: userData[userID] },
+  console.log("user data from user metrics", userData);
+
+  if (!!Object.keys(userData).length) {
+    const commands = Object.keys(userData).map((userID) => {
+      return {
+        updateOne: {
+          filter: { _id: new ObjectId(userID) },
+          update: {
+            $set: { usage: userData[userID] },
           },
-        };
-      }),
-    )
-    .then((res) => console.log(`Finish updating~ on ${key}`))
-    .catch((err) => console.log(err));
+        },
+      };
+    });
+
+    console.log(commands);
+    await client
+      .db("mapnews")
+      .collection("users")
+      .bulkWrite(commands)
+      .then((res) => console.log(`Finish updating~ on ${key}`))
+      .catch((err) => console.log(err));
+  }
 });
 
 // // NOTIFICATION SCHEDULER
@@ -252,12 +276,15 @@ cron.schedule("* * * * *", async function () {
 
 // FOR TESTING
 const test = async () => {
-  const testVar = await RedisClient.geoSearch(
+  const nearByusers = await RedisClient.geoSearch(
     "user-locations",
-    { latitude: 1.3352529, longitude: 103.7592734 },
+    {
+      latitude: article.location.coordinates[1],
+      longitude: article.location.coordinates[0],
+    },
     { radius: 5, unit: "km" },
   );
-  console.log(testVar);
+  console.log(nearByusers);
 };
 
-// test()
+// test();
