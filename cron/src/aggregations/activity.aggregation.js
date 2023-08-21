@@ -6,11 +6,7 @@ export const ActivityAggregation = (article) => {
           $gte: [
             "$time",
             {
-              $subtract: [
-                "$$NOW",
-                // 3600000
-                3600000 * 4,
-              ],
+              $subtract: ["$$NOW", 3600000],
             },
           ],
         },
@@ -34,11 +30,6 @@ export const ActivityAggregation = (article) => {
     { $project: { tags: 1 } },
     { $unwind: "$tags" },
     { $group: { _id: "$tags", count: { $sum: 1 } } },
-    // {
-    //   $count: {
-    //     $sum: '$count'
-    //   }
-    // }
     {
       $group: {
         _id: null,

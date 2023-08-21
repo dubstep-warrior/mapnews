@@ -1,3 +1,9 @@
+const threshold = {
+  combinedUsage: 20,
+  catUsage: 0.4,
+  tagUsage: 0.1,
+};
+
 export const InterestAggregation = (article) => {
   return [
     {
@@ -30,8 +36,8 @@ export const InterestAggregation = (article) => {
 
     {
       $match: {
-        totalCat: { $gt: 20 },
-        totalTags: { $gt: 20 },
+        totalCat: { $gt: threshold["combinedUsage"] },
+        totalTags: { $gt: threshold["combinedUsage"] },
       },
     },
 
@@ -49,7 +55,7 @@ export const InterestAggregation = (article) => {
                         "$totalCat",
                       ],
                     },
-                    0.4,
+                    threshold["catUsage"],
                   ],
                 },
                 {
@@ -76,7 +82,7 @@ export const InterestAggregation = (article) => {
                         "$totalTags",
                       ],
                     },
-                    0.1,
+                    threshold["tagUsage"],
                   ],
                 },
               ],
