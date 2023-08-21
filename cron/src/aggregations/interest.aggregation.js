@@ -99,13 +99,5 @@ export const InterestAggregation = (article) => {
         _id: { $toString: "$_id" },
       },
     },
-
-    // { $match: { "CategoryMatch": { $gte: {
-    //   $cond: {
-    //     if: {
-
-    //     }
-    //   }
-    // } }}},
   ];
 };

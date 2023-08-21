@@ -3,8 +3,9 @@ import { createClient } from "redis";
 dotenv.config();
 import { MongoClient, ServerApiVersion, ObjectId } from "mongodb";
 import cron from "node-cron";
-import { InterestAggregation } from "./interest.aggregation.js";
-import { ActivityAggregation } from "./activity.aggregation.js";
+import { InterestAggregation } from "./aggregations/interest.aggregation.js";
+import { ActivityAggregation } from "./aggregations/activity.aggregation.js";
+import CronConfig from "./../config/cron.config.json";
 
 const RedisClient = createClient({
   url: process.env.REDIS_URL,
@@ -61,6 +62,7 @@ RedisSubscriber.subscribe("emergency", async (message) => {
   );
 
   // CHECK ACTIVITY METRICS IF IT MAKE SENSE
+  // CURRENT ISSUE: SUSCEPTIBLE TO NOTIFICATION SPAM
 
   if (!!users.length) {
     console.log(users);
@@ -94,53 +96,59 @@ RedisSubscriber.subscribe("general", async (message) => {
 
   // Check if its worth creating notification
   // Check activity metrics in the area
-  // TODO: BUILD UP ACTIVITY AGGREGATION PIPELINE
+  const activities = await client
+    .db("mapnews")
+    .collection("actions")
+    .aggregate(ActivityAggregation(article))
+    .toArray();
 
-  // Gather users
-  const nearByusers = new Set(
-    await RedisClient.geoSearch(
-      "user-locations",
-      {
-        latitude: article.location.coordinates[1],
-        longitude: article.location.coordinates[0],
-      },
-      { radius: 30, unit: "km" },
-    ),
-  );
+  if (!!activities.length) {
+    // Gather users
+    const nearByusers = new Set(
+      await RedisClient.geoSearch(
+        "user-locations",
+        {
+          latitude: article.location.coordinates[1],
+          longitude: article.location.coordinates[0],
+        },
+        { radius: 30, unit: "km" },
+      ),
+    );
 
-  // Gather users that will find this interesting
-  const collection = client.db("mapnews").collection("users");
+    // Gather users that will find this interesting
+    const collection = client.db("mapnews").collection("users");
 
-  const interestedUser = new Set(
-    (await collection.aggregate(InterestAggregation(article)).toArray()).map(
-      (user) => user._id,
-    ),
-  );
+    const interestedUser = new Set(
+      (await collection.aggregate(InterestAggregation(article)).toArray()).map(
+        (user) => user._id,
+      ),
+    );
 
-  // CURRENTLY USERS ARE NEARBY (ONLINE) AND INTERESTED, CHANGE SOON
-  const users = nearByusers & interestedUser;
+    // CURRENTLY USERS ARE NEARBY (ONLINE) AND INTERESTED, CHANGE SOON
+    const users = nearByusers & interestedUser;
 
-  if (!!users.length) {
-    console.log(users);
-    console.log(article.posted_by);
-    notification["users"] = [...users]
-      .filter((userID) => userID !== article.posted_by)
-      .map((userID) => new ObjectId(userID));
+    if (!!users.length) {
+      console.log(users);
+      console.log(article.posted_by);
+      notification["users"] = [...users]
+        .filter((userID) => userID !== article.posted_by)
+        .map((userID) => new ObjectId(userID));
 
-    const collection = client.db("mapnews").collection("notifications");
+      const collection = client.db("mapnews").collection("notifications");
 
-    collection.insertOne(notification).then(() => {
-      console.log("added a new notification");
-      users.forEach((userID) =>
-        RedisPublisher.publish(userID, JSON.stringify(notification)),
-      );
-    });
+      collection.insertOne(notification).then(() => {
+        console.log("added a new notification");
+        users.forEach((userID) =>
+          RedisPublisher.publish(userID, JSON.stringify(notification)),
+        );
+      });
+    }
   }
 });
 
 // ACTION UPDATE CRON
 // per 30 mins -> */30 * * * *
-cron.schedule("* * * * *", async function () {
+cron.schedule(CronConfig["action-update"], async function () {
   const key = "actions";
   console.log(`Starting cron job on ${key}`);
   // const userData = {};
@@ -165,8 +173,8 @@ cron.schedule("* * * * *", async function () {
   console.log(`Finish updating~ on ${key}`);
 });
 
-// // TODO CREATE AN UPDATE USER METRICS SCHEDULER
-cron.schedule("* * * * *", async function () {
+// UPDATE USER METRICS SCHEDULER
+cron.schedule(CronConfig["user-metrics"], async function () {
   const key = "user metrics";
   console.log(`Starting cron job on ${key}`);
 
@@ -221,28 +229,8 @@ cron.schedule("* * * * *", async function () {
   }
 });
 
-// // NOTIFICATION SCHEDULER
-// cron.schedule("* * * * *", async function () {
-//   const key = "interactions";
-//   console.log(`Starting cron job on ${key}`);
-
-//   const popped = (await RedisClient.lRange(key, 0, -1)).map((string) => {
-//     const obj = JSON.parse(string);
-//     return {
-//       ...obj,
-//       user: new ObjectId(obj.user),
-//       article: new ObjectId(obj.article),
-//     };
-//   });
-
-//   if (!!popped.length) {
-//     console.log(popped);
-//   }
-
-//   console.log("Finish updating~");
-// });
-
-cron.schedule("* * * * *", async function () {
+// LOCATION UPDATE CRON
+cron.schedule(CronConfig["location-update"], async function () {
   const key = "locations";
   console.log(`Starting cron job on ${key}`);
 
@@ -276,21 +264,3 @@ cron.schedule("* * * * *", async function () {
 
   console.log("Finish updating~");
 });
-
-// FOR TESTING
-const test = async () => {
-  const article = {
-    category: "emergency",
-    tags: ["test"],
-    location: { coordinates: [103.7868639, 1.3362486] },
-  };
-  const collection = client.db("mapnews").collection("actions");
-  console.log("running test");
-  const activities = new Set(
-    await collection.aggregate(ActivityAggregation(article)).toArray(),
-  );
-  console.log("finish run");
-  console.log(activities);
-};
-
-test();
