@@ -15,6 +15,7 @@ import { LocationService } from 'src/app/core/services/location/location.service
 import { State } from 'src/app/core/interfaces/state';
 import { FormService } from 'src/app/core/services/form/form.service';
 import { trigger, style, animate, transition } from '@angular/animations';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-map',
@@ -49,11 +50,10 @@ import { trigger, style, animate, transition } from '@angular/animations';
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent extends Base implements AfterViewInit, OnDestroy {
-  map: Map | undefined;
   @ViewChild('map')
-  private mapContainer!: ElementRef<HTMLElement>;
+  map: any;
   currentCoordinates: any = { lng: 139.753, lat: 35.6844, zoom: 14 };
-  articles: Article[] = [];
+  articles: Observable<Article[]>;
   state: State;
   prevState: State;
   constructor(
@@ -63,23 +63,10 @@ export class MapComponent extends Base implements AfterViewInit, OnDestroy {
     public formService: FormService,
   ) {
     super();
+    this.articles = this.service.model;
   }
 
   async ngAfterViewInit() {
-    this.service.model.pipe(this.takeUntilDestroy()).subscribe((data) => {
-      console.log(data);
-      if (data.type == 'article') {
-        this.articles = [...this.articles, data.data];
-      } else if (data.type == 'update') {
-        console.log(data.data);
-        this.articles = this.articles.map((article) =>
-          data.data?._id == article._id ? data.data : article,
-        );
-      } else {
-        this.articles = data.data;
-      }
-    });
-
     this.locationService
       .getLocation()
       .pipe(this.takeUntilDestroy())
@@ -97,9 +84,18 @@ export class MapComponent extends Base implements AfterViewInit, OnDestroy {
         // };
       });
 
-    this.stateService.model.pipe(this.takeUntilDestroy()).subscribe((data) => {
+    this.stateService.model.pipe(this.takeUntilDestroy()).subscribe((state) => {
       this.prevState = this.state;
-      this.state = data;
+      this.state = state;
+      if (state.name == 'articleDetails') {
+        // move map
+        this.map.mapInstance.flyTo({
+          center: state.data.coordinates,
+          speed: 0.2,
+          curve: 1,
+          zoom: this.currentCoordinates.zoom + 1,
+        });
+      }
     });
   }
 

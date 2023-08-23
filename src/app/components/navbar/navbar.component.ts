@@ -31,13 +31,13 @@ export class NavbarComponent extends Base implements OnInit {
   }
 
   ngOnInit(): void {
-    this.articleService.model
-      .pipe(this.takeUntilDestroy())
-      .subscribe((data) => {
-        if ('state' in data) {
-          this.articleState = data.state;
-        }
-      });
+    // this.articleService.model
+    //   .pipe(this.takeUntilDestroy())
+    //   .subscribe((data) => {
+    //     if ('state' in data) {
+    //       this.articleState = data.state;
+    //     }
+    //   });
   }
 
   addArticle() {
@@ -47,7 +47,9 @@ export class NavbarComponent extends Base implements OnInit {
 
   openNotifications() {
     this.mobileMenu = false;
-    this.service.resolveState('notifications');
+    this.service.resolveState(
+      this.service.state.name == 'notifications' ? 'neutral' : 'notifications',
+    );
   }
 
   searchArticle() {

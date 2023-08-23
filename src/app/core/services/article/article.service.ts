@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ServerService } from '../server/server.service';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { StateService } from '../state/state.service';
 import { FormGroup } from '@angular/forms';
 import { FormService } from '../form/form.service';
@@ -15,7 +15,8 @@ import { AuthStatus } from '../../interfaces/auth';
 })
 export class ArticleService {
   authStatus: AuthStatus;
-  model: Subject<any>;
+  private articles: Article[] = [];
+  model: BehaviorSubject<Article[]>;
   api: string = 'api/v1/article';
   location: any;
   current: string = 'relevant';
@@ -34,7 +35,7 @@ export class ArticleService {
     private locationService: LocationService,
     private wsService: WebSocketService,
   ) {
-    this.model = new Subject();
+    this.model = new BehaviorSubject([]);
     this.locationService.getLocation().subscribe((data) => {
       this.location = {
         longtitude: data.longitude,
@@ -70,11 +71,8 @@ export class ArticleService {
     );
     console.log(res);
     if (res && res.success) {
-      this.model.next({
-        type: 'articles',
-        state: key,
-        data: res.data,
-      });
+      this.articles = res.data;
+      this.model.next(this.articles);
       if (!!params) {
         console.log('sending out searched articles');
         this.wsService.send({
@@ -104,10 +102,7 @@ export class ArticleService {
     this.stateService.resolveState('submittingArticle');
     const res = await this.service.post(this.api, formData);
     if (res && res.success) {
-      this.model.next({
-        type: 'article',
-        data: res.data,
-      });
+      this.model.next([...this.articles, res.data]);
       this.wsService.send({
         name: 'postedArticle',
         data: res.data,
@@ -122,10 +117,10 @@ export class ArticleService {
     console.log(res);
     if (res && res.success) {
       console.log('inside success');
-      this.model.next({
-        type: 'update',
-        data: res.data,
-      });
+      this.articles = this.articles.map((article) =>
+        res.data?._id == article._id ? res.data : article,
+      );
+      this.model.next(this.articles);
 
       if (res.data.likes?.includes(this.authStatus?.id)) {
         this.wsService.send({
@@ -142,4 +137,11 @@ export class ArticleService {
       }
     }
   }
+
+  addNotificationArticle: (arg: Article) => void = (article) => {
+    if (!this.articles.some((currArticle) => currArticle._id == article._id)) {
+      this.articles = [...this.articles, article];
+      this.model.next(this.articles);
+    }
+  };
 }
