@@ -26,9 +26,7 @@ export const Auth = (userAttName?: string, articleResolution?: boolean) => {
           process.env.SECRET_JWT_CODE!,
         ) as JwtPayload;
         if (userAttName) {
-          req.body[userAttName] = JSON.stringify(
-            new mongoose.Types.ObjectId(decoded.id),
-          );
+          req.body[userAttName] = decoded.id;
         }
 
         return originalMethod.apply(this, args);

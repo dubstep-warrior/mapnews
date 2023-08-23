@@ -5,7 +5,7 @@ import { MongoClient, ServerApiVersion, ObjectId } from "mongodb";
 import cron from "node-cron";
 import { InterestAggregation } from "./aggregations/interest.aggregation.js";
 import { ActivityAggregation } from "./aggregations/activity.aggregation.js";
-import CronConfig from "./../config/cron.config.json";
+import CronConfig from "./../config/cron.config.json" assert { type: "json" };
 
 const RedisClient = createClient({
   url: process.env.REDIS_URL,

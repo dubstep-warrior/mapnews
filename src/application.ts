@@ -1,5 +1,9 @@
 // src/application.ts
-import express, { Application as ExApplication, Handler } from "express";
+import express, {
+  Application as ExApplication,
+  Handler,
+  RequestHandler,
+} from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 
@@ -15,6 +19,7 @@ class Application {
     return this._instance;
   }
   upload: multer.Multer;
+  imageUploadPaths: Record<string, (...args: any[]) => void>;
   constructor() {
     this._instance = express();
 
@@ -49,6 +54,11 @@ class Application {
     this._instance.use(bodyParser.urlencoded({ extended: false }));
     this._instance.use(bodyParser.json());
 
+    this.imageUploadPaths = {
+      apiCreateArticle: this.upload.array("images", 12),
+      apiRegister: this.upload.single("profile_img"),
+    };
+
     this.registerRouters();
   }
 
@@ -69,16 +79,12 @@ class Application {
       const exRouter = express.Router();
       console.log(routers);
       routers.forEach(({ method, path, handlerName }) => {
-        if (handlerName == "apiCreateArticle") {
+        if (handlerName in this.imageUploadPaths) {
           exRouter[method](
             path,
-            this.upload.array("images", 12),
-            controllerInstance[String(handlerName)].bind(controllerInstance),
-          );
-        } else if (handlerName == "apiRegister") {
-          exRouter[method](
-            path,
-            this.upload.single("profile_img"),
+            this.imageUploadPaths[
+              handlerName as keyof typeof this.imageUploadPaths
+            ],
             controllerInstance[String(handlerName)].bind(controllerInstance),
           );
         } else {

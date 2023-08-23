@@ -65,7 +65,7 @@ class ArticleService {
       const article = await Article.findOneAndUpdate(
         { _id: articleId },
         FilterResolver(req.path, {
-          id: new mongoose.Types.ObjectId(JSON.parse(userId)),
+          id: new mongoose.Types.ObjectId(userId),
         }),
         { returnDocument: "after" },
       );
@@ -87,9 +87,7 @@ class ArticleService {
       ...JSON.parse(req.query.data),
     };
     if ("userId" in req.body)
-      options["id"] = new mongoose.Types.ObjectId(
-        JSON.parse(req.body["userId"]),
-      );
+      options["id"] = new mongoose.Types.ObjectId(req.body["userId"]);
     try {
       // console.log(options);
       const allArticles = await Article.find(
