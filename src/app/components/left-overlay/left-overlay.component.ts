@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { bounce, slideIn } from 'src/app/core/utilities/animations';
 import { FormDirective } from 'src/app/core/directives/form.directive';
+import { ILocation } from 'src/app/core/interfaces/location';
 
 @Component({
   selector: 'app-left-overlay',
@@ -9,8 +10,7 @@ import { FormDirective } from 'src/app/core/directives/form.directive';
   styleUrls: ['./left-overlay.component.scss'],
 })
 export class LeftOverlayComponent extends FormDirective implements OnInit {
-  @ViewChild('tags') inputTags: any;
-  currentCoordinates: any;
+  @ViewChild('tags') inputTags: any; 
   locationMouseMode: boolean = false;
 
   constructor() {
@@ -18,24 +18,14 @@ export class LeftOverlayComponent extends FormDirective implements OnInit {
     this.formType = 'addArticle';
   }
 
-  override ngOnInit(): void {
-    this.locationService
-      .getLocation()
-      .pipe(this.takeUntilDestroy())
-      .subscribe((data) => {
-        console.log('rep', data);
-        this.currentCoordinates = {
-          lng: data.longitude,
-          lat: data.latitude,
-        };
-      });
+  override ngOnInit(): void { 
 
     this.locationService.mouseLocationCoordinates
       .pipe(this.takeUntilDestroy())
-      .subscribe((data) => {
+      .subscribe((data: ILocation) => {
         if (['addArticleLocation'].includes(this.state?.name)) {
           this.form.get('location').setValue({
-            coordinates: [JSON.parse(data).lng, JSON.parse(data).lat],
+            coordinates: [data.longitude, data.latitude],
           });
         }
       });
@@ -47,10 +37,10 @@ export class LeftOverlayComponent extends FormDirective implements OnInit {
     this.stateService.resetState();
   }
 
-  setLoc(type?: String): any {
-    if (type && type == 'current') {
+  setLoc(type?: string): void {
+    if (type && type == 'current') { 
       this.form.get('location').setValue({
-        coordinates: [this.currentCoordinates.lng, this.currentCoordinates.lat],
+        coordinates: [this.locationService.currentLocation.longitude, this.locationService.currentLocation.latitude],
       });
     } else {
       this.locationMouseMode = !this.locationMouseMode;
@@ -91,7 +81,7 @@ export class LeftOverlayComponent extends FormDirective implements OnInit {
     console.log(res);
   }
 
-  resetState(): any {
+  resetState(): void {
     this.formService.resetForm();
     this.stateService.resetState();
   }

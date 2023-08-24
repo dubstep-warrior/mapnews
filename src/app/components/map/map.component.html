@@ -4,7 +4,7 @@
     'https://api.maptiler.com/maps/bright-v2/style.json?key=Vf3Ucwo3a2GSlz4MWlz4'
   "
   [zoom]="[currentCoordinates['zoom']]"
-  [center]="[currentCoordinates['lng'], currentCoordinates['lat']]"
+  [center]="[currentCoordinates['longitude'], currentCoordinates['latitude']]"
   (mapMouseUp)="sendMouseCoordinates($event)"
   (click)="
     ['addArticleLocation'].includes(state?.name) ||
@@ -35,7 +35,7 @@
   <app-mark
     [type]="'self'"
     [article]="{
-      coordinates: [currentCoordinates['lng'], currentCoordinates['lat']]
+      coordinates: [currentCoordinates['longitude'], currentCoordinates['latitude']]
     }"
   ></app-mark>
 </mgl-map>

@@ -4,7 +4,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { StateService } from '../state/state.service';
 import { FormGroup } from '@angular/forms';
 import { FormService } from '../form/form.service';
-import { Article } from '../../interfaces/article';
+import { Article, GetArticleParams } from '../../interfaces/article';
 import { LocationService } from '../location/location.service';
 import { WebSocketService } from '../ws/web-socket.service';
 import { AuthService } from '../auth/auth.service';
@@ -17,8 +17,7 @@ export class ArticleService {
   authStatus: AuthStatus;
   private articles: Article[] = [];
   model: BehaviorSubject<Article[]>;
-  api: string = 'api/v1/article';
-  location: any;
+  api: string = 'api/v1/article'; 
   current: string = 'relevant';
   navMapping: any = {
     favourites: '/favourites',
@@ -35,39 +34,21 @@ export class ArticleService {
     private locationService: LocationService,
     private wsService: WebSocketService,
   ) {
-    this.model = new BehaviorSubject([]);
-    this.locationService.getLocation().subscribe((data) => {
-      this.location = {
-        longtitude: data.longitude,
-        latitude: data.latitude,
-      };
-    });
-
+    this.model = new BehaviorSubject([]); 
     console.log('BEGIN', navigator.geolocation);
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((data) => {
-        console.log('yes exist', data);
-        this.location = {
-          longtitude: data.coords.longitude,
-          latitude: data.coords.latitude,
-        };
-
-        this.getArticles('relevant');
-      });
-    }
-
     this.authService.authStatusSubject.pipe().subscribe((status) => {
       this.authStatus = status;
     });
   }
 
-  async getArticles(key: string, params?: any) {
+  async getArticles(key: string, params?: GetArticleParams) {
+    
     this.current = key == 'current' ? this.current : key;
     console.log('YES WE ARE');
-    console.log('GETTING ARTICLES', { ...this.location, ...params });
+    console.log('GETTING ARTICLES', { ...this.locationService.currentLocation, ...params });
     const res = await this.service.get(
       `${this.api}${this.navMapping[this.current]}`,
-      { ...this.location, ...params },
+      { ...this.locationService.currentLocation, ...params },
     );
     console.log(res);
     if (res && res.success) {

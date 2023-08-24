@@ -16,6 +16,7 @@ import { State } from 'src/app/core/interfaces/state';
 import { FormService } from 'src/app/core/services/form/form.service';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { Observable, distinctUntilChanged } from 'rxjs';
+import { ILocation, IMapAttributes } from 'src/app/core/interfaces/location';
 
 @Component({
   selector: 'app-map',
@@ -52,7 +53,7 @@ import { Observable, distinctUntilChanged } from 'rxjs';
 export class MapComponent extends Base implements AfterViewInit, OnDestroy {
   @ViewChild('map')
   map: any;
-  currentCoordinates: any = { lng: 139.753, lat: 35.6844, zoom: 14 };
+  currentCoordinates: IMapAttributes = { longitude: 139.753, latitude: 35.6844, zoom: 14 };
   articles: Observable<Article[]>;
   state: State;
   prevState: State;
@@ -70,18 +71,9 @@ export class MapComponent extends Base implements AfterViewInit, OnDestroy {
     this.locationService
       .getLocation()
       .pipe(this.takeUntilDestroy())
-      .subscribe((data) => {
-        console.log('rep', data);
-        this.currentCoordinates = {
-          ...this.currentCoordinates,
-          lng: data.longitude,
-          lat: data.latitude,
-        };
+      .subscribe((data: ILocation) => {
+        this.currentCoordinates = { ...this.currentCoordinates, ...data }
 
-        // this.startingCoordinates = {
-        //   lng: 103.77431291838502,
-        //   lat: 1.3295169515211853,
-        // };
       });
 
     this.stateService.model
@@ -111,7 +103,7 @@ export class MapComponent extends Base implements AfterViewInit, OnDestroy {
   sendMouseCoordinates(event: any) {
     if (['addArticleLocation'].includes(this.state?.name)) {
       this.locationService.setMouseCoordinates(
-        JSON.stringify(event.lngLat.wrap()),
+        { longitude: event.lngLat.wrap().lng, latitude: event.lngLat.wrap().lat }
       );
     }
   }

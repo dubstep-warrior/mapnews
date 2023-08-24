@@ -12,7 +12,6 @@ export class RightOverlayComponent extends FormDirective implements OnInit {
 
   constructor() {
     super();
-    this.formType = 'search';
   }
 
   override ngOnInit(): void {
@@ -21,7 +20,10 @@ export class RightOverlayComponent extends FormDirective implements OnInit {
       .subscribe((status) => {
         this.authStatus = status;
       });
-    super.ngOnInit();
+    if(['search'].includes(this.state.name)) {
+      this.formType = 'search';
+      super.ngOnInit();
+    } 
   }
 
   async clickLikeButton(id: string): Promise<void> {

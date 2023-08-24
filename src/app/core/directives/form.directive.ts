@@ -7,12 +7,13 @@ import { ArticleService } from '../services/article/article.service';
 import { AuthService } from '../services/auth/auth.service';
 import { LocationService } from '../services/location/location.service';
 import { StateService } from '../services/state/state.service';
+import { State } from '../interfaces/state';
 
 @Directive({
   selector: '[appForm]',
 })
 export class FormDirective extends Base implements OnInit {
-  @Input() state: any;
+  @Input() state: State;
   form: FormGroup;
 
   formService: FormService;

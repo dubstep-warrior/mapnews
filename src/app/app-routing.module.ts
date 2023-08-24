@@ -4,13 +4,15 @@ import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { AccessComponent } from './pages/access/access.component';
 import { RegisterComponent } from './components/register/register.component';
-import { ConfigResolver } from './core/resolvers/config.resolver';
+import { ConfigResolver } from './core/resolvers/config/config.resolver';
+import { LocationResolver } from './core/resolvers/location/location.resolver';
 
 const routes: Routes = [
   {
     path: '',
     resolve: {
       config: ConfigResolver,
+      location: LocationResolver
     },
     children: [
       {
