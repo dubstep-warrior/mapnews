@@ -28,7 +28,7 @@ export const Cache = () => {
             EX: 10,
           },
         );
-        console.log("set redis and retrieve mongodb at ", req.path);
+        console.log("set redis and retrieve mongodb at ", `${req.baseUrl}${req.path}${req.body["userId"]}`);
         return models;
       } catch (err) {
         throw "Error in retrieving server cache";
