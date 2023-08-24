@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { NotificationType } from '../interfaces/notification';
-import * as NotificationMessages from './../configs/notification.messages.json';
+import { NotificationType } from '../../interfaces/notification';
+import * as NotificationMessages from './../../configs/notification.messages.json';
 
 @Pipe({
   name: 'notificationMessage',

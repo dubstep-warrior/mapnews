@@ -41,6 +41,7 @@ export class AppComponent extends Base implements OnInit {
   }
 
   resetState(): void {
+    console.log('CALLING RESET STATE IN APP LEVEL?');
     if (
       [
         'articleDetails',

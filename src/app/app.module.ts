@@ -30,7 +30,8 @@ import { ArticleDetailsComponent } from './components/article-details/article-de
 import { RightOverlayContainerComponent } from './components/shared/right-overlay-container/right-overlay-container.component';
 import { AccessContainerComponent } from './components/shared/access-container/access-container.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
-import { NotificationMessagePipe } from './core/pipes/notification-message.pipe';
+import { NotificationMessagePipe } from './core/pipes/notification-message/notification-message.pipe';
+// import { StaticImagePipe } from './core/pipes/static-image.pipe';
 
 export let AppInjector: Injector;
 @NgModule({

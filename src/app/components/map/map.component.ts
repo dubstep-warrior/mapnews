@@ -15,7 +15,7 @@ import { LocationService } from 'src/app/core/services/location/location.service
 import { State } from 'src/app/core/interfaces/state';
 import { FormService } from 'src/app/core/services/form/form.service';
 import { trigger, style, animate, transition } from '@angular/animations';
-import { Observable } from 'rxjs';
+import { Observable, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-map',
@@ -87,6 +87,7 @@ export class MapComponent extends Base implements AfterViewInit, OnDestroy {
     this.stateService.model.pipe(this.takeUntilDestroy()).subscribe((state) => {
       this.prevState = this.state;
       this.state = state;
+      // console.log('IT IS DISTINCT', this.prevState, this.state)
       if (state.name == 'articleDetails') {
         // move map
         this.map.mapInstance.flyTo({
