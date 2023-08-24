@@ -18,7 +18,23 @@ export const FilterResolver = (path: string, options: any) => {
         },
       },
     },
-    "/search": { tags: { $all: options.tags }, category: options.category },
+    "/search": {
+      ...(!!options.tags?.length ? { tags: { $all: options.tags } } : {}),
+      ...(!!options.category ? { category: options.category } : {}),
+      ...(!options.tags?.length && !options.category
+        ? {
+            location: {
+              $near: {
+                $maxDistance: options.distance ?? 7000,
+                $geometry: {
+                  type: "Point",
+                  coordinates: [options.longtitude, options.latitude],
+                },
+              },
+            },
+          }
+        : {}),
+    },
     "/like": [
       {
         $set: {

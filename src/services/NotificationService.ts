@@ -1,10 +1,12 @@
 import * as dotenv from "dotenv";
 import Notification from "../models/Notification";
+import { Cache } from "../utils/cache.decorator";
 dotenv.config();
 
 class NotificationService {
   constructor() {}
 
+  @Cache()
   async getAll(req: any) {
     const { userId } = req.body;
     try {

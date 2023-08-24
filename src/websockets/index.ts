@@ -53,8 +53,20 @@ export default async (expressServer: http.Server) => {
       console.log("i am the current user:", currentUser);
 
       // RedisSub
-      RedisSubscriber.subscribe(currentUser.id, (message) => {
-        console.log(message); // 'message'
+      RedisSubscriber.subscribe(currentUser.id, async (message) => {
+        console.log("SENDING OVER WS CONNECTION", message); // 'message'
+        const cache = await RedisClient.get(
+          `/api/v1/notification/${currentUser.id}`,
+        );
+        if (cache) {
+          RedisClient.set(
+            `/api/v1/notification/${currentUser.id}`,
+            JSON.stringify([...JSON.parse(cache), JSON.parse(message)]),
+            {
+              EX: 10,
+            },
+          );
+        }
         websocketConnection.send(message);
       });
 
@@ -64,7 +76,6 @@ export default async (expressServer: http.Server) => {
         // ['selectedArticle', 'articleDetails', 'likedArticle', 'postedArticle', 'searchedArticles']
         if (parsedMessage.name == "location") {
           currentUser[parsedMessage.name] = parsedMessage.data;
-          console.log(currentUser);
           RedisClient.RPUSH("locations", JSON.stringify(currentUser));
         } else if (
           [
@@ -75,7 +86,6 @@ export default async (expressServer: http.Server) => {
             "searchedArticles",
           ].includes(parsedMessage.name)
         ) {
-          console.log(parsedMessage);
           const action: any = {
             user: currentUser.id,
             action: parsedMessage.name,

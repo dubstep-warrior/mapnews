@@ -10,23 +10,26 @@ export const Cache = () => {
       const req = args[0];
 
       try {
-        const cache = await RedisClient.get(`${req.body["userId"]}${req.path}`);
+        console.log(req.baseUrl, req.path);
+        const cache = await RedisClient.get(
+          `${req.baseUrl}${req.path}${req.body["userId"]}`,
+        );
         if (cache) {
           console.log("cache retrieved at ", req.path);
           return JSON.parse(cache);
         }
 
-        const articles = await originalMethod.apply(this, args);
+        const models = await originalMethod.apply(this, args);
 
         RedisClient.set(
-          `${req.body["userId"]}${req.path}`,
-          JSON.stringify(articles),
+          `${req.baseUrl}${req.path}${req.body["userId"]}`,
+          JSON.stringify(models),
           {
             EX: 10,
           },
         );
         console.log("set redis and retrieve mongodb at ", req.path);
-        return articles;
+        return models;
       } catch (err) {
         throw "Error in retrieving server cache";
       }
