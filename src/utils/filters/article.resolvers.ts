@@ -13,7 +13,7 @@ export const FilterResolver = (path: string, options: any) => {
           $maxDistance: options.distance ?? 7000,
           $geometry: {
             type: "Point",
-            coordinates: [options.longtitude, options.latitude],
+            coordinates: [options.longitude, options.latitude],
           },
         },
       },
