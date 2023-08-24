@@ -3,6 +3,7 @@ import { Base } from 'src/app/core/directives/base.directive';
 import { State } from 'src/app/core/interfaces/state';
 import { ArticleService } from 'src/app/core/services/article/article.service';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { NotificationService } from 'src/app/core/services/notification/notification.service';
 import { StateService } from 'src/app/core/services/state/state.service';
 import {
   slideInFromLeft,
@@ -22,12 +23,17 @@ export class NavbarComponent extends Base implements OnInit {
   articleState: string = 'relevant';
   mobileMenu: boolean = false;
 
+  unviewedCount: number;
+
   constructor(
     private service: StateService,
     private authService: AuthService,
     private articleService: ArticleService,
+    private notificationService: NotificationService,
   ) {
     super();
+    this.unviewedCount = this.notificationService.unviewedCount;
+    console.log('UNVIEWED COUNT', this.unviewedCount);
   }
 
   ngOnInit(): void {

@@ -11,10 +11,19 @@ export class NotificationService {
   model: BehaviorSubject<Notification[]> = new BehaviorSubject<Notification[]>(
     [],
   );
+  private new: number = 2;
   private data: Notification[];
   private api: string = 'api/v1/notification';
   constructor(private service: ServerService) {
     this.pullNotifications();
+  }
+
+  public get unviewedCount(): number {
+    return this.new;
+  }
+
+  seenNotification() {
+    this.new = 0;
   }
 
   addNotification(message: string) {

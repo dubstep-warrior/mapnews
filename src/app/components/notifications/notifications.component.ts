@@ -12,6 +12,7 @@ import { StateService } from 'src/app/core/services/state/state.service';
 })
 export class NotificationsComponent {
   notifications$: Observable<Notification[]>;
+
   constructor(
     private service: NotificationService,
     private stateService: StateService,

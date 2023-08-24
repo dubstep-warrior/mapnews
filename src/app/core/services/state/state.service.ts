@@ -14,7 +14,9 @@ export class StateService {
   model: Subject<any> = new Subject();
 
   resolveState(stateName: State['name'], data?: any) {
-    this.state.name = stateName;
+    this.state = {
+      name: stateName,
+    };
     this.state.data = data;
     this.wsService.send(this.state);
     this.stateBroadcast();

@@ -1,12 +1,12 @@
 <section (click)="$event.stopPropagation()" [class]="state.name">
   <app-article-details
-    *ngIf="state.name == 'articleDetails'"
+    *ngIf="['articleDetails'].includes(state.name)"
     [article]="state.data"
     [state]="state"
     [authStatus]="authStatus"
     (resolveLike)="clickLikeButton($event)"
   ></app-article-details>
-  <app-right-overlay-container *ngIf="state.name == 'search'">
+  <app-right-overlay-container *ngIf="['search'].includes(state.name)">
     <h2 title>Search</h2>
     <app-article-form
       body
