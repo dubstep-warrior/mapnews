@@ -30,6 +30,7 @@ import { ArticleDetailsComponent } from './components/article-details/article-de
 import { RightOverlayContainerComponent } from './components/shared/right-overlay-container/right-overlay-container.component';
 import { AccessContainerComponent } from './components/shared/access-container/access-container.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
+import { NotificationMessagePipe } from './core/pipes/notification-message.pipe';
 
 export let AppInjector: Injector;
 @NgModule({
@@ -54,6 +55,7 @@ export let AppInjector: Injector;
     RightOverlayContainerComponent,
     AccessContainerComponent,
     NotificationsComponent,
+    NotificationMessagePipe,
   ],
   imports: [
     HttpClientModule,

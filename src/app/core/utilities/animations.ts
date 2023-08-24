@@ -146,7 +146,7 @@ function slideTo(direction: string) {
       [
         style({
           position: 'absolute',
-          [direction]: '0%',
+          [direction]: '0',
           // transform: 'translateY(-50%)',
           top: 0,
           width: '100%',

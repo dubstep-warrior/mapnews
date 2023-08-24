@@ -7,6 +7,7 @@
 :host {
   overflow: scroll;
   display: flex;
+  width: 100%;
 
   &::-webkit-scrollbar {
     display: none;

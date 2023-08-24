@@ -17,8 +17,10 @@
       <div>
         <div>
           <div>
-            {{ notificationMessages[notification.type] }}
-            {{ notification.article.title }}
+            {{
+              notification.article.title
+                | notificationMessage: notification.type
+            }}
           </div>
           <div>
             <!-- message -->
