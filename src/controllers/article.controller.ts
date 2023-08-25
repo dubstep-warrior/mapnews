@@ -41,12 +41,15 @@ export default class Article {
   @Auth("posted_by")
   @Post("")
   async apiCreateArticle(req: Request, res: Response, next: NextFunction) {
+    // validate form title etc
+
     try {
       const createdArticle = await ArticleService.createArticle(req);
 
-      if (createdArticle.category == "emergency") {
-        RedisPublisher.publish("emergency", JSON.stringify(createdArticle));
-      }
+      RedisPublisher.publish(
+        createdArticle.category == "emergency" ? "emergency" : "general",
+        JSON.stringify(createdArticle),
+      );
 
       res.json({
         success: true,

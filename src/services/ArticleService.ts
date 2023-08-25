@@ -31,7 +31,7 @@ class ArticleService {
   async createArticle(req: any) {
     try {
       const data = req.body;
-
+      console.log(data);
       const imageUploads = req.files.map((img: any) =>
         this.imageKit.upload({
           file: img.buffer.toString("base64"),
@@ -45,7 +45,11 @@ class ArticleService {
       };
 
       Object.keys(data).forEach((key) => {
-        newArticle[key] = JSON.parse(data[key]);
+        try {
+          newArticle[key] = JSON.parse(data[key]);
+        } catch (e) {
+          newArticle[key] = data[key];
+        }
       });
 
       const response = await new Article(newArticle).save();
@@ -54,7 +58,7 @@ class ArticleService {
         coordinates: (response.location as any).coordinates,
       };
     } catch (error) {
-      console.log("error in service");
+      console.log("error in service", error);
       throw error;
     }
   }

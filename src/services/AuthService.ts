@@ -72,15 +72,15 @@ class AuthService {
     });
 
     if (["email", "password"].some((element) => !(element in currentUser))) {
-      throw new Error("Not all parameters filled");
+      throw "Not all parameters filled";
     }
     const user = await User.findOne({ email: currentUser["email"] });
 
     if (!user) {
-      throw new Error("User does not exist");
+      throw "User does not exist";
     }
     if (!Bcrypt.compareSync(currentUser["password"], user.password)) {
-      throw new Error("Wrong password");
+      throw "Wrong password";
     }
     const token = JsonWebToken.sign(
       { id: user._id, email: user.email },

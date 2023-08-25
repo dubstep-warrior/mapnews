@@ -52,14 +52,16 @@ RedisSubscriber.subscribe("emergency", async (message) => {
   };
 
   // Gather users
-  const users = await RedisClient.geoSearch(
-    "user-locations",
-    {
-      latitude: article.location.coordinates[1],
-      longitude: article.location.coordinates[0],
-    },
-    { radius: 5, unit: "km" },
-  );
+  const users = (
+    await RedisClient.geoSearch(
+      "user-locations",
+      {
+        latitude: article.location.coordinates[1],
+        longitude: article.location.coordinates[0],
+      },
+      { radius: 5, unit: "km" },
+    )
+  ).filter((userID) => userID !== article.posted_by);
 
   // CHECK ACTIVITY METRICS IF IT MAKE SENSE
   // CURRENT ISSUE: SUSCEPTIBLE TO NOTIFICATION SPAM
@@ -67,16 +69,23 @@ RedisSubscriber.subscribe("emergency", async (message) => {
   if (!!users.length) {
     console.log(users);
     console.log(article.posted_by);
-    notification["users"] = users
-      .filter((userID) => userID !== article.posted_by)
-      .map((userID) => new ObjectId(userID));
+    console.log(users.includes(article.posted_by), typeof article.posted_by);
 
+    notification["users"] = users.map((userID) => new ObjectId(userID));
+    console.log("filtered", notification["users"]);
     const collection = client.db("mapnews").collection("notifications");
 
-    collection.insertOne(notification).then(() => {
+    collection.insertOne(notification).then((res) => {
       console.log("added a new notification");
       users.forEach((userID) =>
-        RedisPublisher.publish(userID, JSON.stringify(notification)),
+        RedisPublisher.publish(
+          userID,
+          JSON.stringify({
+            ...notification,
+            _id: res.insertedId,
+            article: article,
+          }),
+        ),
       );
     });
   }
@@ -125,21 +134,28 @@ RedisSubscriber.subscribe("general", async (message) => {
     );
 
     // CURRENTLY USERS ARE NEARBY (ONLINE) AND INTERESTED, CHANGE SOON
-    const users = nearByusers & interestedUser;
+    const users = [...(nearByusers & interestedUser)].filter(
+      (userID) => userID !== article.posted_by,
+    );
 
     if (!!users.length) {
       console.log(users);
       console.log(article.posted_by);
-      notification["users"] = [...users]
-        .filter((userID) => userID !== article.posted_by)
-        .map((userID) => new ObjectId(userID));
+      notification["users"] = users.map((userID) => new ObjectId(userID));
 
       const collection = client.db("mapnews").collection("notifications");
 
-      collection.insertOne(notification).then(() => {
+      collection.insertOne(notification).then((res) => {
         console.log("added a new notification");
         users.forEach((userID) =>
-          RedisPublisher.publish(userID, JSON.stringify(notification)),
+          RedisPublisher.publish(
+            userID,
+            JSON.stringify({
+              ...notification,
+              _id: res.insertedId,
+              article: article,
+            }),
+          ),
         );
       });
     }

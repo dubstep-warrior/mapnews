@@ -72,7 +72,7 @@ export default async (expressServer: http.Server) => {
 
       websocketConnection.on("message", (message: any) => {
         const parsedMessage = JSON.parse(message);
-
+        // console.log('onmessage,', parsedMessage)
         // ['selectedArticle', 'articleDetails', 'likedArticle', 'postedArticle', 'searchedArticles']
         if (parsedMessage.name == "location") {
           currentUser[parsedMessage.name] = parsedMessage.data;
@@ -105,21 +105,6 @@ export default async (expressServer: http.Server) => {
           // const job = await RedisClient.get('actions-job')
 
           RedisClient.LPUSH("actions", JSON.stringify(action));
-          if (
-            !["searchedArticles", "postedArticle"].includes(parsedMessage.name)
-          ) {
-            console.log(parsedMessage.data.id);
-            RedisClient.LPUSH(
-              "interactions",
-              JSON.stringify({
-                user: currentUser.id,
-                action: parsedMessage.name,
-                article: parsedMessage.data.id,
-              }),
-            );
-
-            // if(parsedMessage.data.)
-          }
         }
       });
     },

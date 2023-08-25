@@ -14,7 +14,7 @@ class NotificationService {
       const notifications = await Notification.find({
         users: { $all: userId },
       })
-        .sort({ date: -1 })
+        .sort({ date: 1 })
         .populate("article")
         .lean();
       console.log(notifications);
