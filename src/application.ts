@@ -77,7 +77,6 @@ class Application {
         controllerClass,
       );
       const exRouter = express.Router();
-      console.log(routers);
       routers.forEach(({ method, path, handlerName }) => {
         if (handlerName in this.imageUploadPaths) {
           exRouter[method](

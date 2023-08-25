@@ -10,12 +10,10 @@ export const Cache = () => {
       const req = args[0];
 
       try {
-        console.log(req.baseUrl, req.path);
         const cache = await RedisClient.get(
           `${req.baseUrl}${req.path}${req.body["userId"]}`,
         );
         if (cache) {
-          console.log("cache retrieved at ", req.path);
           return JSON.parse(cache);
         }
 

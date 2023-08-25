@@ -11,13 +11,9 @@ export default async (expressServer: http.Server) => {
   });
 
   expressServer.on("upgrade", (request: any, socket: any, head: any) => {
-    console.log("server being upgraded");
-    // console.log(request.query);
-    // console.log(request)
     const [_path, params] = request?.url?.split("?") as any;
 
     const urlParams = new URLSearchParams(params);
-    console.log(urlParams.get("authentication"));
 
     try {
       const decoded = jwt.verify(
@@ -26,7 +22,6 @@ export default async (expressServer: http.Server) => {
       ) as JwtPayload;
 
       if (decoded) {
-        console.log("JWT verification succeeded");
         websocketServer.handleUpgrade(request, socket, head, (websocket) => {
           websocketServer.emit("connection", websocket, request, decoded);
         });
@@ -43,18 +38,15 @@ export default async (expressServer: http.Server) => {
       connectionRequest: any,
       user: any,
     ) {
-      console.log("websocket connection");
       const [_path, params] = connectionRequest?.url?.split("?") as any;
       const connectionParams = params;
       // NOTE: connectParams are not used here but good to understand how to get
       // to them if you need to pass data with the connection to identify it (e.g., a userId).
-      // consoley.log(connectionRequest);
+
       const currentUser = { ...user };
-      console.log("i am the current user:", currentUser);
 
       // RedisSub
       RedisSubscriber.subscribe(currentUser.id, async (message) => {
-        console.log("SENDING OVER WS CONNECTION", message); // 'message'
         const cache = await RedisClient.get(
           `/api/v1/notification/${currentUser.id}`,
         );
@@ -72,8 +64,6 @@ export default async (expressServer: http.Server) => {
 
       websocketConnection.on("message", (message: any) => {
         const parsedMessage = JSON.parse(message);
-        // console.log('onmessage,', parsedMessage)
-        // ['selectedArticle', 'articleDetails', 'likedArticle', 'postedArticle', 'searchedArticles']
         if (parsedMessage.name == "location") {
           currentUser[parsedMessage.name] = parsedMessage.data;
           RedisClient.RPUSH("locations", JSON.stringify(currentUser));
@@ -101,8 +91,6 @@ export default async (expressServer: http.Server) => {
                 currentUser.location.latitude,
               ],
             };
-          // console.log('parsedMessage:',parsedMessage);
-          // const job = await RedisClient.get('actions-job')
 
           RedisClient.LPUSH("actions", JSON.stringify(action));
         }

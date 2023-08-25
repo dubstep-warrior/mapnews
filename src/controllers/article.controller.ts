@@ -80,34 +80,4 @@ export default class Article {
       res.status(500).json({ success: false, error: error });
     }
   }
-
-  // static async apiUpdateArticle(req, res, next){
-  //    try {
-  //       const comment = {}
-  //       comment.title        = req.body.title;
-  //       comment.body         = req.body.body;
-  //       comment.articleImage = req.body.article_image
-
-  //       const updatedArticle = await ArticleService.updateArticle(comment);
-
-  //       if(updatedArticle.modifiedCount === 0){
-  //          throw new Error("Unable to update article, error occord");
-  //       }
-
-  //       res.json(updatedArticle);
-
-  //    } catch (error) {
-  //       res.status(500).json({error: error});
-  //    }
-  // }
-
-  // static async apiDeleteArticle(req, res, next){
-  //       try {
-  //          const articleId = req.params.id;
-  //          const deleteResponse =  await ArticleService.deleteArticle(articleId)
-  //          res.json(deleteResponse);
-  //       } catch (error) {
-  //          res.status(500).json({error: error})
-  //       }
-  // }
 }

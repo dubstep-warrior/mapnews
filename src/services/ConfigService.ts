@@ -7,7 +7,8 @@ class ConfigService {
       const config = await Config.find().lean();
       return config;
     } catch (error) {
-      console.log(`Could not fetch articles ${error}`);
+      console.log(`Could not fetch config ${error}`);
+      throw error;
     }
   }
 }

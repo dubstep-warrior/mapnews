@@ -10,14 +10,12 @@ class NotificationService {
   async getAll(req: any) {
     const { userId } = req.body;
     try {
-      console.log("getall service called: ", userId);
       const notifications = await Notification.find({
         users: { $all: userId },
       })
         .sort({ date: 1 })
         .populate("article")
         .lean();
-      console.log(notifications);
       return notifications.map((notification: any) => {
         return {
           ...notification,

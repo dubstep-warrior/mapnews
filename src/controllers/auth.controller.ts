@@ -14,7 +14,6 @@ export default class Auth {
         data: createdUser,
       });
     } catch (error: any) {
-      console.log("error caught in register");
       console.log(error);
       res.send({ success: false, error: error.message });
     }
@@ -23,15 +22,12 @@ export default class Auth {
   @Post("/login")
   async apiLogin(req: Request, res: Response, next: NextFunction) {
     try {
-      console.log("login controller attempted");
       const token = await authService.userLogin(req);
-      console.log("controller", token);
       res.json({
         success: true,
         data: token,
       });
     } catch (error) {
-      console.log("error caught heres");
       console.log(error);
       res.status(500).json({ success: false, error: error });
     }

@@ -28,15 +28,12 @@ RedisClient.connect();
 
 RedisClient.on("error", function (error) {
   console.error(error);
-  // I report it onto a logging service like Sentry.
 });
 RedisSubscriber.on("error", function (error) {
   console.error(error);
-  // I report it onto a logging service like Sentry.
 });
 RedisPublisher.on("error", function (error) {
   console.error(error);
-  // I report it onto a logging service like Sentry.
 });
 
 // EMERGENCY SUBSCRIPTION
