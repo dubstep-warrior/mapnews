@@ -18,7 +18,6 @@ export class RegisterComponent extends FormDirective implements OnInit {
       .pipe(this.takeUntilDestroy())
       .subscribe((status) => {
         this.authenticated = status.loggedIn;
-        console.log(status);
       });
 
     super.ngOnInit();
@@ -31,6 +30,5 @@ export class RegisterComponent extends FormDirective implements OnInit {
 
   async submit() {
     const res = await this.authService.register(this.form);
-    console.log(res);
   }
 }

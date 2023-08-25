@@ -32,8 +32,6 @@ export class LocationService {
     return new Observable((observer: Observer<ILocation>) => {
       navigator.geolocation.watchPosition(
         (pos) => {
-          // console.log('change detected');
-          // console.log(pos.coords);
           this._currentLocation = {
             longitude: pos.coords.longitude,
             latitude: pos.coords.latitude,

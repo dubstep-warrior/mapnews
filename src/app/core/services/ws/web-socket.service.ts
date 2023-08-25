@@ -21,9 +21,7 @@ export class WebSocketService {
           environment.ws_endpoint_mapnews_backend_api
         }?authentication=${localStorage.getItem('token')}`,
       );
-      console.log('WS CONNECTION CALLED ', this.connection$);
       this.connection$.subscribe((data) => {
-        console.log('web socket data: ', data);
         this.notificationService.addNotification(data);
       });
       return this.connection$;

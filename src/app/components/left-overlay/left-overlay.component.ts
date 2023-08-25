@@ -63,7 +63,6 @@ export class LeftOverlayComponent extends FormDirective implements OnInit {
         };
       }),
     ]);
-    console.log(this.form.get('images').value);
   }
 
   addImage(event: any) {
@@ -78,9 +77,7 @@ export class LeftOverlayComponent extends FormDirective implements OnInit {
   }
 
   async submit(): Promise<void> {
-    console.log('submit called');
-    const res = await this.articleService.report(this.form);
-    console.log(res);
+    await this.articleService.report(this.form);
   }
 
   resetState(): void {

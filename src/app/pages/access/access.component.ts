@@ -33,7 +33,6 @@ export class AccessComponent extends Base implements OnInit, AfterViewInit {
       .pipe(this.takeUntilDestroy())
       .subscribe((status) => {
         this.authenticated = status.loggedIn;
-        console.log(status);
       });
 
     this.router.events
@@ -42,10 +41,8 @@ export class AccessComponent extends Base implements OnInit, AfterViewInit {
         filter((event) => event instanceof NavigationEnd),
       )
       .subscribe((event) => {
-        console.log(event);
         const strArr = (event as NavigationEnd)['url'].split('/');
         this.currentRoute = strArr[strArr.length - 1];
-        console.log(strArr);
       });
   }
 
@@ -62,7 +59,6 @@ export class AccessComponent extends Base implements OnInit, AfterViewInit {
   }
 
   resetState() {
-    console.log('animation ended');
     this.router.navigate(['/']);
   }
 }

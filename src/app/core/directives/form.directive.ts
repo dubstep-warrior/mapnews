@@ -44,7 +44,5 @@ export class FormDirective extends Base implements OnInit {
     this.form
       .get('tags')
       .setValue([...this.form.get('tags').value, event.target.value]);
-    console.log(this.form.get('tags').value);
-    console.log('tag added');
   }
 }

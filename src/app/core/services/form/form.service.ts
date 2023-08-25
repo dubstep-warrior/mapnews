@@ -17,7 +17,6 @@ export class FormService {
     return this.serverService.get(this.api).then((res: any) => {
       if (res && res.success) {
         this.formConfigurations = res.data;
-        console.log(this.formConfigurations);
       }
     });
   }
@@ -40,8 +39,6 @@ export class FormService {
     });
 
     this.form = new FormGroup(formGroupObject);
-    console.log(this.formObjSchema);
-    console.log(this.form);
     this.currentFormName = name;
     return this.form;
   }

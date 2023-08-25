@@ -28,13 +28,11 @@ export class HomeComponent extends Base implements OnInit {
   ngOnInit(): void {
     this.service.model.pipe(this.takeUntilDestroy()).subscribe((state) => {
       this.state = state;
-      console.log(this.state);
     });
 
     this.authService.authStatusSubject
       .pipe(this.takeUntilDestroy())
       .subscribe((status) => {
-        console.log(status);
         this.authenticated = status.loggedIn;
       });
   }

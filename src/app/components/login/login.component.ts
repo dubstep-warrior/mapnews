@@ -12,7 +12,6 @@ export class LoginComponent extends FormDirective {
   }
 
   async submit() {
-    const res = await this.authService.login(this.form);
-    console.log(res);
+    await this.authService.login(this.form);
   }
 }

@@ -35,7 +35,6 @@ export class ArticleService {
     private wsService: WebSocketService,
   ) {
     this.model = new BehaviorSubject([]);
-    console.log('BEGIN', navigator.geolocation);
     this.authService.authStatusSubject.pipe().subscribe((status) => {
       this.authStatus = status;
     });
@@ -43,21 +42,15 @@ export class ArticleService {
 
   async getArticles(key: string, params?: GetArticleParams) {
     this.current = key == 'current' ? this.current : key;
-    console.log('YES WE ARE');
-    console.log('GETTING ARTICLES', {
-      ...this.locationService.currentLocation,
-      ...params,
-    });
+
     const res = await this.service.get(
       `${this.api}${this.navMapping[this.current]}`,
       { ...this.locationService.currentLocation, ...params },
     );
-    console.log(res);
     if (res && res.success) {
       this.articles = res.data;
       this.model.next(this.articles);
       if (!!params) {
-        console.log('sending out searched articles');
         this.wsService.send({
           name: 'searchedArticles',
           data: params,
@@ -97,9 +90,7 @@ export class ArticleService {
 
   async resolveArticleLikes(id: string) {
     const res = await this.service.post(`${this.api}/like`, { articleId: id });
-    console.log(res);
     if (res && res.success) {
-      console.log('inside success');
       this.articles = this.articles.map((article) =>
         res.data?._id == article._id ? res.data : article,
       );

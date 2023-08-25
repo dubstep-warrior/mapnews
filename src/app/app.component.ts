@@ -26,7 +26,6 @@ export class AppComponent extends Base implements OnInit {
   ngOnInit(): void {
     this.stateService.model.pipe(this.takeUntilDestroy()).subscribe((state) => {
       this.state = state;
-      console.log(this.state.name);
     });
 
     this.router.events
@@ -35,13 +34,11 @@ export class AppComponent extends Base implements OnInit {
         filter((event) => event instanceof NavigationEnd),
       )
       .subscribe((event) => {
-        console.log(event);
         this.currentURL = (event as NavigationEnd)['url'];
       });
   }
 
   resetState(): void {
-    console.log('CALLING RESET STATE IN APP LEVEL?');
     if (
       [
         'articleDetails',

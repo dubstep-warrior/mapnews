@@ -72,7 +72,6 @@ export class MapComponent extends Base implements AfterViewInit, OnDestroy {
       .getLocation()
       .pipe(this.takeUntilDestroy())
       .subscribe((data: ILocation) => {
-        console.log('CMON LOCATION');
         this.currentCoordinates = { ...this.currentCoordinates, ...data };
       });
 
@@ -80,16 +79,13 @@ export class MapComponent extends Base implements AfterViewInit, OnDestroy {
       .pipe(
         this.takeUntilDestroy(),
         distinctUntilChanged((prev, curr) => {
-          console.log('CHECKING DISTINCT:', prev, curr);
           return prev.name === curr.name;
         }),
       )
       .subscribe((state) => {
         this.prevState = this.state;
         this.state = state;
-        // console.log('IT IS DISTINCT', this.prevState, this.state)
         if (state.name == 'articleDetails') {
-          // move map
           this.map.mapInstance.flyTo({
             center: state.data.coordinates,
             speed: 0.2,

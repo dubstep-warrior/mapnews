@@ -43,7 +43,6 @@ export class NotificationService {
         JSON.parse(localStorage.getItem('seen-notifications')),
       );
     }
-    console.log('PULLED NOTIFICATIONS: ', res);
     if (res && res.success) {
       this.data = res.data;
       this.model.next(this.data);

@@ -72,7 +72,6 @@ export class NavbarComponent extends Base implements OnInit {
     this.service.resetState();
     const key = item.toLowerCase().replaceAll(' ', '');
     const res = await this.articleService.getArticles(key);
-    console.log(res);
   }
 
   resolveMobileMenu() {

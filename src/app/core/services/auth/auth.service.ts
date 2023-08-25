@@ -64,12 +64,9 @@ export class AuthService {
     if (res && res.success) {
       this.authenticated = true;
       this.token = res.data;
-      console.log(res);
-      // console.log(res)
       localStorage.setItem('token', res.data.token);
       localStorage.setItem(res.data.token, JSON.stringify(res.data.user));
       this.wsService.connect();
-      console.log(localStorage.getItem('token'));
       this.authStatusSubject.next({
         loggedIn: this.authenticated,
         id: res.data.user._id,

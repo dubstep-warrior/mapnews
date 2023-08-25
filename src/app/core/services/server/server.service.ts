@@ -19,7 +19,6 @@ export class ServerService {
       observe: 'body',
       headers: {},
     };
-    console.log('BEFORE APPEND:', url);
     if (method == 'GET' && data) {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
@@ -28,7 +27,6 @@ export class ServerService {
       options['params'] = params;
     }
     const result = this.http.request(method, url, options);
-    console.log(url);
     return new Promise((resolve, reject) => {
       result.subscribe(resolve, reject);
     }).catch((res) => {

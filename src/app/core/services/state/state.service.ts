@@ -27,7 +27,6 @@ export class StateService {
   }
 
   resetState() {
-    console.log('reset state called');
     this.state = { name: 'neutral' };
     this.stateBroadcast();
   }
