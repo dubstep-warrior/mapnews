@@ -11,7 +11,7 @@ export class FormService {
   currentFormName: string;
   formObjSchema: any = {};
   formConfigurations: Array<any>;
-  constructor(private serverService: ServerService) { }
+  constructor(private serverService: ServerService) {}
 
   init() {
     return this.serverService.get(this.api).then((res: any) => {

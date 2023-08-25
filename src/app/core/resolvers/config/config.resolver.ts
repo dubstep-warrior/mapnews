@@ -5,16 +5,14 @@ import {
   RouterStateSnapshot,
   ActivatedRouteSnapshot,
 } from '@angular/router';
-import { Observable, of } from 'rxjs'; 
-import { FormService } from '../../services/form/form.service'; 
+import { Observable, of } from 'rxjs';
+import { FormService } from '../../services/form/form.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ConfigResolver implements Resolve<boolean> {
-  constructor(
-    private service: FormService, 
-  ) {}
+  constructor(private service: FormService) {}
 
   resolve(
     route: ActivatedRouteSnapshot,

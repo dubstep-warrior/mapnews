@@ -53,7 +53,7 @@ import { ILocation, IMapAttributes } from 'src/app/core/interfaces/location';
 export class MapComponent extends Base implements AfterViewInit, OnDestroy {
   @ViewChild('map')
   map: any;
-  currentCoordinates: IMapAttributes = { longitude: 139.753, latitude: 35.6844, zoom: 14 };
+  currentCoordinates: IMapAttributes = { zoom: 14 };
   articles: Observable<Article[]>;
   state: State;
   prevState: State;
@@ -72,8 +72,8 @@ export class MapComponent extends Base implements AfterViewInit, OnDestroy {
       .getLocation()
       .pipe(this.takeUntilDestroy())
       .subscribe((data: ILocation) => {
-        this.currentCoordinates = { ...this.currentCoordinates, ...data }
-
+        console.log('CMON LOCATION');
+        this.currentCoordinates = { ...this.currentCoordinates, ...data };
       });
 
     this.stateService.model
@@ -102,9 +102,10 @@ export class MapComponent extends Base implements AfterViewInit, OnDestroy {
 
   sendMouseCoordinates(event: any) {
     if (['addArticleLocation'].includes(this.state?.name)) {
-      this.locationService.setMouseCoordinates(
-        { longitude: event.lngLat.wrap().lng, latitude: event.lngLat.wrap().lat }
-      );
+      this.locationService.setMouseCoordinates({
+        longitude: event.lngLat.wrap().lng,
+        latitude: event.lngLat.wrap().lat,
+      });
     }
   }
 

@@ -15,6 +15,7 @@ export class AuthService {
   authStatusSubject: BehaviorSubject<AuthStatus>;
   token: string = '';
   user: IUser | null;
+  private _error: string;
   constructor(
     private service: ServerService,
     private wsService: WebSocketService,
@@ -74,6 +75,15 @@ export class AuthService {
         id: res.data.user._id,
       });
     }
+    if (res && !res.success && res.error) this._error = res.error;
     return res;
+  }
+
+  get error() {
+    return this._error;
+  }
+
+  clearError() {
+    this._error = '';
   }
 }

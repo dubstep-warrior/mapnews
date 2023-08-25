@@ -34,6 +34,10 @@ export class FormDirective extends Base implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formService.resolve(this.formType);
+    this.form.valueChanges.pipe(this.takeUntilDestroy()).subscribe(() => {
+      if (['register', 'login'].includes(this.formType))
+        this.authService.clearError();
+    });
   }
 
   addTag(event: any) {

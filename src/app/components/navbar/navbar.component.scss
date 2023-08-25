@@ -83,6 +83,22 @@ section {
   img {
     margin: auto;
   }
+
+  &.notification {
+    position: relative;
+    overflow: visible;
+
+    > .number {
+      position: absolute;
+      background-color: red;
+      color: white;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      text-align: center;
+      inset: auto 0 0 auto;
+    }
+  }
 }
 
 .not-mobile {

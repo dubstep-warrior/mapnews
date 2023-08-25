@@ -1,8 +1,13 @@
 <section>
   <div>
-    <h2>MapNews</h2>
+    <div>
+      <h2>MapNews</h2>
+    </div>
+    <ng-content select="[upload]"></ng-content>
+    <ng-content class="form" select="[form]"></ng-content>
+    <ng-content select="[actions]"></ng-content>
   </div>
-  <ng-content select="[upload]"></ng-content>
-  <ng-content class="form" select="[form]"></ng-content>
-  <ng-content select="[actions]"></ng-content>
+  <div class="error" *ngIf="!!service.error">
+    {{ service.error | uppercase }}
+  </div>
 </section>

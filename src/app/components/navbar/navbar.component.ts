@@ -23,17 +23,13 @@ export class NavbarComponent extends Base implements OnInit {
   articleState: string = 'relevant';
   mobileMenu: boolean = false;
 
-  unviewedCount: number;
-
   constructor(
     private service: StateService,
     private authService: AuthService,
     private articleService: ArticleService,
-    private notificationService: NotificationService,
+    public notificationService: NotificationService,
   ) {
     super();
-    this.unviewedCount = this.notificationService.unviewedCount;
-    console.log('UNVIEWED COUNT', this.unviewedCount);
   }
 
   ngOnInit(): void {
@@ -53,6 +49,7 @@ export class NavbarComponent extends Base implements OnInit {
 
   openNotifications() {
     this.mobileMenu = false;
+    this.notificationService.seenNotification();
     this.service.resolveState(
       this.service.state.name == 'notifications' ? 'neutral' : 'notifications',
     );

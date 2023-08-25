@@ -38,12 +38,19 @@
       <div class="button" (click)="searchArticle()">
         <img class="icon" src="./../../../assets/images/search.png" alt="" />
       </div>
-      <div class="button" (click)="openNotifications()" *ngIf="authenticated">
+      <div
+        class="button notification"
+        (click)="openNotifications()"
+        *ngIf="authenticated"
+      >
         <img
           class="icon"
           src="./../../../assets/images/notification.png"
           alt=""
         />
+        <div class="number" *ngIf="!!notificationService.unviewedCount">
+          {{ notificationService.unviewedCount }}
+        </div>
       </div>
       <div class="button not-mobile" *ngIf="authenticated" (click)="logout()">
         <img class="icon" src="./../../../assets/images/logout.png" alt="" />

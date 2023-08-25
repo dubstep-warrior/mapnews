@@ -19,60 +19,72 @@
 }
 
 section {
-  margin: auto;
   width: 389px;
+  margin: auto;
   display: flex;
-  align-items: center;
   flex-direction: column;
-  gap: 96px;
 
-  @include screen-small {
-    width: 100%;
-    padding: 24px;
-    gap: 48px;
-  }
-
-  > ::ng-deep * {
+  > :first-child {
     display: flex;
-    width: 100%;
-    flex-direction: column;
     align-items: center;
-    text-align: center;
+    flex-direction: column;
+    gap: 96px;
+    margin-bottom: 12px;
 
-    * {
+    @include screen-small {
       width: 100%;
+      padding: 24px;
+      gap: 48px;
     }
-  }
 
-  ::ng-deep form * {
-    text-align: left;
-  }
+    > ::ng-deep * {
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
 
-  h2 {
-    font-weight: 400;
-    font-size: 32px;
-  }
-
-  > ::ng-deep :last-child {
-    gap: 8px;
-
-    > :last-child {
-      font-size: 22px;
-      cursor: pointer;
-
-      &:hover {
-        text-decoration: underline;
+      * {
+        width: 100%;
       }
     }
+
+    ::ng-deep form * {
+      text-align: left;
+    }
+
+    h2 {
+      font-weight: 400;
+      font-size: 32px;
+    }
+
+    > ::ng-deep :last-child {
+      gap: 8px;
+
+      > :last-child {
+        font-size: 22px;
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    ::ng-deep form {
+      display: flex;
+      gap: 24px;
+      flex-direction: column;
+    }
+
+    ::ng-deep input {
+      color: black;
+    }
   }
 
-  ::ng-deep form {
-    display: flex;
-    gap: 24px;
-    flex-direction: column;
-  }
-
-  ::ng-deep input {
-    color: black;
+  > div.error {
+    text-align: center;
+    border-radius: 8px;
+    border: 2px solid rgb(255, 45, 45);
   }
 }

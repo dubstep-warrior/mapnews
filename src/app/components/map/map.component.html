@@ -1,41 +1,48 @@
-<mgl-map
-  #map
-  [style]="
-    'https://api.maptiler.com/maps/bright-v2/style.json?key=Vf3Ucwo3a2GSlz4MWlz4'
-  "
-  [zoom]="[currentCoordinates['zoom']]"
-  [center]="[currentCoordinates['longitude'], currentCoordinates['latitude']]"
-  (mapMouseUp)="sendMouseCoordinates($event)"
-  (click)="
-    ['addArticleLocation'].includes(state?.name) ||
-    ['addArticleLocation'].includes(prevState?.name)
-      ? $event.stopPropagation()
-      : null
-  "
-  (zoomEnd)="currentCoordinates.zoom = $event.target.style.z"
-  [class.locationSelection]="['addArticleLocation'].includes(state?.name)"
+<section
+  *ngIf="!!currentCoordinates.longitude && !!currentCoordinates.latitude"
 >
-  <app-mark
-    *ngFor="let article of articles | async"
-    [article]="article"
-    [type]="article.category"
-  ></app-mark>
-  <app-article-box></app-article-box>
-  <app-mark
-    [@locationDrop]
-    [type]="'post-location'"
-    *ngIf="
-      ['addArticleLocation', 'addArticle'].includes(state?.name) &&
-      formService.form?.get('location')?.value?.coordinates.length
+  <mgl-map
+    #map
+    [style]="
+      'https://api.maptiler.com/maps/bright-v2/style.json?key=Vf3Ucwo3a2GSlz4MWlz4'
     "
-    [article]="{
-      coordinates: formService.form?.get('location')?.value?.coordinates
-    }"
-  ></app-mark>
-  <app-mark
-    [type]="'self'"
-    [article]="{
-      coordinates: [currentCoordinates['longitude'], currentCoordinates['latitude']]
-    }"
-  ></app-mark>
-</mgl-map>
+    [zoom]="[currentCoordinates['zoom']]"
+    [center]="[currentCoordinates['longitude'], currentCoordinates['latitude']]"
+    (mapMouseUp)="sendMouseCoordinates($event)"
+    (click)="
+      ['addArticleLocation'].includes(state?.name) ||
+      ['addArticleLocation'].includes(prevState?.name)
+        ? $event.stopPropagation()
+        : null
+    "
+    (zoomEnd)="currentCoordinates.zoom = $event.target.style.z"
+    [class.locationSelection]="['addArticleLocation'].includes(state?.name)"
+  >
+    <app-mark
+      *ngFor="let article of articles | async"
+      [article]="article"
+      [type]="article.category"
+    ></app-mark>
+    <app-article-box></app-article-box>
+    <app-mark
+      [@locationDrop]
+      [type]="'post-location'"
+      *ngIf="
+        ['addArticleLocation', 'addArticle'].includes(state?.name) &&
+        formService.form?.get('location')?.value?.coordinates.length
+      "
+      [article]="{
+        coordinates: formService.form?.get('location')?.value?.coordinates
+      }"
+    ></app-mark>
+    <app-mark
+      [type]="'self'"
+      [article]="{
+        coordinates: [
+          currentCoordinates['longitude'],
+          currentCoordinates['latitude']
+        ]
+      }"
+    ></app-mark>
+  </mgl-map>
+</section>

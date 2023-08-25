@@ -1,10 +1,8 @@
-
 export interface ILocation {
-    longitude: number,
-    latitude: number
+  longitude: number;
+  latitude: number;
 }
 
-export interface IMapAttributes extends ILocation {
-    zoom: number
+export interface IMapAttributes extends Partial<ILocation> {
+  zoom: number;
 }
-  

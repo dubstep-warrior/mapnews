@@ -31,8 +31,8 @@ export class ServerService {
     console.log(url);
     return new Promise((resolve, reject) => {
       result.subscribe(resolve, reject);
-    }).catch(() => {
-      return { success: false };
+    }).catch((res) => {
+      return res.error;
     });
   }
 

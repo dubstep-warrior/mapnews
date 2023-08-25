@@ -10,7 +10,7 @@ import { ILocation } from 'src/app/core/interfaces/location';
   styleUrls: ['./left-overlay.component.scss'],
 })
 export class LeftOverlayComponent extends FormDirective implements OnInit {
-  @ViewChild('tags') inputTags: any; 
+  @ViewChild('tags') inputTags: any;
   locationMouseMode: boolean = false;
 
   constructor() {
@@ -18,8 +18,7 @@ export class LeftOverlayComponent extends FormDirective implements OnInit {
     this.formType = 'addArticle';
   }
 
-  override ngOnInit(): void { 
-
+  override ngOnInit(): void {
     this.locationService.mouseLocationCoordinates
       .pipe(this.takeUntilDestroy())
       .subscribe((data: ILocation) => {
@@ -38,9 +37,12 @@ export class LeftOverlayComponent extends FormDirective implements OnInit {
   }
 
   setLoc(type?: string): void {
-    if (type && type == 'current') { 
+    if (type && type == 'current') {
       this.form.get('location').setValue({
-        coordinates: [this.locationService.currentLocation.longitude, this.locationService.currentLocation.latitude],
+        coordinates: [
+          this.locationService.currentLocation.longitude,
+          this.locationService.currentLocation.latitude,
+        ],
       });
     } else {
       this.locationMouseMode = !this.locationMouseMode;

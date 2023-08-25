@@ -12,7 +12,7 @@ const routes: Routes = [
     path: '',
     resolve: {
       config: ConfigResolver,
-      location: LocationResolver
+      location: LocationResolver,
     },
     children: [
       {

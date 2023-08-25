@@ -17,7 +17,7 @@ export class ArticleService {
   authStatus: AuthStatus;
   private articles: Article[] = [];
   model: BehaviorSubject<Article[]>;
-  api: string = 'api/v1/article'; 
+  api: string = 'api/v1/article';
   current: string = 'relevant';
   navMapping: any = {
     favourites: '/favourites',
@@ -34,7 +34,7 @@ export class ArticleService {
     private locationService: LocationService,
     private wsService: WebSocketService,
   ) {
-    this.model = new BehaviorSubject([]); 
+    this.model = new BehaviorSubject([]);
     console.log('BEGIN', navigator.geolocation);
     this.authService.authStatusSubject.pipe().subscribe((status) => {
       this.authStatus = status;
@@ -42,10 +42,12 @@ export class ArticleService {
   }
 
   async getArticles(key: string, params?: GetArticleParams) {
-    
     this.current = key == 'current' ? this.current : key;
     console.log('YES WE ARE');
-    console.log('GETTING ARTICLES', { ...this.locationService.currentLocation, ...params });
+    console.log('GETTING ARTICLES', {
+      ...this.locationService.currentLocation,
+      ...params,
+    });
     const res = await this.service.get(
       `${this.api}${this.navMapping[this.current]}`,
       { ...this.locationService.currentLocation, ...params },

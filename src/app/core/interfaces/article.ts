@@ -1,7 +1,12 @@
-import { ILocation } from "./location";
+import { ILocation } from './location';
 
-export type ArticleCategory = "emergency" | "crime" | "event" | "observation" | "recommendation"
- 
+export type ArticleCategory =
+  | 'emergency'
+  | 'crime'
+  | 'event'
+  | 'observation'
+  | 'recommendation';
+
 export interface Article {
   category: ArticleCategory;
   coordinates: Array<number>;
@@ -12,7 +17,6 @@ export interface Article {
 }
 
 export interface GetArticleParams extends ILocation {
-  category?: ArticleCategory,
-  tags?: string[]
+  category?: ArticleCategory;
+  tags?: string[];
 }
-
