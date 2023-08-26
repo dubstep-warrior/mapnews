@@ -110,7 +110,7 @@ RedisSubscriber.subscribe("general", async (message) => {
       .aggregate(ActivityAggregation(article))
       .toArray();
 
-    if (true) {
+    if (!!activities.length) {
       console.log("yes boss its worth creating notification");
       // Gather users
       const nearByusers = new Set(
