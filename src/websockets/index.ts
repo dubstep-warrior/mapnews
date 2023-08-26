@@ -74,7 +74,8 @@ export default async (expressServer: http.Server) => {
             "likedArticle",
             "postedArticle",
             "searchedArticles",
-          ].includes(parsedMessage.name)
+          ].includes(parsedMessage.name) &&
+          ("category" in parsedMessage.data || "tags" in parsedMessage.data)
         ) {
           const action: any = {
             user: currentUser.id,

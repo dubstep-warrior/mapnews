@@ -188,57 +188,61 @@ cron.schedule(CronConfig["action-update"], async function () {
 
 // UPDATE USER METRICS SCHEDULER
 cron.schedule(CronConfig["user-metrics"], async function () {
-  const key = "user metrics";
-  console.log(`Starting cron job on ${key}`);
+  try {
+    const key = "user metrics";
+    console.log(`Starting cron job on ${key}`);
 
-  const collection = client.db("mapnews").collection("actions");
+    const collection = client.db("mapnews").collection("actions");
 
-  const data = await collection.find().toArray();
-  console.log("actions data from user metrics", data);
-  const userData = {};
-  for (const doc of data) {
-    const user = doc.user.toHexString();
-    if (user in userData) {
-      userData[user]["category"][doc.category] =
-        doc.category in userData[user]["category"]
-          ? userData[user]["category"][doc.category] + 1
-          : 1;
-    } else {
-      userData[user] = {
-        category: {
-          [doc.category]: 1,
-        },
-        tags: {},
-      };
-    }
+    const data = await collection.find().toArray();
+    console.log("actions data from user metrics");
+    const userData = {};
 
-    for (let tag of doc.tags) {
-      userData[user]["tags"][tag] =
-        tag in userData[user]["tags"] ? userData[user]["tags"][tag] + 1 : 1;
-    }
-  }
-
-  console.log("user data from user metrics", userData);
-
-  if (!!Object.keys(userData).length) {
-    const commands = Object.keys(userData).map((userID) => {
-      return {
-        updateOne: {
-          filter: { _id: new ObjectId(userID) },
-          update: {
-            $set: { usage: userData[userID] },
+    data.forEach((doc) => {
+      const user = doc.user.toHexString();
+      if (user in userData) {
+        userData[user]["category"][doc.category] =
+          doc.category in userData[user]["category"]
+            ? userData[user]["category"][doc.category] + 1
+            : 1;
+      } else {
+        userData[user] = {
+          category: {
+            [doc.category]: 1,
           },
-        },
-      };
+          tags: {},
+        };
+      }
+      if ("tags" in doc) {
+        for (let tag of doc.tags) {
+          userData[user]["tags"][tag] =
+            tag in userData[user]["tags"] ? userData[user]["tags"][tag] + 1 : 1;
+        }
+      }
     });
+    console.log(`finish all iterations`, userData);
 
-    console.log(commands);
-    await client
-      .db("mapnews")
-      .collection("users")
-      .bulkWrite(commands)
-      .then((res) => console.log(`Finish updating~ on ${key}`))
-      .catch((err) => console.log(err));
+    if (!!Object.keys(userData).length) {
+      const commands = Object.keys(userData).map((userID) => {
+        return {
+          updateOne: {
+            filter: { _id: new ObjectId(userID) },
+            update: {
+              $set: { usage: userData[userID] },
+            },
+          },
+        };
+      });
+
+      await client
+        .db("mapnews")
+        .collection("users")
+        .bulkWrite(commands)
+        .then((res) => console.log(`Finish updating~ on ${key}`))
+        .catch((err) => console.log(err));
+    }
+  } catch (e) {
+    console.log("error found in user metrics cron", e);
   }
 });
 

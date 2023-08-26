@@ -10,7 +10,7 @@
     "build": "tsc",
     "start-deployment": "docker build -t mapnews-cron ./cron && docker build -t mapnews-backend:latest . && docker stack deploy --compose-file docker-compose.yml mapnews-backend",
     "stop-deployment": "docker stack rm mapnews-backend",
-    "restart-deployment": "npm run stop-deployment && npm run start-deployment",
+    "restart-deployment": "npm run stop-deployment && docker stack deploy --compose-file docker-compose.yml mapnews-backend",
     "format": "npx prettier --write ."
   },
   "author": "",
