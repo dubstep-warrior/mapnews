@@ -1,5 +1,5 @@
 {
-  "action-update": "* * * * *",
-  "user-metrics": "* * * * *",
+  "action-update": "*/30 * * * *",
+  "user-metrics": "*/15 * * * *",
   "location-update": "* * * * *"
 }
