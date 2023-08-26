@@ -41,39 +41,4 @@ export class ServerService {
   post(api: string, event: any): any {
     return this.request('POST', `${this.url}/${api}`, event);
   }
-
-  // getProducts(): any {
-  //   return this.request('GET', `${this.url}/product`);
-  // }
-
-  // getProduct(event: any): any {
-  //   return this.request(
-  //     'GET',
-  //     `${this.url}/product/search/${event.bSN}/${event.upc}`
-  //   );
-  // }
-
-  // addProduct(event: any) {
-  //   return this.request('POST', `${this.url}/product/add-product`, event);
-  // }
-
-  // getStock(event: any) {
-  //   return this.request('GET', `${this.url}/inventory/search/${event.upc}`);
-  // }
-
-  // addStock(event: any) {
-  //   return this.request('POST', `${this.url}/inventory/add-stock`, event);
-  // }
-
-  // processSale(event: any) {
-  //   return this.request('POST', `${this.url}/sales`, event);
-  // }
-
-  // processStocktake(event: any) {
-  //   return this.request('POST', `${this.url}/stocktake`, event);
-  // }
-
-  // getReport(): any {
-  //   return this.request('GET', `${this.url}/stocktake/report`);
-  // }
 }

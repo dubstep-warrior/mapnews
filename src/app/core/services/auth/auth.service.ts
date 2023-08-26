@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { AuthStatus, IUser } from '../../interfaces/auth';
 import { WebSocketService } from '../ws/web-socket.service';
+import { NotificationService } from '../notification/notification.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,11 +20,15 @@ export class AuthService {
   constructor(
     private service: ServerService,
     private wsService: WebSocketService,
+    private notificationService: NotificationService,
   ) {
     this.token = localStorage.getItem('token');
     this.user = JSON.parse(localStorage.getItem(this.token)) as IUser;
     this.authenticated = Boolean(this.token && this.user);
-    if (this.authenticated) this.wsService.connect();
+    if (this.authenticated) {
+      this.wsService.connect();
+      this.notificationService.pullNotifications();
+    }
     this.authStatusSubject = new BehaviorSubject({
       loggedIn: this.authenticated,
       id: this.user?._id ?? '',

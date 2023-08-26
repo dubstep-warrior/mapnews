@@ -14,9 +14,7 @@ export class NotificationService {
   private data: Notification[] = [];
   private api: string = 'api/v1/notification';
   private seen: Set<string> = new Set();
-  constructor(private service: ServerService) {
-    this.pullNotifications();
-  }
+  constructor(private service: ServerService) {}
 
   public get unviewedCount(): number {
     const diff = this.data.length - this.seen.size;

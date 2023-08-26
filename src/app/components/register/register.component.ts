@@ -7,20 +7,9 @@ import { FormDirective } from 'src/app/core/directives/form.directive';
 })
 export class RegisterComponent extends FormDirective implements OnInit {
   previewImg: string;
-  authenticated: boolean = false;
   constructor() {
     super();
     this.formType = 'register';
-  }
-
-  override ngOnInit(): void {
-    this.authService.authStatusSubject
-      .pipe(this.takeUntilDestroy())
-      .subscribe((status) => {
-        this.authenticated = status.loggedIn;
-      });
-
-    super.ngOnInit();
   }
 
   addImage(event: any) {
@@ -29,6 +18,6 @@ export class RegisterComponent extends FormDirective implements OnInit {
   }
 
   async submit() {
-    const res = await this.authService.register(this.form);
+    await this.authService.register(this.form);
   }
 }

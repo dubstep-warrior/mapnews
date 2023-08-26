@@ -8,7 +8,7 @@ import { NotificationService } from '../notification/notification.service';
   providedIn: 'root',
 })
 export class WebSocketService {
-  connection$: WebSocketSubject<any>;
+  private connection$: WebSocketSubject<any>;
 
   constructor(private notificationService: NotificationService) {}
 

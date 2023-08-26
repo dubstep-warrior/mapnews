@@ -19,7 +19,7 @@
   </div>
   <div form>
     <div>
-      <form [formGroup]="form">
+      <form [formGroup]="form" (submit)="submit()">
         <input formControlName="email" type="text" placeholder="Email" />
         <input
           formControlName="password"
@@ -31,6 +31,7 @@
           type="password"
           placeholder="Confirm Password"
         />
+        <input type="submit" hidden />
       </form>
     </div>
   </div>
