@@ -91,71 +91,78 @@ RedisSubscriber.subscribe("emergency", async (message) => {
 // GENERAL SUBSCRIPTION
 // **********************
 RedisSubscriber.subscribe("general", async (message) => {
-  const article = JSON.parse(message);
+  console.log("general called");
+  try {
+    const article = JSON.parse(message);
 
-  // Build notification
-  const notification = {
-    article: new ObjectId(article._id),
-    type: "emergency",
-    date: new Date(),
-  };
+    // Build notification
+    const notification = {
+      article: new ObjectId(article._id),
+      type: "interest",
+      date: new Date(),
+    };
 
-  // Check if its worth creating notification
-  // Check activity metrics in the area
-  const activities = await client
-    .db("mapnews")
-    .collection("actions")
-    .aggregate(ActivityAggregation(article))
-    .toArray();
+    // Check if its worth creating notification
+    // Check activity metrics in the area
+    const activities = await client
+      .db("mapnews")
+      .collection("actions")
+      .aggregate(ActivityAggregation(article))
+      .toArray();
 
-  if (!!activities.length) {
-    // Gather users
-    const nearByusers = new Set(
-      await RedisClient.geoSearch(
-        "user-locations",
-        {
-          latitude: article.location.coordinates[1],
-          longitude: article.location.coordinates[0],
-        },
-        { radius: 30, unit: "km" },
-      ),
-    );
+    if (true) {
+      console.log("yes boss its worth creating notification");
+      // Gather users
+      const nearByusers = new Set(
+        await RedisClient.geoSearch(
+          "user-locations",
+          {
+            latitude: article.location.coordinates[1],
+            longitude: article.location.coordinates[0],
+          },
+          { radius: 30, unit: "km" },
+        ),
+      );
 
-    // Gather users that will find this interesting
-    const collection = client.db("mapnews").collection("users");
+      // Gather users that will find this interesting
+      const collection = client.db("mapnews").collection("users");
 
-    const interestedUser = new Set(
-      (await collection.aggregate(InterestAggregation(article)).toArray()).map(
-        (user) => user._id,
-      ),
-    );
+      const interestedUsers = new Set(
+        (
+          await collection.aggregate(InterestAggregation(article)).toArray()
+        ).map((user) => user._id),
+      );
 
-    // CURRENTLY USERS ARE NEARBY (ONLINE) AND INTERESTED, CHANGE SOON
-    const users = [...(nearByusers & interestedUser)].filter(
-      (userID) => userID !== article.posted_by,
-    );
+      // CURRENTLY USERS ARE NEARBY (ONLINE) AND INTERESTED, CHANGE SOON
+      const users = [...nearByusers]
+        .filter((x) => interestedUsers.has(x))
+        .filter((userID) => userID !== article.posted_by);
+      console.log("all users", interestedUsers, nearByusers, users);
 
-    if (!!users.length) {
-      console.log(users);
-      console.log(article.posted_by);
-      notification["users"] = users.map((userID) => new ObjectId(userID));
+      if (!!users.length) {
+        console.log(users);
+        console.log(article.posted_by);
+        notification["users"] = users.map((userID) => new ObjectId(userID));
 
-      const collection = client.db("mapnews").collection("notifications");
+        const collection = client.db("mapnews").collection("notifications");
 
-      collection.insertOne(notification).then((res) => {
-        console.log("added a new notification");
-        users.forEach((userID) =>
-          RedisPublisher.publish(
-            userID,
-            JSON.stringify({
-              ...notification,
-              _id: res.insertedId,
-              article: article,
-            }),
-          ),
-        );
-      });
+        collection.insertOne(notification).then((res) => {
+          console.log("added a new notification");
+          users.forEach((userID) =>
+            RedisPublisher.publish(
+              userID,
+              JSON.stringify({
+                ...notification,
+                _id: res.insertedId,
+                article: article,
+              }),
+            ),
+          );
+        });
+      }
     }
+  } catch (e) {
+    console.log(e);
   }
 });
 
