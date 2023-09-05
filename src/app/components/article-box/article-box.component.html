@@ -1,5 +1,5 @@
 <mgl-marker
-  *ngIf="currentState?.name == 'selectedArticle'"
+  *ngIf="fromMap && currentState?.name == 'selectedArticle'"
   [lngLat]="[
     currentState.data['coordinates'][0],
     currentState.data['coordinates'][1]
@@ -18,12 +18,43 @@
         <img class="icon" src="../../../assets/images/right-arrow.svg" alt="" />
       </div>
     </div>
-    <img
-      [src]="currentState.data?.images?.[0] ?? 'https://placehold.co/250x100'"
-    />
+    <div>
+      <img
+        [src]="currentState.data?.images?.[0] ?? 'https://placehold.co/250x100'"
+      />
+    </div>
     <app-tags
       [tags]="currentState.data.tags"
       [currentState]="currentState"
     ></app-tags>
   </div>
 </mgl-marker>
+
+<div
+  [@slideUp]
+  *ngIf="currentState?.name == 'selectedArticle'"
+  class="article-box-mobile"
+  (click)="$event.stopPropagation()"
+>
+  <div class="article-box-heading">
+    <div>{{ currentState.data.title }}</div>
+    <div
+      class="hover"
+      (click)="
+        service.resolveState('articleDetails', currentState.data);
+        $event.stopPropagation()
+      "
+    >
+      <img class="icon" src="../../../assets/images/right-arrow.svg" alt="" />
+    </div>
+  </div>
+  <div>
+    <img
+      [src]="currentState.data?.images?.[0] ?? 'https://placehold.co/250x100'"
+    />
+  </div>
+  <app-tags
+    [tags]="currentState.data.tags"
+    [currentState]="currentState"
+  ></app-tags>
+</div>

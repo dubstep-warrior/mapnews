@@ -23,6 +23,10 @@ section {
     &:first-child {
       min-width: 200px;
 
+      @include screen-small {
+        min-width: unset;
+      }
+
       > div {
         margin-left: 14px;
         padding: 8px 18px;
@@ -42,6 +46,7 @@ section {
         font-size: 24px;
         padding: 4px 24px;
         border-radius: 18px;
+        white-space: nowrap;
       }
 
       > :last-child {

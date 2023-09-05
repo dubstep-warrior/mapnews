@@ -1,3 +1,5 @@
+@use "mixins" as *;
+
 .notifications {
   min-width: 200px;
   min-height: 200px;
@@ -11,6 +13,12 @@
   overflow: hidden;
   max-height: 300px;
   overflow-y: scroll;
+
+  @include screen-small {
+    max-width: unset;
+    max-height: calc(100vh - 72px);
+    inset: 68px 4px auto 4px;
+  }
 
   &::-webkit-scrollbar {
     width: 10px;

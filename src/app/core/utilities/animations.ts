@@ -138,6 +138,23 @@ export const slider = trigger('routeAnimations', [
   transition('register => login', slideTo('left')),
 ]);
 
+export const slideUp = trigger('slideUp', [
+  transition(':enter', [
+    style({
+      bottom: '-100%',
+      position: 'absolute',
+    }),
+    animate('600ms ease', style({ bottom: 0 })),
+  ]),
+  transition(':leave', [
+    style({
+      bottom: '0%',
+      position: 'absolute',
+    }),
+    animate('600ms ease', style({ bottom: '-100%' })),
+  ]),
+]);
+
 function slideTo(direction: string) {
   const optional = { optional: true };
   return [

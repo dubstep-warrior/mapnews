@@ -131,3 +131,18 @@ body {
 .error {
   background-color: rgb(255, 45, 45) !important;
 }
+
+::-webkit-scrollbar {
+  width: 5px;
+  position: absolute;
+  overflow: hidden;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.349);
+}

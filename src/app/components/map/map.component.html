@@ -15,7 +15,6 @@
         ? $event.stopPropagation()
         : null
     "
-    (zoomEnd)="currentCoordinates.zoom = $event.target.style.z"
     [class.locationSelection]="['addArticleLocation'].includes(state?.name)"
   >
     <app-mark

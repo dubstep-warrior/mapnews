@@ -1,12 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ElementRef,
-  AfterViewInit,
-  OnDestroy,
-} from '@angular/core';
-import { Map } from 'maplibre-gl';
+import { Component, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { Article } from '../../core/interfaces/article';
 import { StateService } from './../../core/services/state/state.service';
 import { Base } from 'src/app/core/directives/base.directive';
@@ -103,14 +95,6 @@ export class MapComponent extends Base implements AfterViewInit, OnDestroy {
         latitude: event.lngLat.wrap().lat,
       });
     }
-  }
-
-  async retrieveArticles(event: any) {
-    console.log('zoom ended: ', event.target.style.z);
-    // TODO maybe renable this on some other condition
-    // await this.service.getArticles('current', {
-    //   distance: ((-1923 * event.target.style.z) + 34000)
-    // })
   }
 
   override ngOnDestroy() {
