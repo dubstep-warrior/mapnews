@@ -1,26 +1,19 @@
 import jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
-import mongoose from "mongoose";
 import { JwtPayload } from "./interfaces/jwtpayload.interface";
+import bypass from "./resolvers/bypass-resolver";
 dotenv.config();
 
-export const Auth = (userAttName?: string, articleResolution?: boolean) => {
+export const Auth = (userAttName?: string) => {
   return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
     const originalMethod = descriptor.value;
 
     descriptor.value = function (...args: any[]) {
       const req = args[0];
-
-      if (
-        articleResolution &&
-        ["/new", "/relevant", "/search"].includes(req.path)
-      )
-        return originalMethod.apply(this, args);
-
       const token = req.headers.authorization?.split(" ")[1];
-      if (!token) throw "No token provided";
 
       try {
+        if (!token) throw "No token provided";
         const decoded = jwt.verify(
           token,
           process.env.SECRET_JWT_CODE!,
@@ -31,7 +24,11 @@ export const Auth = (userAttName?: string, articleResolution?: boolean) => {
 
         return originalMethod.apply(this, args);
       } catch (err) {
-        throw "Invalid token";
+        if (bypass(propertyKey, req.path)) {
+          console.log(propertyKey, req.path);
+          console.log("yes we are bypassing");
+          return originalMethod.apply(this, args);
+        } else throw "Invalid token:" + err;
       }
     };
 

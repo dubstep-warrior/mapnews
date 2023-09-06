@@ -1,4 +1,3 @@
-// const ArticleService = require("../services/ArticleService")
 import ArticleService from "../services/ArticleService";
 import { Request, Response, NextFunction } from "express";
 import Controller from "../utils/controller.decorator";
@@ -9,7 +8,11 @@ import { RedisPublisher } from "../clients/redis.client";
 @Controller("/article")
 export default class Article {
   @Get("")
-  async apiGetAllArticles(req: Request, res: Response, next: NextFunction) {
+  async apiGetAllArticles(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> {
     try {
       const articles = await ArticleService.getAllArticles();
       if (!articles) {
@@ -26,7 +29,11 @@ export default class Article {
 
   @Auth("userId")
   @Post("/like")
-  async resolveArticleLikes(req: Request, res: Response, next: NextFunction) {
+  async resolveArticleLikes(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> {
     try {
       const article = await ArticleService.resolveArticleLikes(req);
       res.json({
@@ -40,13 +47,20 @@ export default class Article {
 
   @Auth("posted_by")
   @Post("")
-  async apiCreateArticle(req: Request, res: Response, next: NextFunction) {
+  async apiCreateArticle(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> {
+    // validate form title etc
+
     try {
       const createdArticle = await ArticleService.createArticle(req);
 
-      if (createdArticle.category == "emergency") {
-        RedisPublisher.publish("emergency", JSON.stringify(createdArticle));
-      }
+      RedisPublisher.publish(
+        createdArticle.category == "emergency" ? "emergency" : "general",
+        JSON.stringify(createdArticle),
+      );
 
       res.json({
         success: true,
@@ -57,9 +71,13 @@ export default class Article {
     }
   }
 
-  @Auth("userId", true)
+  @Auth("userId")
   @Get("/favourites", "/self", "/new", "/relevant", "/search")
-  async apiResolveArticles(req: Request, res: Response, next: NextFunction) {
+  async apiResolveArticles(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> {
     try {
       const method =
         req.path == "/search" ? "resolveArticleSearch" : "resolveArticles";
@@ -77,34 +95,4 @@ export default class Article {
       res.status(500).json({ success: false, error: error });
     }
   }
-
-  // static async apiUpdateArticle(req, res, next){
-  //    try {
-  //       const comment = {}
-  //       comment.title        = req.body.title;
-  //       comment.body         = req.body.body;
-  //       comment.articleImage = req.body.article_image
-
-  //       const updatedArticle = await ArticleService.updateArticle(comment);
-
-  //       if(updatedArticle.modifiedCount === 0){
-  //          throw new Error("Unable to update article, error occord");
-  //       }
-
-  //       res.json(updatedArticle);
-
-  //    } catch (error) {
-  //       res.status(500).json({error: error});
-  //    }
-  // }
-
-  // static async apiDeleteArticle(req, res, next){
-  //       try {
-  //          const articleId = req.params.id;
-  //          const deleteResponse =  await ArticleService.deleteArticle(articleId)
-  //          res.json(deleteResponse);
-  //       } catch (error) {
-  //          res.status(500).json({error: error})
-  //       }
-  // }
 }

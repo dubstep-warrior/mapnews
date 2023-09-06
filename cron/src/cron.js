@@ -28,15 +28,12 @@ RedisClient.connect();
 
 RedisClient.on("error", function (error) {
   console.error(error);
-  // I report it onto a logging service like Sentry.
 });
 RedisSubscriber.on("error", function (error) {
   console.error(error);
-  // I report it onto a logging service like Sentry.
 });
 RedisPublisher.on("error", function (error) {
   console.error(error);
-  // I report it onto a logging service like Sentry.
 });
 
 // EMERGENCY SUBSCRIPTION
@@ -52,14 +49,16 @@ RedisSubscriber.subscribe("emergency", async (message) => {
   };
 
   // Gather users
-  const users = await RedisClient.geoSearch(
-    "user-locations",
-    {
-      latitude: article.location.coordinates[1],
-      longitude: article.location.coordinates[0],
-    },
-    { radius: 5, unit: "km" },
-  );
+  const users = (
+    await RedisClient.geoSearch(
+      "user-locations",
+      {
+        latitude: article.location.coordinates[1],
+        longitude: article.location.coordinates[0],
+      },
+      { radius: 5, unit: "km" },
+    )
+  ).filter((userID) => userID !== article.posted_by);
 
   // CHECK ACTIVITY METRICS IF IT MAKE SENSE
   // CURRENT ISSUE: SUSCEPTIBLE TO NOTIFICATION SPAM
@@ -67,16 +66,23 @@ RedisSubscriber.subscribe("emergency", async (message) => {
   if (!!users.length) {
     console.log(users);
     console.log(article.posted_by);
-    notification["users"] = users
-      .filter((userID) => userID !== article.posted_by)
-      .map((userID) => new ObjectId(userID));
+    console.log(users.includes(article.posted_by), typeof article.posted_by);
 
+    notification["users"] = users.map((userID) => new ObjectId(userID));
+    console.log("filtered", notification["users"]);
     const collection = client.db("mapnews").collection("notifications");
 
-    collection.insertOne(notification).then(() => {
+    collection.insertOne(notification).then((res) => {
       console.log("added a new notification");
       users.forEach((userID) =>
-        RedisPublisher.publish(userID, JSON.stringify(notification)),
+        RedisPublisher.publish(
+          userID,
+          JSON.stringify({
+            ...notification,
+            _id: res.insertedId,
+            article: article,
+          }),
+        ),
       );
     });
   }
@@ -85,64 +91,78 @@ RedisSubscriber.subscribe("emergency", async (message) => {
 // GENERAL SUBSCRIPTION
 // **********************
 RedisSubscriber.subscribe("general", async (message) => {
-  const article = JSON.parse(message);
+  console.log("general called");
+  try {
+    const article = JSON.parse(message);
 
-  // Build notification
-  const notification = {
-    article: new ObjectId(article._id),
-    type: "emergency",
-    date: new Date(),
-  };
+    // Build notification
+    const notification = {
+      article: new ObjectId(article._id),
+      type: "interest",
+      date: new Date(),
+    };
 
-  // Check if its worth creating notification
-  // Check activity metrics in the area
-  const activities = await client
-    .db("mapnews")
-    .collection("actions")
-    .aggregate(ActivityAggregation(article))
-    .toArray();
+    // Check if its worth creating notification
+    // Check activity metrics in the area
+    const activities = await client
+      .db("mapnews")
+      .collection("actions")
+      .aggregate(ActivityAggregation(article))
+      .toArray();
 
-  if (!!activities.length) {
-    // Gather users
-    const nearByusers = new Set(
-      await RedisClient.geoSearch(
-        "user-locations",
-        {
-          latitude: article.location.coordinates[1],
-          longitude: article.location.coordinates[0],
-        },
-        { radius: 30, unit: "km" },
-      ),
-    );
+    if (!!activities.length) {
+      console.log("yes boss its worth creating notification");
+      // Gather users
+      const nearByusers = new Set(
+        await RedisClient.geoSearch(
+          "user-locations",
+          {
+            latitude: article.location.coordinates[1],
+            longitude: article.location.coordinates[0],
+          },
+          { radius: 30, unit: "km" },
+        ),
+      );
 
-    // Gather users that will find this interesting
-    const collection = client.db("mapnews").collection("users");
+      // Gather users that will find this interesting
+      const collection = client.db("mapnews").collection("users");
 
-    const interestedUser = new Set(
-      (await collection.aggregate(InterestAggregation(article)).toArray()).map(
-        (user) => user._id,
-      ),
-    );
+      const interestedUsers = new Set(
+        (
+          await collection.aggregate(InterestAggregation(article)).toArray()
+        ).map((user) => user._id),
+      );
 
-    // CURRENTLY USERS ARE NEARBY (ONLINE) AND INTERESTED, CHANGE SOON
-    const users = nearByusers & interestedUser;
+      // CURRENTLY USERS ARE NEARBY (ONLINE) AND INTERESTED, CHANGE SOON
+      const users = [...nearByusers]
+        .filter((x) => interestedUsers.has(x))
+        .filter((userID) => userID !== article.posted_by);
+      console.log("all users", interestedUsers, nearByusers, users);
 
-    if (!!users.length) {
-      console.log(users);
-      console.log(article.posted_by);
-      notification["users"] = [...users]
-        .filter((userID) => userID !== article.posted_by)
-        .map((userID) => new ObjectId(userID));
+      if (!!users.length) {
+        console.log(users);
+        console.log(article.posted_by);
+        notification["users"] = users.map((userID) => new ObjectId(userID));
 
-      const collection = client.db("mapnews").collection("notifications");
+        const collection = client.db("mapnews").collection("notifications");
 
-      collection.insertOne(notification).then(() => {
-        console.log("added a new notification");
-        users.forEach((userID) =>
-          RedisPublisher.publish(userID, JSON.stringify(notification)),
-        );
-      });
+        collection.insertOne(notification).then((res) => {
+          console.log("added a new notification");
+          users.forEach((userID) =>
+            RedisPublisher.publish(
+              userID,
+              JSON.stringify({
+                ...notification,
+                _id: res.insertedId,
+                article: article,
+              }),
+            ),
+          );
+        });
+      }
     }
+  } catch (e) {
+    console.log(e);
   }
 });
 
@@ -175,57 +195,61 @@ cron.schedule(CronConfig["action-update"], async function () {
 
 // UPDATE USER METRICS SCHEDULER
 cron.schedule(CronConfig["user-metrics"], async function () {
-  const key = "user metrics";
-  console.log(`Starting cron job on ${key}`);
+  try {
+    const key = "user metrics";
+    console.log(`Starting cron job on ${key}`);
 
-  const collection = client.db("mapnews").collection("actions");
+    const collection = client.db("mapnews").collection("actions");
 
-  const data = await collection.find().toArray();
-  console.log("actions data from user metrics", data);
-  const userData = {};
-  for (const doc of data) {
-    const user = doc.user.toHexString();
-    if (user in userData) {
-      userData[user]["category"][doc.category] =
-        doc.category in userData[user]["category"]
-          ? userData[user]["category"][doc.category] + 1
-          : 1;
-    } else {
-      userData[user] = {
-        category: {
-          [doc.category]: 1,
-        },
-        tags: {},
-      };
-    }
+    const data = await collection.find().toArray();
+    console.log("actions data from user metrics");
+    const userData = {};
 
-    for (let tag of doc.tags) {
-      userData[user]["tags"][tag] =
-        tag in userData[user]["tags"] ? userData[user]["tags"][tag] + 1 : 1;
-    }
-  }
-
-  console.log("user data from user metrics", userData);
-
-  if (!!Object.keys(userData).length) {
-    const commands = Object.keys(userData).map((userID) => {
-      return {
-        updateOne: {
-          filter: { _id: new ObjectId(userID) },
-          update: {
-            $set: { usage: userData[userID] },
+    data.forEach((doc) => {
+      const user = doc.user.toHexString();
+      if (user in userData) {
+        userData[user]["category"][doc.category] =
+          doc.category in userData[user]["category"]
+            ? userData[user]["category"][doc.category] + 1
+            : 1;
+      } else {
+        userData[user] = {
+          category: {
+            [doc.category]: 1,
           },
-        },
-      };
+          tags: {},
+        };
+      }
+      if ("tags" in doc) {
+        for (let tag of doc.tags) {
+          userData[user]["tags"][tag] =
+            tag in userData[user]["tags"] ? userData[user]["tags"][tag] + 1 : 1;
+        }
+      }
     });
+    console.log(`finish all iterations`, userData);
 
-    console.log(commands);
-    await client
-      .db("mapnews")
-      .collection("users")
-      .bulkWrite(commands)
-      .then((res) => console.log(`Finish updating~ on ${key}`))
-      .catch((err) => console.log(err));
+    if (!!Object.keys(userData).length) {
+      const commands = Object.keys(userData).map((userID) => {
+        return {
+          updateOne: {
+            filter: { _id: new ObjectId(userID) },
+            update: {
+              $set: { usage: userData[userID] },
+            },
+          },
+        };
+      });
+
+      await client
+        .db("mapnews")
+        .collection("users")
+        .bulkWrite(commands)
+        .then((res) => console.log(`Finish updating~ on ${key}`))
+        .catch((err) => console.log(err));
+    }
+  } catch (e) {
+    console.log("error found in user metrics cron", e);
   }
 });
 

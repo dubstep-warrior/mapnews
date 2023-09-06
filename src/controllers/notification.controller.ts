@@ -12,7 +12,7 @@ export default class Notification {
     req: Request,
     res: Response,
     next: NextFunction,
-  ) {
+  ): Promise<void> {
     try {
       const notifications = await NotificationService.getAll(req);
       if (!notifications) {

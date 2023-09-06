@@ -2,12 +2,10 @@ import { createClient } from "redis";
 import * as dotenv from "dotenv";
 dotenv.config();
 
-/* create and open the Redis OM Client */
 const RedisClient = createClient({
   url: process.env.REDIS_URL,
 });
 
-// RedisClient.on("error", (err) => console.log("Redis Client Error", err));
 RedisClient.connect()
   .then((res: any) => console.log(`Connection Succesful ${res}`))
   .catch((err: any) => console.log(`Error in DB connection ${err}`));
@@ -27,13 +25,10 @@ RedisSubscriber.connect()
 
 RedisClient.on("error", function (error) {
   console.error(error);
-  // I report it onto a logging service like Sentry.
 });
 RedisSubscriber.on("error", function (error) {
   console.error(error);
-  // I report it onto a logging service like Sentry.
 });
 RedisPublisher.on("error", function (error) {
   console.error(error);
-  // I report it onto a logging service like Sentry.
 });

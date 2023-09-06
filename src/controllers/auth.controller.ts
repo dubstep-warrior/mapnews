@@ -6,7 +6,11 @@ import { Post } from "../utils/handlers.decorator";
 @Controller("/auth")
 export default class Auth {
   @Post("/register")
-  async apiRegister(req: Request, res: Response, next: NextFunction) {
+  async apiRegister(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> {
     try {
       const createdUser = await authService.createUser(req);
       res.json({
@@ -14,18 +18,19 @@ export default class Auth {
         data: createdUser,
       });
     } catch (error: any) {
-      console.log("error caught in register");
       console.log(error);
       res.send({ success: false, error: error.message });
     }
   }
 
   @Post("/login")
-  async apiLogin(req: Request, res: Response, next: NextFunction) {
+  async apiLogin(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> {
     try {
-      console.log("login controller attempted");
       const token = await authService.userLogin(req);
-      console.log("controller", token);
       res.json({
         success: true,
         data: token,

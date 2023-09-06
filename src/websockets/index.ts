@@ -1,8 +1,9 @@
 import WebSocket from "ws";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import RedisClient, { RedisSubscriber } from "../clients/redis.client";
-// import {queryString} from "query-string";
 import * as http from "http";
+import { Duplex } from "stream";
+import { Action } from "../utils/interfaces/action.interface";
 
 export default async (expressServer: http.Server) => {
   const websocketServer = new WebSocket.Server({
@@ -10,31 +11,30 @@ export default async (expressServer: http.Server) => {
     path: "/ws",
   });
 
-  expressServer.on("upgrade", (request: any, socket: any, head: any) => {
-    console.log("server being upgraded");
-    // console.log(request.query);
-    // console.log(request)
-    const [_path, params] = request?.url?.split("?") as any;
+  expressServer.on(
+    "upgrade",
+    (request: http.IncomingMessage, socket: Duplex, head: Buffer) => {
+      const url: string = request?.url ?? "";
+      const [_path, params] = url.split("?");
 
-    const urlParams = new URLSearchParams(params);
-    console.log(urlParams.get("authentication"));
+      const urlParams = new URLSearchParams(params);
 
-    try {
-      const decoded = jwt.verify(
-        urlParams.get("authentication")!,
-        process.env.SECRET_JWT_CODE!,
-      ) as JwtPayload;
+      try {
+        const decoded: string | JwtPayload = jwt.verify(
+          urlParams.get("authentication")!,
+          process.env.SECRET_JWT_CODE!,
+        );
 
-      if (decoded) {
-        console.log("JWT verification succeeded");
-        websocketServer.handleUpgrade(request, socket, head, (websocket) => {
-          websocketServer.emit("connection", websocket, request, decoded);
-        });
+        if (decoded) {
+          websocketServer.handleUpgrade(request, socket, head, (websocket) => {
+            websocketServer.emit("connection", websocket, request, decoded);
+          });
+        }
+      } catch (err) {
+        console.log("JWT verification failed: ", err);
       }
-    } catch (err) {
-      console.log("JWT verification failed: ", err);
-    }
-  });
+    },
+  );
 
   websocketServer.on(
     "connection",
@@ -43,18 +43,12 @@ export default async (expressServer: http.Server) => {
       connectionRequest: any,
       user: any,
     ) {
-      console.log("websocket connection");
       const [_path, params] = connectionRequest?.url?.split("?") as any;
-      const connectionParams = params;
-      // NOTE: connectParams are not used here but good to understand how to get
-      // to them if you need to pass data with the connection to identify it (e.g., a userId).
-      // consoley.log(connectionRequest);
+
       const currentUser = { ...user };
-      console.log("i am the current user:", currentUser);
 
       // RedisSub
       RedisSubscriber.subscribe(currentUser.id, async (message) => {
-        console.log("SENDING OVER WS CONNECTION", message); // 'message'
         const cache = await RedisClient.get(
           `/api/v1/notification/${currentUser.id}`,
         );
@@ -70,10 +64,8 @@ export default async (expressServer: http.Server) => {
         websocketConnection.send(message);
       });
 
-      websocketConnection.on("message", (message: any) => {
+      websocketConnection.on("message", (message: string) => {
         const parsedMessage = JSON.parse(message);
-
-        // ['selectedArticle', 'articleDetails', 'likedArticle', 'postedArticle', 'searchedArticles']
         if (parsedMessage.name == "location") {
           currentUser[parsedMessage.name] = parsedMessage.data;
           RedisClient.RPUSH("locations", JSON.stringify(currentUser));
@@ -84,9 +76,10 @@ export default async (expressServer: http.Server) => {
             "likedArticle",
             "postedArticle",
             "searchedArticles",
-          ].includes(parsedMessage.name)
+          ].includes(parsedMessage.name) &&
+          ("category" in parsedMessage.data || "tags" in parsedMessage.data)
         ) {
-          const action: any = {
+          const action: Partial<Action> = {
             user: currentUser.id,
             action: parsedMessage.name,
             category: parsedMessage.data.category,
@@ -101,25 +94,8 @@ export default async (expressServer: http.Server) => {
                 currentUser.location.latitude,
               ],
             };
-          // console.log('parsedMessage:',parsedMessage);
-          // const job = await RedisClient.get('actions-job')
 
           RedisClient.LPUSH("actions", JSON.stringify(action));
-          if (
-            !["searchedArticles", "postedArticle"].includes(parsedMessage.name)
-          ) {
-            console.log(parsedMessage.data.id);
-            RedisClient.LPUSH(
-              "interactions",
-              JSON.stringify({
-                user: currentUser.id,
-                action: parsedMessage.name,
-                article: parsedMessage.data.id,
-              }),
-            );
-
-            // if(parsedMessage.data.)
-          }
         }
       });
     },

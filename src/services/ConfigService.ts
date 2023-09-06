@@ -1,13 +1,14 @@
-// const Config = require("../models/Config");
 import Config from "../models/Config";
+import { IForm } from "../utils/interfaces/form.interface";
 
 class ConfigService {
-  async getConfig() {
+  async getConfig(): Promise<IForm[]> {
     try {
       const config = await Config.find().lean();
       return config;
     } catch (error) {
-      console.log(`Could not fetch articles ${error}`);
+      console.log(`Could not fetch config ${error}`);
+      throw error;
     }
   }
 }

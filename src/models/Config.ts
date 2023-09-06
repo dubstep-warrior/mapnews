@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
+import { IForm } from "../utils/interfaces/form.interface";
 const Schema = mongoose.Schema;
 
-const configSchema = new Schema(
+const configSchema = new Schema<IForm>(
   {
     form: {
       type: Object,

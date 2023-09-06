@@ -1,18 +1,6 @@
 export const ActivityAggregation = (article) => {
   return [
     {
-      $match: {
-        $expr: {
-          $gte: [
-            "$time",
-            {
-              $subtract: ["$$NOW", 3600000],
-            },
-          ],
-        },
-      },
-    },
-    {
       $geoNear: {
         near: {
           type: "Point",
@@ -24,6 +12,18 @@ export const ActivityAggregation = (article) => {
         distanceField: "dist.calculated",
         maxDistance: 2,
         spherical: true,
+      },
+    },
+    {
+      $match: {
+        $expr: {
+          $gte: [
+            "$time",
+            {
+              $subtract: ["$$NOW", 3600000],
+            },
+          ],
+        },
       },
     },
 
