@@ -3,7 +3,7 @@ import ImageKit from "imagekit";
 import * as dotenv from "dotenv";
 import mongoose from "mongoose";
 import { Cache } from "../utils/cache.decorator";
-import { FilterResolver } from "../utils/filters/article.resolvers";
+import { FilterResolver } from "../utils/resolvers/article-filter.resolver";
 import { MulterRequest } from "../utils/interfaces/http.interface";
 import {
   IArticle,

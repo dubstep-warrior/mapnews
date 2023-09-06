@@ -1,5 +1,6 @@
 import * as dotenv from "dotenv";
 import RedisClient from "../clients/redis.client";
+import bypass from "./resolvers/bypass-resolver";
 dotenv.config();
 
 export const Cache = () => {
@@ -10,8 +11,9 @@ export const Cache = () => {
       const req = args[0];
 
       try {
+        if (!req.body["userId"]) throw "No user";
         const cache = await RedisClient.get(
-          `${req.baseUrl}${req.path}${req.body["userId"]}`,
+          `${req.baseUrl}${req.path}/${req.body["userId"]}`,
         );
         if (cache) {
           return JSON.parse(cache);
@@ -20,7 +22,7 @@ export const Cache = () => {
         const models = await originalMethod.apply(this, args);
 
         RedisClient.set(
-          `${req.baseUrl}${req.path}${req.body["userId"]}`,
+          `${req.baseUrl}${req.path}/${req.body["userId"]}`,
           JSON.stringify(models),
           {
             EX: 10,
@@ -28,11 +30,15 @@ export const Cache = () => {
         );
         console.log(
           "set redis and retrieve mongodb at ",
-          `${req.baseUrl}${req.path}${req.body["userId"]}`,
+          `${req.baseUrl}${req.path}/${req.body["userId"]}`,
         );
         return models;
       } catch (err) {
-        throw "Error in retrieving server cache";
+        console.log(propertyKey, req.path);
+        if (bypass(propertyKey, req.path)) {
+          console.log("yes we are bypassing cache");
+          return originalMethod.apply(this, args);
+        } else throw "Error in retrieving server cache";
       }
     };
 

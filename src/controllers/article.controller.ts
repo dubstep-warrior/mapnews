@@ -71,7 +71,7 @@ export default class Article {
     }
   }
 
-  @Auth("userId", true)
+  @Auth("userId")
   @Get("/favourites", "/self", "/new", "/relevant", "/search")
   async apiResolveArticles(
     req: Request,
