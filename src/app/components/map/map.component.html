@@ -19,7 +19,7 @@
   >
     <app-mark
       *ngFor="let article of articles | async"
-      [article]="article"
+      [mark]="article"
       [type]="article.category"
     ></app-mark>
     <app-article-box></app-article-box>
@@ -28,15 +28,15 @@
       [type]="'post-location'"
       *ngIf="
         ['addArticleLocation', 'addArticle'].includes(state?.name) &&
-        formService.form?.get('location')?.value?.coordinates.length
+        formService.formCoordinates.length
       "
-      [article]="{
-        coordinates: formService.form?.get('location')?.value?.coordinates
+      [mark]="{
+        coordinates: formService.formCoordinates
       }"
     ></app-mark>
     <app-mark
       [type]="'self'"
-      [article]="{
+      [mark]="{
         coordinates: [
           currentCoordinates['longitude'],
           currentCoordinates['latitude']

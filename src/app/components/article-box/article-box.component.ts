@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Base } from 'src/app/core/directives/base.directive';
-import { State } from './../../core/interfaces/state';
+import { State } from '../../core/interfaces/state.interface';
 import { StateService } from './../../core/services/state/state.service';
 import { slideUp } from 'src/app/core/utilities/animations';
 

@@ -7,7 +7,7 @@ import { ArticleService } from '../services/article/article.service';
 import { AuthService } from '../services/auth/auth.service';
 import { LocationService } from '../services/location/location.service';
 import { StateService } from '../services/state/state.service';
-import { State } from '../interfaces/state';
+import { State } from '../interfaces/state.interface';
 
 @Directive({
   selector: '[appForm]',
@@ -40,10 +40,11 @@ export class FormDirective extends Base implements OnInit {
     });
   }
 
-  addTag(event: any) {
-    if (!event.target.value.trim()) return;
+  addTag(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (!input.value.trim()) return;
     this.form
       .get('tags')
-      .setValue([...this.form.get('tags').value, event.target.value]);
+      .setValue([...this.form.get('tags').value, input.value]);
   }
 }

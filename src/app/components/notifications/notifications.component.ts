@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Notification } from 'src/app/core/interfaces/notification';
+import { Notification } from 'src/app/core/interfaces/notification.interface';
 import { ArticleService } from 'src/app/core/services/article/article.service';
 import { NotificationService } from 'src/app/core/services/notification/notification.service';
 import { StateService } from 'src/app/core/services/state/state.service';

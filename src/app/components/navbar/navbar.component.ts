@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { filter, map } from 'rxjs';
 import { Base } from 'src/app/core/directives/base.directive';
-import { State } from 'src/app/core/interfaces/state';
+import { State } from 'src/app/core/interfaces/state.interface';
 import { ArticleService } from 'src/app/core/services/article/article.service';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { NotificationService } from 'src/app/core/services/notification/notification.service';
@@ -20,27 +21,18 @@ export class NavbarComponent extends Base implements OnInit {
   selected = 'Relevant';
   menu = ['Relevant', 'New', 'Favourites', 'My Posts'];
   @Input() authenticated: boolean = false;
-  articleState: string = 'relevant';
   mobileMenu: boolean = false;
 
   constructor(
     private service: StateService,
     private authService: AuthService,
-    private articleService: ArticleService,
+    public articleService: ArticleService,
     public notificationService: NotificationService,
   ) {
     super();
   }
 
-  ngOnInit(): void {
-    // this.articleService.model
-    //   .pipe(this.takeUntilDestroy())
-    //   .subscribe((data) => {
-    //     if ('state' in data) {
-    //       this.articleState = data.state;
-    //     }
-    //   });
-  }
+  ngOnInit(): void {}
 
   addArticle() {
     this.mobileMenu = false;

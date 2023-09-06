@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./image-gallery.component.scss'],
 })
 export class ImageGalleryComponent {
-  @Input() images: Array<any>;
+  @Input() images: Array<string>;
   position: 'bottom' | 'top' | 'left' | 'right' = 'bottom';
 
   positionOptions = [
@@ -28,7 +28,7 @@ export class ImageGalleryComponent {
     },
   ];
 
-  responsiveOptions: any[] = [
+  responsiveOptions = [
     {
       breakpoint: '1024px',
       numVisible: 3,

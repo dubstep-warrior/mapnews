@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { bounce, slideIn } from 'src/app/core/utilities/animations';
 import { FormDirective } from 'src/app/core/directives/form.directive';
-import { ILocation } from 'src/app/core/interfaces/location';
+import { ILocation } from 'src/app/core/interfaces/location.interface';
 
 @Component({
   selector: 'app-left-overlay',
@@ -10,7 +10,6 @@ import { ILocation } from 'src/app/core/interfaces/location';
   styleUrls: ['./left-overlay.component.scss'],
 })
 export class LeftOverlayComponent extends FormDirective implements OnInit {
-  @ViewChild('tags') inputTags: any;
   locationMouseMode: boolean = false;
 
   constructor() {
@@ -56,7 +55,7 @@ export class LeftOverlayComponent extends FormDirective implements OnInit {
     event.preventDefault();
     this.form.get('images').setValue([
       ...this.form.get('images').value,
-      ...[...event.dataTransfer.files].map((data) => {
+      ...[...event.dataTransfer.files].map((data: File) => {
         return {
           file: data,
           preview_uri: URL.createObjectURL(data as Blob),
@@ -65,10 +64,10 @@ export class LeftOverlayComponent extends FormDirective implements OnInit {
     ]);
   }
 
-  addImage(event: any) {
+  addImage(event: Event) {
     this.imageDropHandler({
       dataTransfer: {
-        files: [event.target.files[0]],
+        files: [(event.target as HTMLInputElement).files[0]],
       },
       preventDefault: () => {
         return;

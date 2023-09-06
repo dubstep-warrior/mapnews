@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthStatus } from 'src/app/core/interfaces/auth';
+import { AuthStatus } from 'src/app/core/interfaces/auth.interface';
 import { FormDirective } from 'src/app/core/directives/form.directive';
 
 @Component({
@@ -35,7 +35,6 @@ export class RightOverlayComponent extends FormDirective implements OnInit {
       'search',
       this.form.value,
     );
-    // TODO reset form when successful lmao
     if (res && res.success) {
       this.formService.resetForm();
       this.stateService.resetState();

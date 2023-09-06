@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StateService } from './core/services/state/state.service';
 import { Base } from './core/directives/base.directive';
-import { State } from './core/interfaces/state';
+import { State } from './core/interfaces/state.interface';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
 import { fader, slider } from './core/utilities/animations';

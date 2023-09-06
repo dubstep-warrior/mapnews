@@ -28,7 +28,9 @@
         (click)="resolveMenuOption(item)"
         *ngFor="let item of menu.slice(0, authenticated ? menu.length : 2)"
         class="menu-item"
-        [class.selected]="item == selected && articleState !== 'search'"
+        [class.selected]="
+          item == selected && articleService.current !== 'search'
+        "
       >
         <div>{{ item }}</div>
         <div></div>
@@ -63,7 +65,9 @@
         (click)="resolveMenuOption(item)"
         *ngFor="let item of menu.slice(0, authenticated ? menu.length : 2)"
         class="menu-item"
-        [class.selected]="item == selected && articleState !== 'search'"
+        [class.selected]="
+          item == selected && articleService.current !== 'search'
+        "
       >
         <div>
           <img

@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { PreviewImage } from 'src/app/core/interfaces/preview-image.interface';
 
 @Component({
   selector: 'app-multi-item-carousel',
@@ -6,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./multi-item-carousel.component.scss'],
 })
 export class MultiItemCarouselComponent implements OnInit {
-  @Input() images: Array<any>;
+  @Input() images: Array<PreviewImage>;
 
   constructor() {}
 

@@ -12,9 +12,10 @@ export class RegisterComponent extends FormDirective implements OnInit {
     this.formType = 'register';
   }
 
-  addImage(event: any) {
-    this.form.get('profile_img').setValue(event.target.files[0]);
-    this.previewImg = URL.createObjectURL(event.target.files[0]);
+  addImage(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.form.get('profile_img').setValue(input.files[0]);
+    this.previewImg = URL.createObjectURL(input.files[0]);
   }
 
   async submit() {

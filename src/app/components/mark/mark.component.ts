@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Article } from './../../core/interfaces/article';
+import { Article } from '../../core/interfaces/article.interface.';
 import { StateService } from './../../core/services/state/state.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { StateService } from './../../core/services/state/state.service';
   styleUrls: ['./mark.component.scss'],
 })
 export class MarkComponent {
-  @Input() article: Article | any = {} as Article;
+  @Input() mark: Partial<Article>;
   @Input() type: string = 'location';
   constructor(public stateService: StateService) {}
 }

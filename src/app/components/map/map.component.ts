@@ -1,14 +1,19 @@
 import { Component, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
-import { Article } from '../../core/interfaces/article';
+import { Article } from '../../core/interfaces/article.interface.';
 import { StateService } from './../../core/services/state/state.service';
 import { Base } from 'src/app/core/directives/base.directive';
 import { ArticleService } from 'src/app/core/services/article/article.service';
 import { LocationService } from 'src/app/core/services/location/location.service';
-import { State } from 'src/app/core/interfaces/state';
+import { State } from 'src/app/core/interfaces/state.interface';
 import { FormService } from 'src/app/core/services/form/form.service';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { Observable, distinctUntilChanged } from 'rxjs';
-import { ILocation, IMapAttributes } from 'src/app/core/interfaces/location';
+import {
+  ILocation,
+  IMapAttributes,
+} from 'src/app/core/interfaces/location.interface';
+import { MapMouseEvent } from 'maplibre-gl';
+import { EventData } from '@maplibre/ngx-maplibre-gl';
 
 @Component({
   selector: 'app-map',
@@ -88,7 +93,7 @@ export class MapComponent extends Base implements AfterViewInit, OnDestroy {
       });
   }
 
-  sendMouseCoordinates(event: any) {
+  sendMouseCoordinates(event: MapMouseEvent & EventData) {
     if (['addArticleLocation'].includes(this.state?.name)) {
       this.locationService.setMouseCoordinates({
         longitude: event.lngLat.wrap().lng,

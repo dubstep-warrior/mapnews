@@ -1,9 +1,9 @@
-<mgl-marker [lngLat]="[article['coordinates'][0], article['coordinates'][1]]">
+<mgl-marker [lngLat]="[mark['coordinates'][0], mark['coordinates'][1]]">
   <div
-    *ngIf="article?._id; else displayOnly"
+    *ngIf="mark?._id; else displayOnly"
     class="marker"
     (click)="
-      stateService.resolveState('selectedArticle', article);
+      stateService.resolveState('selectedArticle', mark);
       $event.stopPropagation()
     "
   >
@@ -14,9 +14,8 @@
       <img
         [class]="type"
         [src]="
-          type == 'self'
-            ? './../../assets/images/current-loc.gif'
-            : './../../assets/images/' + type + '.png'
+          './../../assets/images/' +
+          (type == 'self' ? 'current-loc.gif' : type + '.png')
         "
       />
     </div>

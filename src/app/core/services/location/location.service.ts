@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable, Observer, Subject } from 'rxjs';
 import { WebSocketService } from '../ws/web-socket.service';
-import { ILocation } from '../../interfaces/location';
+import { ILocation } from '../../interfaces/location.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LocationService {
   private _currentLocation: ILocation;
-  mouseLocationCoordinates: Subject<any> = new Subject();
+  mouseLocationCoordinates: Subject<ILocation> = new Subject();
   constructor(private ws: WebSocketService) {}
 
   async init(): Promise<ILocation> {

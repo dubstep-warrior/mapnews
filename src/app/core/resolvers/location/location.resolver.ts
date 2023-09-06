@@ -8,7 +8,7 @@ import {
 import { Observable, of } from 'rxjs';
 import { LocationService } from '../../services/location/location.service';
 import { ArticleService } from '../../services/article/article.service';
-import { ILocation } from '../../interfaces/location';
+import { ILocation } from '../../interfaces/location.interface';
 
 @Injectable({
   providedIn: 'root',

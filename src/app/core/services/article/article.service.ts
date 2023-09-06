@@ -4,11 +4,12 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { StateService } from '../state/state.service';
 import { FormGroup } from '@angular/forms';
 import { FormService } from '../form/form.service';
-import { Article, GetArticleParams } from '../../interfaces/article';
+import { Article, GetArticleParams } from '../../interfaces/article.interface.';
 import { LocationService } from '../location/location.service';
 import { WebSocketService } from '../ws/web-socket.service';
 import { AuthService } from '../auth/auth.service';
-import { AuthStatus } from '../../interfaces/auth';
+import { AuthStatus } from '../../interfaces/auth.interface';
+import { PreviewImage } from '../../interfaces/preview-image.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -65,13 +66,13 @@ export class ArticleService {
   async report(form: FormGroup) {
     let formData = new FormData();
     Object.keys(form.value).forEach((key) => {
-      if ((form.value as any)[key]) {
+      if (form.value[key]) {
         if (key == 'images') {
-          (form.value as any)[key].forEach((image: any) => {
+          form.value[key].forEach((image: PreviewImage) => {
             formData.append(key, image.file);
           });
         } else {
-          formData.append(key, JSON.stringify((form.value as any)[key]));
+          formData.append(key, JSON.stringify(form.value[key]));
         }
       }
     });

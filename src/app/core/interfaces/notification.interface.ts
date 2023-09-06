@@ -1,5 +1,5 @@
-import { Article } from './article';
-import { IUser } from './auth';
+import { Article } from './article.interface.';
+import { IUser } from './auth.interface';
 
 export type NotificationType = 'emergency' | 'viral' | 'interest';
 

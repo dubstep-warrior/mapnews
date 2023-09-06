@@ -1,41 +1,48 @@
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ServerService } from '../server/server.service';
+import { IResponse } from '../../interfaces/response.interface';
+import { IForm, IFormAttribute } from '../../interfaces/form.interface';
+
+export interface ConfigResponse extends IResponse {
+  data: IForm[];
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class FormService {
-  api: string = 'api/v1/config';
-  form: FormGroup;
-  currentFormName: string;
-  formObjSchema: any = {};
-  formConfigurations: Array<any>;
+  private api: string = 'api/v1/config';
+  private form: FormGroup;
+  private currentFormName: string;
+  private formConfigurations: Array<IForm>;
   constructor(private serverService: ServerService) {}
 
   init() {
-    return this.serverService.get(this.api).then((res: any) => {
+    return this.serverService.get(this.api).then((res: ConfigResponse) => {
       if (res && res.success) {
         this.formConfigurations = res.data;
       }
     });
   }
 
-  resetForm() {
+  get formCoordinates() {
+    return this.form?.get('location')?.value?.coordinates;
+  }
+
+  resetForm(): void {
     this.form.reset();
-    this.formObjSchema = {};
     this.currentFormName = '';
   }
 
-  resolve(name: string) {
+  resolve(name: string): FormGroup {
     if (this.currentFormName == name) return this.form;
-    const formConfig: any = this.formConfigurations.find(
+    const formConfig: IForm = this.formConfigurations.find(
       (config) => config.name == name,
     );
     const formGroupObject: any = {};
     Object.keys(formConfig.form).forEach((key) => {
       formGroupObject[key] = this.resolveType(formConfig.form[key]);
-      this.formObjSchema[key] = formConfig.form[key].value;
     });
 
     this.form = new FormGroup(formGroupObject);
@@ -43,7 +50,7 @@ export class FormService {
     return this.form;
   }
 
-  resolveType(formConfigObject: any) {
+  resolveType(formConfigObject: IFormAttribute) {
     const type = formConfigObject.type;
     switch (type) {
       case 'control':

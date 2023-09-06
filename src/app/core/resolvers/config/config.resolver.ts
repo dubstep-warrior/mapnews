@@ -11,13 +11,13 @@ import { FormService } from '../../services/form/form.service';
 @Injectable({
   providedIn: 'root',
 })
-export class ConfigResolver implements Resolve<boolean> {
+export class ConfigResolver implements Resolve<void> {
   constructor(private service: FormService) {}
 
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
-  ): Observable<boolean> {
+  ): Promise<void> {
     return this.service.init();
   }
 }

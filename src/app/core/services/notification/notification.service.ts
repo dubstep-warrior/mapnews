@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ServerService } from '../server/server.service';
-import { Notification } from '../../interfaces/notification';
+import { Notification } from '../../interfaces/notification.interface';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({

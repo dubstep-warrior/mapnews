@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { ServerService } from '../server/server.service';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { AuthStatus, IUser } from '../../interfaces/auth';
+import { AuthStatus, IUser } from '../../interfaces/auth.interface';
 import { WebSocketService } from '../ws/web-socket.service';
 import { NotificationService } from '../notification/notification.service';
 
@@ -54,12 +54,12 @@ export class AuthService {
   }
 
   async resolveSubmission(form: FormGroup, action: string) {
-    let formData: any;
+    let formData: FormData;
     if (action == 'register') {
       formData = new FormData();
       Object.keys(form.value).forEach((key) => {
-        if ((form.value as any)[key]) {
-          formData.append(key, (form.value as any)[key]);
+        if (form.value[key]) {
+          formData.append(key, form.value[key]);
         }
       });
     } else {

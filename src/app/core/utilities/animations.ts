@@ -11,7 +11,6 @@ import {
 
 export const fader = trigger('routeAnimations', [
   transition('* <=> *', [
-    // Set a default  style for enter and leave
     query(
       ':enter, :leave',
       [
@@ -21,7 +20,6 @@ export const fader = trigger('routeAnimations', [
       ],
       { optional: true },
     ),
-    // Animate the new page in
     query(
       ':enter',
       [
@@ -164,7 +162,6 @@ function slideTo(direction: string) {
         style({
           position: 'absolute',
           [direction]: '0',
-          // transform: 'translateY(-50%)',
           top: 0,
           width: '100%',
           height: '100%',
@@ -178,7 +175,6 @@ function slideTo(direction: string) {
         style({
           position: 'absolute',
           [direction]: '-100%',
-          // transform: 'translateY(-50%)',
           top: 0,
           width: '100%',
           height: '100%',
@@ -198,12 +194,6 @@ function slideTo(direction: string) {
       query(':leave *', [style({}), animate('600ms', style({}))], optional),
       query(':enter *', [style({}), animate('0ms', style({}))], optional),
     ]),
-
-    // Normalize the page style... Might not be necessary
-
-    // Required only if you have child animations on the page
-    // query(':leave', animateChild()),
-    // query(':enter', animateChild()),
   ];
 }
 

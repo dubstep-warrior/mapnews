@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Article } from './../../interfaces/article';
+import { Article } from '../../interfaces/article.interface.';
 import { Subject } from 'rxjs';
-import { State } from './../../interfaces/state';
+import { State, StateName } from '../../interfaces/state.interface';
 import { WebSocketService } from '../ws/web-socket.service';
 
 @Injectable({
@@ -13,7 +13,7 @@ export class StateService {
   state: State = { name: 'neutral' };
   model: Subject<any> = new Subject();
 
-  resolveState(stateName: State['name'], data?: any) {
+  resolveState(stateName: StateName, data?: any) {
     this.state = {
       name: stateName,
     };

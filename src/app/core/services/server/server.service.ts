@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
+import { IResponse } from '../../interfaces/response.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -34,11 +35,19 @@ export class ServerService {
     });
   }
 
-  get(api: string, params: any = null): any {
-    return this.request('GET', `${this.url}/${api}`, params);
+  get(api: string, params: any = null): Promise<any> {
+    return this.request(
+      'GET',
+      `${this.url}/${api}`,
+      params,
+    ) as Promise<IResponse>;
   }
 
-  post(api: string, event: any): any {
-    return this.request('POST', `${this.url}/${api}`, event);
+  post(api: string, event: any): Promise<any> {
+    return this.request(
+      'POST',
+      `${this.url}/${api}`,
+      event,
+    ) as Promise<IResponse>;
   }
 }

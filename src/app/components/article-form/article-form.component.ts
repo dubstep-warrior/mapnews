@@ -5,8 +5,8 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { Form, FormGroup } from '@angular/forms';
-import { State } from 'src/app/core/interfaces/state';
+import { FormGroup } from '@angular/forms';
+import { ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-article-form',
@@ -14,7 +14,7 @@ import { State } from 'src/app/core/interfaces/state';
   styleUrls: ['./article-form.component.scss'],
 })
 export class ArticleFormComponent {
-  @ViewChild('tags') inputTags: any;
+  @ViewChild('tags') inputTags: ElementRef<HTMLInputElement>;
 
   @Input() form: FormGroup;
   @Input() locationMouseMode?: boolean;
@@ -22,25 +22,25 @@ export class ArticleFormComponent {
   @Input() descMaxLength: number = 280;
 
   @Output() submit = new EventEmitter<void>();
-  @Output() imageDrop = new EventEmitter<any>();
-  @Output() addImage = new EventEmitter<any>();
-  @Output() addTag = new EventEmitter<any>();
+  @Output() imageDrop = new EventEmitter<DragEvent>();
+  @Output() addImage = new EventEmitter<Event>();
+  @Output() addTag = new EventEmitter<Event>();
   @Output() setLoc = new EventEmitter<string>();
   textAreaRemaining: number = this.descMaxLength;
 
-  async submitClicked(): Promise<void> {
+  submitClicked(): void {
     this.submit.emit();
   }
 
-  imageDropHandler($event: any): void {
+  imageDropHandler($event: DragEvent): void {
     this.imageDrop.emit($event);
   }
 
-  imageAdded($event: any): void {
+  imageAdded($event: Event): void {
     this.addImage.emit($event);
   }
 
-  tagAdded($event: any): void {
+  tagAdded($event: Event): void {
     this.addTag.emit($event);
     this.inputTags.nativeElement.value = '';
   }

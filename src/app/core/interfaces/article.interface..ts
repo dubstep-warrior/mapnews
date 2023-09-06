@@ -1,4 +1,4 @@
-import { ILocation } from './location';
+import { ILocation } from './location.interface';
 
 export type ArticleCategory =
   | 'emergency'
@@ -14,6 +14,8 @@ export interface Article {
   title: string;
   description: string;
   tags?: Array<string>;
+  likes: string[];
+  images: string[];
 }
 
 export interface GetArticleParams extends ILocation {
