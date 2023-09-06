@@ -1,0 +1,8 @@
+{
+ "registration": {
+    "E11000": "There is a registered user with the provided email, please try again with another email"
+ },
+ "createArticle": {
+    "required": "is a required field"
+ }
+}

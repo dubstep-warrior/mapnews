@@ -11,7 +11,7 @@ const articleSchema = new Schema<IArticle>(
 
     tags: {
       type: [String],
-      required: true,
+      required: false,
     },
 
     category: {
@@ -21,7 +21,7 @@ const articleSchema = new Schema<IArticle>(
 
     description: {
       type: String,
-      required: true,
+      required: false,
     },
 
     location: {

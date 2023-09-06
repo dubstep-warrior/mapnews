@@ -82,10 +82,10 @@ class AuthService {
     const user = await User.findOne({ email: currentUser["email"] });
 
     if (!user) {
-      throw "User does not exist";
+      throw new Error("User does not exist");
     }
     if (!Bcrypt.compareSync(currentUser["password"]!, user.password)) {
-      throw "Wrong password";
+      throw new Error("Wrong password");
     }
     const token = JsonWebToken.sign(
       { id: user._id, email: user.email },

@@ -2,6 +2,7 @@ import authService from "../services/AuthService";
 import { Request, Response, NextFunction } from "express";
 import Controller from "../utils/controller.decorator";
 import { Post } from "../utils/handlers.decorator";
+import MongoServerErrors from "./../config/mongo-server.errors.json"
 
 @Controller("/auth")
 export default class Auth {
@@ -18,8 +19,11 @@ export default class Auth {
         data: createdUser,
       });
     } catch (error: any) {
-      console.log(error);
-      res.send({ success: false, error: error.message });
+      console.log(error.name);
+      console.log(error.message)
+      const key: any = error.message.split(" ")[0]
+      const mongoErrors = MongoServerErrors.registration
+      res.send({ success: false, error: mongoErrors?.[key as keyof typeof mongoErrors] ?? error.message });
     }
   }
 

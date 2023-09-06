@@ -20,7 +20,7 @@ class ArticleService {
     urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT!,
   });
 
-  constructor() {}
+  constructor() { }
 
   async getAllArticles(): Promise<IProcessedArticle[]> {
     try {
@@ -63,8 +63,7 @@ class ArticleService {
         ...response.toObject(),
         coordinates: (response.location as any).coordinates,
       };
-    } catch (error) {
-      console.log("error in service", error);
+    } catch (error: any) {
       throw error;
     }
   }
@@ -99,7 +98,7 @@ class ArticleService {
     };
     if ("userId" in req.body)
       options["id"] = new mongoose.Types.ObjectId(req.body["userId"]);
-    try { 
+    try {
       const allArticles = await Article.find(
         FilterResolver(req.path, options),
       ).lean();
@@ -129,6 +128,6 @@ class ArticleService {
       throw error;
     }
   }
- 
+
 }
 export default new ArticleService();
