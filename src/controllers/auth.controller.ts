@@ -30,10 +30,9 @@ export default class Auth {
         success: true,
         data: token,
       });
-    } catch (error) {
-      console.log("error caught heres");
-      console.log(error);
-      res.status(500).json({ success: false, error: error });
+    } catch (error: any) {
+      console.log("error caught heres"); 
+      res.status(500).json({ success: false, error: error.message });
     }
   }
 }

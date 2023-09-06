@@ -15,12 +15,15 @@ class AuthService {
 
   // TODO see if can refactor
   async createUser(req: Request) {
-    try {
-      let data = req.body;
+    let data = req.body;
       const newUser: any = {};
       Object.keys(data).forEach((key) => {
         newUser[key] = data[key];
       });
+      
+      if (["email", "password", "confirmPassword"].some((element) => !newUser[element])) {
+        throw new Error("Not all fields are filled");
+      } 
       if (newUser.password !== newUser.confirmPassword) {
         throw new Error("Passwords do not match!");
       }
@@ -56,11 +59,8 @@ class AuthService {
           user: user.toObject(),
         };
       } else {
-        throw "Something happened, please try again later";
+        throw new Error("Something happened, please try again later");
       }
-    } catch (error) {
-      throw error;
-    }
   }
 
   async userLogin(req: Request) {
@@ -70,10 +70,11 @@ class AuthService {
     Object.keys(data).forEach((key) => {
       currentUser[key] = data[key];
     });
+ 
+    if (["email", "password"].some((element) => !currentUser[element])) {
+      throw new Error("Not all fields are filled");
+    } 
 
-    if (["email", "password"].some((element) => !(element in currentUser))) {
-      throw new Error("Not all parameters filled");
-    }
     const user = await User.findOne({ email: currentUser["email"] });
 
     if (!user) {

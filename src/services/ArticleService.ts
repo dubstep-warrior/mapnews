@@ -88,8 +88,7 @@ class ArticleService {
     };
     if ("userId" in req.body)
       options["id"] = new mongoose.Types.ObjectId(req.body["userId"]);
-    try {
-      // console.log(options);
+    try { 
       const allArticles = await Article.find(
         FilterResolver(req.path, options),
       ).lean();
@@ -119,28 +118,6 @@ class ArticleService {
       throw error;
     }
   }
-
-  // static async updateArticle(title, body, articleImage){
-  //         try {
-  //             const updateResponse =  await Article.updateOne(
-  //                 {title, body, articleImage},
-  //                 {$set: {date: new Date.now()}});
-
-  //                 return updateResponse;
-  //         } catch (error) {
-  //             console.log(`Could not update Article ${error}` );
-
-  //     }
-  // }
-
-  // static async deleteArticle(articleId){
-  //     try {
-  //         const deletedResponse = await Article.findOneAndDelete(articleId);
-  //         return deletedResponse;
-  //     } catch (error) {
-  //         console.log(`Could  ot delete article ${error}`);
-  //     }
-
-  // }
+ 
 }
 export default new ArticleService();
