@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
+import { IUser } from "../utils/interfaces/user.interface";
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema(
+const userSchema = new Schema<IUser>(
   {
     email: {
       type: String,
@@ -17,17 +18,6 @@ const userSchema = new Schema(
     profile_img: {
       type: String,
       required: false,
-    },
-    location: {
-      type: {
-        type: String,
-        enum: ["Point"],
-        default: "Point",
-      },
-      coordinates: {
-        type: [Number],
-        index: "2dsphere", // Create a geospatial index for faster queries
-      },
     },
     usage: {
       type: Object,

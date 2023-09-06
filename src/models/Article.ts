@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
+import { IArticle } from "../utils/interfaces/article.interface";
 const Schema = mongoose.Schema;
 
-const articleSchema = new Schema(
+const articleSchema = new Schema<IArticle>(
   {
     title: {
       type: String,

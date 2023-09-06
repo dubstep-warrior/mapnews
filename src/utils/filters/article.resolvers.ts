@@ -1,4 +1,6 @@
-export const FilterResolver = (path: string, options: any) => {
+import { ResolverOptions } from "../interfaces/resolver-options.interface";
+
+export const FilterResolver = (path: string, options: ResolverOptions) => {
   const map: any = {
     "/favourites": { likes: options.id },
     "/self": { posted_by: options.id },
@@ -28,7 +30,7 @@ export const FilterResolver = (path: string, options: any) => {
                 $maxDistance: options.distance ?? 7000,
                 $geometry: {
                   type: "Point",
-                  coordinates: [options.longtitude, options.latitude],
+                  coordinates: [options.longitude, options.latitude],
                 },
               },
             },

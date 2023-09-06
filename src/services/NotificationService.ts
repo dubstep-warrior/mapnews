@@ -1,29 +1,34 @@
 import * as dotenv from "dotenv";
 import Notification from "../models/Notification";
 import { Cache } from "../utils/cache.decorator";
+import { Request } from "express";
+import {
+  IFullNotification,
+  IFullProcessedNotification,
+} from "../utils/interfaces/notification.interface";
 dotenv.config();
 
 class NotificationService {
   constructor() {}
 
   @Cache()
-  async getAll(req: any) {
+  async getAll(req: Request): Promise<IFullProcessedNotification[]> {
     const { userId } = req.body;
     try {
-      const notifications = await Notification.find({
+      const notifications = (await Notification.find({
         users: { $all: userId },
       })
         .sort({ date: 1 })
         .populate("article")
-        .lean();
-      return notifications.map((notification: any) => {
+        .lean()) as IFullNotification[];
+      return notifications.map((notification) => {
         return {
           ...notification,
           article: {
             ...notification.article,
             coordinates: notification.article.location.coordinates,
           },
-        };
+        } as IFullProcessedNotification;
       });
     } catch (error) {
       console.log(error);

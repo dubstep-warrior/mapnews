@@ -5,6 +5,10 @@ dotenv.config();
 import JsonWebToken from "jsonwebtoken";
 import Bcrypt from "bcryptjs";
 import { Request } from "express";
+import { IAuth } from "../utils/interfaces/auth.interface";
+import { IKCallback, UploadResponse } from "imagekit/dist/libs/interfaces";
+import IKResponse from "imagekit/dist/libs/interfaces/IKResponse";
+import { IUser } from "../utils/interfaces/user.interface";
 
 class AuthService {
   imageKit = new ImageKit({
@@ -14,19 +18,21 @@ class AuthService {
   });
 
   // TODO see if can refactor
-  async createUser(req: Request) {
+  async createUser(req: Request): Promise<IAuth> {
     try {
-      let data = req.body;
-      const newUser: any = {};
+      const data = req.body;
+      const newUser: Partial<IUser> & { confirmPassword?: string } = {};
       Object.keys(data).forEach((key) => {
-        newUser[key] = data[key];
+        const index: keyof IUser = key as keyof IUser;
+        newUser[index] = data[index];
       });
+
       if (newUser.password !== newUser.confirmPassword) {
         throw new Error("Passwords do not match!");
       }
       delete newUser.confirmPassword;
 
-      newUser["password"] = Bcrypt.hashSync(newUser["password"], 10);
+      newUser["password"] = Bcrypt.hashSync(newUser["password"]!, 10);
 
       const user = await new User(newUser).save();
       if (user) {
@@ -42,10 +48,10 @@ class AuthService {
               fileName: req.file.originalname,
               folder: "Users",
             },
-            (err: any, res: any) => {
+            (err, res) => {
               if (err) throw err;
               else {
-                user.profile_img = res.url;
+                user.profile_img = res?.url;
                 user.save();
               }
             },
@@ -63,12 +69,13 @@ class AuthService {
     }
   }
 
-  async userLogin(req: Request) {
+  async userLogin(req: Request): Promise<IAuth> {
     let data = req.body;
 
-    const currentUser: any = {};
+    const currentUser: Partial<IUser> = {};
     Object.keys(data).forEach((key) => {
-      currentUser[key] = data[key];
+      const index: keyof IUser = key as keyof IUser;
+      currentUser[index] = data[index];
     });
 
     if (["email", "password"].some((element) => !(element in currentUser))) {
@@ -79,7 +86,7 @@ class AuthService {
     if (!user) {
       throw "User does not exist";
     }
-    if (!Bcrypt.compareSync(currentUser["password"], user.password)) {
+    if (!Bcrypt.compareSync(currentUser["password"]!, user.password)) {
       throw "Wrong password";
     }
     const token = JsonWebToken.sign(

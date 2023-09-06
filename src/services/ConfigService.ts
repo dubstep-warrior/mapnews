@@ -1,8 +1,9 @@
 // const Config = require("../models/Config");
 import Config from "../models/Config";
+import { IForm } from "../utils/interfaces/form.interface";
 
 class ConfigService {
-  async getConfig() {
+  async getConfig(): Promise<IForm[]> {
     try {
       const config = await Config.find().lean();
       return config;

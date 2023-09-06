@@ -1,10 +1,16 @@
 import Article from "../models/Article";
 import ImageKit from "imagekit";
 import * as dotenv from "dotenv";
-import mongoose, { ObjectId } from "mongoose";
+import mongoose from "mongoose";
 import { Cache } from "../utils/cache.decorator";
 import { FilterResolver } from "../utils/filters/article.resolvers";
-import RedisClient from "../clients/redis.client";
+import { MulterRequest } from "../utils/interfaces/http.interface";
+import {
+  IArticle,
+  IProcessedArticle,
+} from "../utils/interfaces/article.interface";
+import { Request } from "express";
+import { ResolverOptions } from "../utils/interfaces/resolver-options.interface";
 dotenv.config();
 
 class ArticleService {
@@ -16,10 +22,10 @@ class ArticleService {
 
   constructor() {}
 
-  async getAllArticles() {
+  async getAllArticles(): Promise<IProcessedArticle[]> {
     try {
-      const allArticles = await Article.find().lean();
-      return allArticles.map((article: any) => {
+      const allArticles: IArticle[] = await Article.find().lean();
+      return allArticles.map((article) => {
         return { ...article, coordinates: article.location.coordinates };
       });
     } catch (error) {
@@ -28,7 +34,7 @@ class ArticleService {
     }
   }
 
-  async createArticle(req: any) {
+  async createArticle(req: MulterRequest): Promise<IProcessedArticle> {
     try {
       const data = req.body;
       const imageUploads = req.files.map((img: any) =>
@@ -39,15 +45,16 @@ class ArticleService {
         }),
       );
 
-      const newArticle: any = {
+      const newArticle: Partial<IArticle> = {
         images: (await Promise.all(imageUploads)).map((res) => res.url),
       };
 
       Object.keys(data).forEach((key) => {
+        const index: keyof IArticle = key as keyof IArticle;
         try {
-          newArticle[key] = JSON.parse(data[key]);
+          newArticle[index] = JSON.parse(data[key]);
         } catch (e) {
-          newArticle[key] = data[key];
+          newArticle[index] = data[key];
         }
       });
 
@@ -62,7 +69,7 @@ class ArticleService {
     }
   }
 
-  async resolveArticleLikes(req: any) {
+  async resolveArticleLikes(req: Request): Promise<IProcessedArticle> {
     const { articleId, userId } = req.body;
     try {
       const article = await Article.findOneAndUpdate(
@@ -72,6 +79,8 @@ class ArticleService {
         }),
         { returnDocument: "after" },
       );
+
+      if (!article) throw "Cant find article";
 
       return {
         ...article?.toObject(),
@@ -84,10 +93,10 @@ class ArticleService {
   }
 
   // TODO to renable caching after fixing geospatial queries
-  // @Cache()
-  async resolveArticles(req: any) {
-    const options: any = {
-      ...JSON.parse(req.query.data),
+  @Cache()
+  async resolveArticles(req: Request): Promise<IProcessedArticle[]> {
+    const options: ResolverOptions = {
+      ...JSON.parse(req.query.data as string),
     };
     if ("userId" in req.body)
       options["id"] = new mongoose.Types.ObjectId(req.body["userId"]);
@@ -96,7 +105,7 @@ class ArticleService {
         FilterResolver(req.path, options),
       ).lean();
 
-      const articles = allArticles.map((article: any) => {
+      const articles = allArticles.map((article) => {
         return { ...article, coordinates: article.location.coordinates };
       });
 
@@ -107,9 +116,9 @@ class ArticleService {
     }
   }
 
-  async resolveArticleSearch(req: any) {
+  async resolveArticleSearch(req: Request): Promise<IProcessedArticle[]> {
     try {
-      const options = JSON.parse(req.query.data);
+      const options: ResolverOptions = JSON.parse(req.query.data as string);
       const allArticles = await Article.find(
         FilterResolver(req.path, options),
       ).lean();
