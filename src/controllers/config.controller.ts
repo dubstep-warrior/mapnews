@@ -1,4 +1,3 @@
-// const ConfigService = require("../services/ConfigService");
 import ConfigService from "../services/ConfigService";
 import { Request, Response, NextFunction } from "express";
 import Controller from "../utils/controller.decorator";

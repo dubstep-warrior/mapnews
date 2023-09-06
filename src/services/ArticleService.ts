@@ -92,7 +92,6 @@ class ArticleService {
     }
   }
 
-  // TODO to renable caching after fixing geospatial queries
   @Cache()
   async resolveArticles(req: Request): Promise<IProcessedArticle[]> {
     const options: ResolverOptions = {

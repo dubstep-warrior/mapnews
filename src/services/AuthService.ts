@@ -6,8 +6,6 @@ import JsonWebToken from "jsonwebtoken";
 import Bcrypt from "bcryptjs";
 import { Request } from "express";
 import { IAuth } from "../utils/interfaces/auth.interface";
-import { IKCallback, UploadResponse } from "imagekit/dist/libs/interfaces";
-import IKResponse from "imagekit/dist/libs/interfaces/IKResponse";
 import { IUser } from "../utils/interfaces/user.interface";
 
 class AuthService {
@@ -17,7 +15,6 @@ class AuthService {
     urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT!,
   });
 
-  // TODO see if can refactor
   async createUser(req: Request): Promise<IAuth> {
     try {
       const data = req.body;
@@ -27,9 +24,9 @@ class AuthService {
         newUser[index] = data[index];
       });
 
-      if (newUser.password !== newUser.confirmPassword) {
+      if (newUser.password !== newUser.confirmPassword)
         throw new Error("Passwords do not match!");
-      }
+
       delete newUser.confirmPassword;
 
       newUser["password"] = Bcrypt.hashSync(newUser["password"]!, 10);
@@ -41,7 +38,7 @@ class AuthService {
           process.env.SECRET_JWT_CODE!,
         );
 
-        if (req.file) {
+        if (req.file)
           this.imageKit.upload(
             {
               file: req.file.buffer.toString("base64"),
@@ -56,7 +53,7 @@ class AuthService {
               }
             },
           );
-        }
+
         return {
           token,
           user: user.toObject(),

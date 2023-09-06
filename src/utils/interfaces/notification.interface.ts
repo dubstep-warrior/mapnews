@@ -1,6 +1,5 @@
 import { ObjectId } from "mongoose";
 import { IArticle, IProcessedArticle } from "./article.interface";
-import { IUser } from "./user.interface";
 
 type TNotificationType = "emergency" | "viral" | "interest";
 

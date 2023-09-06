@@ -1,7 +1,6 @@
-import WebSocket, { MessageEvent } from "ws";
+import WebSocket from "ws";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import RedisClient, { RedisSubscriber } from "../clients/redis.client";
-// import {queryString} from "query-string";
 import * as http from "http";
 import { Duplex } from "stream";
 import { Action } from "../utils/interfaces/action.interface";

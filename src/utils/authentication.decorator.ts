@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
-import mongoose from "mongoose";
 import { JwtPayload } from "./interfaces/jwtpayload.interface";
 import bypass from "./resolvers/bypass-resolver";
 dotenv.config();

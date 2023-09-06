@@ -6,11 +6,9 @@ import express, {
 } from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
-
 import { controllers } from "./controllers";
 import { MetadataKeys } from "./utils/metadata.keys";
 import { IRouter } from "./utils/handlers.decorator";
-
 import multer from "multer";
 
 class Application {
@@ -26,7 +24,7 @@ class Application {
     const storage = multer.memoryStorage();
     this.upload = multer({ storage });
 
-    // IMPORTANT: CORS settings before express json
+    // Note: To enable for production deployment and disable allow cross domain response injection
     // const whitelist = ["*"];
     // const corsOptions = {
     //   origin: function (origin: any, callback: any) {
@@ -40,6 +38,7 @@ class Application {
 
     // this._instance.use(cors(corsOptions));
 
+    // NOTE: Security risk, to disable for production deployment and use CORS whitelist instead
     const allowCrossDomain = (req: any, res: any, next: any) => {
       res.header(`Access-Control-Allow-Origin`, `*`);
       res.header(`Access-Control-Allow-Methods`, `GET,PUT,POST,DELETE`);

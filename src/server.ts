@@ -1,8 +1,6 @@
 import * as dotenv from "dotenv";
 dotenv.config();
 import mongoose, { ConnectOptions } from "mongoose";
-// const express = require('express')
-// const articles = require("./routes/article.routes");
 import application from "./application";
 import * as http from "http";
 import "reflect-metadata";
@@ -24,4 +22,4 @@ server.listen(port, () => {
   console.log(`Application is listening at port ${port}`);
 });
 
-const wss = websockets(server);
+websockets(server);
