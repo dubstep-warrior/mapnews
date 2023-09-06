@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ServerService } from '../server/server.service';
 import { IResponse } from '../../interfaces/response.interface';
 import { IForm, IFormAttribute } from '../../interfaces/form.interface';
+import validator from '../../utilities/validators';
 
 export interface ConfigResponse extends IResponse {
   data: IForm[];
@@ -54,7 +55,7 @@ export class FormService {
     const type = formConfigObject.type;
     switch (type) {
       case 'control':
-        return new FormControl(formConfigObject.value);
+        return new FormControl(formConfigObject.value, formConfigObject?.validators?.map(validatorKey => validator[validatorKey]) ?? []);
       default:
         return console.error('You have not implemented resolve group TBD soon');
     }

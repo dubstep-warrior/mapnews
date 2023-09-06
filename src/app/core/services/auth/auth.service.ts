@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ServerService } from '../server/server.service';
-import { Router } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { AuthStatus, IUser } from '../../interfaces/auth.interface';
 import { WebSocketService } from '../ws/web-socket.service';
 import { NotificationService } from '../notification/notification.service';
+import { map, filter, scan } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +23,7 @@ export class AuthService {
     private service: ServerService,
     private wsService: WebSocketService,
     private notificationService: NotificationService,
+    private router: Router
   ) {
     this.token = localStorage.getItem('token');
     this.user = JSON.parse(localStorage.getItem(this.token)) as IUser;
@@ -33,6 +36,11 @@ export class AuthService {
       loggedIn: this.authenticated,
       id: this.user?._id ?? '',
     } as AuthStatus);
+    this.router.events
+    .pipe(filter(event => event instanceof NavigationStart))
+    .subscribe(() => { 
+      this._error = ''
+    });
   }
 
   async register(form: FormGroup) {
@@ -77,7 +85,9 @@ export class AuthService {
         id: res.data.user._id,
       });
     }
-    if (res && !res.success && res.error) this._error = res.error;
+    if (res && !res.success && res.error) { 
+      console.log(res)
+      this._error = res.error };
     return res;
   }
 

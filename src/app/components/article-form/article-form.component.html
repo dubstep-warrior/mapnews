@@ -95,7 +95,7 @@
     </div>
   </div>
   <div>
-    <div (click)="submitClicked()" class="button blue-btn">Submit</div>
+    <button [disabled]="form.invalid" (click)="submitClicked()" class="button blue-btn">Submit</button>
   </div>
   <input type="submit" hidden />
 </form>

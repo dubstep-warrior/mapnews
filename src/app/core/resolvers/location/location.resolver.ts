@@ -1,19 +1,17 @@
 import { Injectable } from '@angular/core';
 import {
-  Router,
   Resolve,
   RouterStateSnapshot,
   ActivatedRouteSnapshot,
 } from '@angular/router';
-import { Observable, of } from 'rxjs';
 import { LocationService } from '../../services/location/location.service';
 import { ArticleService } from '../../services/article/article.service';
-import { ILocation } from '../../interfaces/location.interface';
+import { IResponse } from '../../interfaces/response.interface';
 
 @Injectable({
   providedIn: 'root',
 })
-export class LocationResolver implements Resolve<ILocation> {
+export class LocationResolver implements Resolve<IResponse> {
   constructor(
     private service: LocationService,
     private articleService: ArticleService,
@@ -22,7 +20,7 @@ export class LocationResolver implements Resolve<ILocation> {
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
-  ): Promise<ILocation> {
+  ): Promise<IResponse> {
     return this.service.init().then((data) => {
       return this.articleService.getArticles('relevant', data);
     });

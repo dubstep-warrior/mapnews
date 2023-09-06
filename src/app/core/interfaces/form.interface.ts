@@ -5,7 +5,7 @@ type TFormName = 'addArticle' | 'login' | 'register' | 'search';
 export interface IFormAttribute {
   type: string;
   value: any;
-  validators?: keyof ValidatorMap[];
+  validators?: (keyof ValidatorMap)[];
 }
 
 interface IFormConfig {

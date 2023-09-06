@@ -19,8 +19,8 @@
       </div>
     </div>
     <div>
-      <img
-        [src]="currentState.data?.images?.[0] ?? 'https://placehold.co/250x100'"
+      <img *ngIf="!!currentState.data?.images?.length"
+        [src]="currentState.data?.images?.[0]"
       />
     </div>
     <app-tags

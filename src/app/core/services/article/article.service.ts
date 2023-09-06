@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { ServerService } from '../server/server.service';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { StateService } from '../state/state.service';
 import { FormGroup } from '@angular/forms';
-import { FormService } from '../form/form.service';
 import { Article, GetArticleParams } from '../../interfaces/article.interface.';
 import { LocationService } from '../location/location.service';
 import { WebSocketService } from '../ws/web-socket.service';
 import { AuthService } from '../auth/auth.service';
 import { AuthStatus } from '../../interfaces/auth.interface';
 import { PreviewImage } from '../../interfaces/preview-image.interface';
+import { IResponse } from '../../interfaces/response.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +29,6 @@ export class ArticleService {
   };
   constructor(
     private service: ServerService,
-    private formService: FormService,
     private authService: AuthService,
     private stateService: StateService,
     private locationService: LocationService,
@@ -41,7 +40,7 @@ export class ArticleService {
     });
   }
 
-  async getArticles(key: string, params?: GetArticleParams) {
+  getArticles: (arg: string, param?: GetArticleParams) => Promise<IResponse> = async (key, params) => {
     this.current = key == 'current' ? this.current : key;
 
     const res = await this.service.get(
@@ -63,7 +62,7 @@ export class ArticleService {
     return res;
   }
 
-  async report(form: FormGroup) {
+  report: (arg: FormGroup) => Promise<void> = async (form: FormGroup) => {
     let formData = new FormData();
     Object.keys(form.value).forEach((key) => {
       if (form.value[key]) {
@@ -89,7 +88,7 @@ export class ArticleService {
     return res;
   }
 
-  async resolveArticleLikes(id: string) {
+  resolveArticleLikes: (arg: string) => Promise<void> = async (id) => {
     const res = await this.service.post(`${this.api}/like`, { articleId: id });
     if (res && res.success) {
       this.articles = this.articles.map((article) =>
