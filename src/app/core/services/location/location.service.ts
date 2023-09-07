@@ -11,7 +11,7 @@ export class LocationService {
   mouseLocationCoordinates: Subject<ILocation> = new Subject();
   constructor(private ws: WebSocketService) {}
 
-  async init(): Promise<ILocation> {
+  init: () => Promise<ILocation> = async () => {
     const data = await new Promise<GeolocationPosition>((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(resolve, reject);
     });
@@ -22,13 +22,13 @@ export class LocationService {
     };
 
     return this._currentLocation;
-  }
+  };
 
   get currentLocation(): ILocation {
     return this._currentLocation;
   }
 
-  getLocation(): Observable<ILocation> {
+  getLocation: () => Observable<ILocation> = () => {
     return new Observable((observer: Observer<ILocation>) => {
       navigator.geolocation.watchPosition(
         (pos) => {
@@ -50,9 +50,9 @@ export class LocationService {
         },
       );
     });
-  }
+  };
 
-  setMouseCoordinates(coordinates: ILocation): void {
+  setMouseCoordinates: (args: ILocation) => void = (coordinates) => {
     this.mouseLocationCoordinates.next(coordinates);
-  }
+  };
 }

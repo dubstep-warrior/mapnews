@@ -19,7 +19,8 @@
       </div>
     </div>
     <div>
-      <img *ngIf="!!currentState.data?.images?.length"
+      <img
+        *ngIf="!!currentState.data?.images?.length"
         [src]="currentState.data?.images?.[0]"
       />
     </div>

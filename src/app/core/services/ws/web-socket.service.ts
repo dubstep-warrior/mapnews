@@ -12,7 +12,7 @@ export class WebSocketService {
 
   constructor(private notificationService: NotificationService) {}
 
-  connect(): Observable<any> {
+  connect: () => Observable<any> = () => {
     if (this.connection$) {
       return this.connection$;
     } else {
@@ -26,9 +26,9 @@ export class WebSocketService {
       });
       return this.connection$;
     }
-  }
+  };
 
-  send(data: any) {
+  send: (args: Record<string, any>) => void = (data) => {
     if (this.connection$) {
       const payload = {
         token: localStorage.getItem('token'),
@@ -36,16 +36,16 @@ export class WebSocketService {
       };
       this.connection$.next(payload);
     }
-  }
+  };
 
-  closeConnection() {
+  closeConnection: () => void = () => {
     if (this.connection$) {
       this.connection$.complete();
       this.connection$ = null;
     }
-  }
+  };
 
-  ngOnDestroy() {
+  ngOnDestroy: () => void = () => {
     this.closeConnection();
-  }
+  };
 }

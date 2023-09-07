@@ -13,21 +13,21 @@ export class StateService {
   state: State = { name: 'neutral' };
   model: Subject<any> = new Subject();
 
-  resolveState(stateName: StateName, data?: any) {
+  resolveState: (args: StateName, params?: any) => void = (stateName, data) => {
     this.state = {
       name: stateName,
     };
     this.state.data = data;
     this.wsService.send(this.state);
     this.stateBroadcast();
-  }
+  };
 
-  private stateBroadcast() {
+  private stateBroadcast: () => void = () => {
     this.model.next(this.state);
-  }
+  };
 
-  resetState() {
+  resetState: () => void = () => {
     this.state = { name: 'neutral' };
     this.stateBroadcast();
-  }
+  };
 }

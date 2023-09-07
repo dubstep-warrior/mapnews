@@ -40,29 +40,30 @@ export class ArticleService {
     });
   }
 
-  getArticles: (arg: string, param?: GetArticleParams) => Promise<IResponse> = async (key, params) => {
-    this.current = key == 'current' ? this.current : key;
+  getArticles: (arg: string, param?: GetArticleParams) => Promise<IResponse> =
+    async (key, params) => {
+      this.current = key == 'current' ? this.current : key;
 
-    const res = await this.service.get(
-      `${this.api}${this.navMapping[this.current]}`,
-      { ...this.locationService.currentLocation, ...params },
-    );
-    if (res && res.success) {
-      this.articles = res.data;
-      this.model.next(this.articles);
-      if (!!params) {
-        this.wsService.send({
-          name: 'searchedArticles',
-          data: params,
-        });
+      const res = await this.service.get(
+        `${this.api}${this.navMapping[this.current]}`,
+        { ...this.locationService.currentLocation, ...params },
+      );
+      if (res && res.success) {
+        this.articles = res.data;
+        this.model.next(this.articles);
+        if (!!params) {
+          this.wsService.send({
+            name: 'searchedArticles',
+            data: params,
+          });
+        }
+      } else {
+        console.log(res.error);
       }
-    } else {
-      console.log(res.error);
-    }
-    return res;
-  }
+      return res;
+    };
 
-  report: (arg: FormGroup) => Promise<void> = async (form: FormGroup) => {
+  report: (arg: FormGroup) => Promise<IResponse> = async (form: FormGroup) => {
     let formData = new FormData();
     Object.keys(form.value).forEach((key) => {
       if (form.value[key]) {
@@ -86,7 +87,7 @@ export class ArticleService {
     }
     this.stateService.resolveState('submitAttempted', { success: res.success });
     return res;
-  }
+  };
 
   resolveArticleLikes: (arg: string) => Promise<void> = async (id) => {
     const res = await this.service.post(`${this.api}/like`, { articleId: id });
@@ -110,7 +111,7 @@ export class ArticleService {
         });
       }
     }
-  }
+  };
 
   addNotificationArticle: (arg: Article) => void = (article) => {
     if (!this.articles.some((currArticle) => currArticle._id == article._id)) {

@@ -4,18 +4,18 @@ import {
   RouterStateSnapshot,
   ActivatedRouteSnapshot,
 } from '@angular/router';
-import { FormService } from '../../services/form/form.service';
+import { ConfigResponse, FormService } from '../../services/form/form.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ConfigResolver implements Resolve<void> {
+export class ConfigResolver implements Resolve<ConfigResponse> {
   constructor(private service: FormService) {}
 
-  resolve(
+  resolve: (
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
-  ): Promise<void> {
+  ) => Promise<ConfigResponse> = async (route, state) => {
     return this.service.init();
-  }
+  };
 }

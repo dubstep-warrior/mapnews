@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
 import { ServerService } from '../server/server.service';
 import { Notification } from '../../interfaces/notification.interface';
 import { BehaviorSubject } from 'rxjs';
@@ -21,20 +20,20 @@ export class NotificationService {
     return diff < 0 ? 0 : diff;
   }
 
-  seenNotification() {
+  seenNotification: () => void = () => {
     this.seen = new Set(this.data.map((notification) => notification._id));
     localStorage.setItem(
       'seen-notifications',
       JSON.stringify(this.data.map((notification) => notification._id)),
     );
-  }
+  };
 
-  addNotification(notification: Notification) {
+  addNotification: (args: Notification) => void = (notification) => {
     this.data.push(notification);
     this.model.next(this.data);
-  }
+  };
 
-  async pullNotifications() {
+  pullNotifications: () => Promise<void> = async () => {
     const res = await this.service.get(this.api);
     if (localStorage.getItem('seen-notifications') !== null) {
       this.seen = new Set(
@@ -45,5 +44,5 @@ export class NotificationService {
       this.data = res.data;
       this.model.next(this.data);
     }
-  }
+  };
 }
