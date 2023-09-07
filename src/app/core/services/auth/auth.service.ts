@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 import { AuthStatus, IUser } from '../../interfaces/auth.interface';
 import { WebSocketService } from '../ws/web-socket.service';
 import { NotificationService } from '../notification/notification.service';
-import { map, filter, scan } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { IResponse } from '../../interfaces/response.interface';
 
 @Injectable({

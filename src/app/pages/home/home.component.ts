@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { trigger, style, animate, transition } from '@angular/animations';
 import { Base } from 'src/app/core/directives/base.directive';
 import { StateService } from 'src/app/core/services/state/state.service';
 import { State } from 'src/app/core/interfaces/state.interface';

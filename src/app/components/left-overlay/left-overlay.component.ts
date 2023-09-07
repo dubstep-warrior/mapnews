@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { bounce, slideIn } from 'src/app/core/utilities/animations';
 import { FormDirective } from 'src/app/core/directives/form.directive';
 import { ILocation } from 'src/app/core/interfaces/location.interface';

@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { filter, map } from 'rxjs';
 import { Base } from 'src/app/core/directives/base.directive';
-import { State } from 'src/app/core/interfaces/state.interface';
 import { ArticleService } from 'src/app/core/services/article/article.service';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { NotificationService } from 'src/app/core/services/notification/notification.service';
@@ -63,7 +61,7 @@ export class NavbarComponent extends Base implements OnInit {
     this.selected = item;
     this.service.resetState();
     const key = item.toLowerCase().replaceAll(' ', '');
-    const res = await this.articleService.getArticles(key);
+    await this.articleService.getArticles(key);
   }
 
   resolveMobileMenu() {
