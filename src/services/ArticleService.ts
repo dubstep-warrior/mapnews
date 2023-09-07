@@ -20,19 +20,7 @@ class ArticleService {
     urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT!,
   });
 
-  constructor() { }
-
-  async getAllArticles(): Promise<IProcessedArticle[]> {
-    try {
-      const allArticles: IArticle[] = await Article.find().lean();
-      return allArticles.map((article) => {
-        return { ...article, coordinates: article.location.coordinates };
-      });
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  }
+  constructor() {}
 
   async createArticle(req: MulterRequest): Promise<IProcessedArticle> {
     try {
@@ -128,6 +116,5 @@ class ArticleService {
       throw error;
     }
   }
-
 }
 export default new ArticleService();

@@ -16,7 +16,6 @@ class AuthService {
   });
 
   async createUser(req: Request): Promise<IAuth> {
-
     const data = req.body;
     const newUser: Partial<IUser> & { confirmPassword?: string } = {};
     Object.keys(data).forEach((key) => {
@@ -24,7 +23,11 @@ class AuthService {
       newUser[index] = data[index];
     });
 
-    if ((["email", "password", "confirmPassword"]).some((element) => !newUser[element as keyof typeof newUser])) {
+    if (
+      ["email", "password", "confirmPassword"].some(
+        (element) => !newUser[element as keyof typeof newUser],
+      )
+    ) {
       throw new Error("Not all fields are filled");
     }
     if (newUser.password !== newUser.confirmPassword) {
@@ -75,7 +78,11 @@ class AuthService {
       currentUser[index] = data[index];
     });
 
-    if (["email", "password"].some((element) => !currentUser[element as keyof Partial<IUser>])) {
+    if (
+      ["email", "password"].some(
+        (element) => !currentUser[element as keyof Partial<IUser>],
+      )
+    ) {
       throw new Error("Not all fields are filled");
     }
 

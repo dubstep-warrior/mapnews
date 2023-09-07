@@ -17,8 +17,8 @@ services:
         window: 120s
     networks:
       - web
-  cron:
-    image: mapnews-cron:latest
+  notification-service:
+    image: mapnews-notification:latest
   proxy:
     image: dockercloud/haproxy
     depends_on:
