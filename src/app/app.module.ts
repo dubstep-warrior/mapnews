@@ -30,6 +30,7 @@ import { RightOverlayContainerComponent } from './components/shared/right-overla
 import { AccessContainerComponent } from './components/shared/access-container/access-container.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { NotificationMessagePipe } from './core/pipes/notification-message/notification-message.pipe';
+import { LikeTermPipe } from './core/pipes/like-term/like-term.pipe';
 
 export let AppInjector: Injector;
 @NgModule({
@@ -55,6 +56,7 @@ export let AppInjector: Injector;
     AccessContainerComponent,
     NotificationsComponent,
     NotificationMessagePipe,
+    LikeTermPipe,
   ],
   imports: [
     HttpClientModule,

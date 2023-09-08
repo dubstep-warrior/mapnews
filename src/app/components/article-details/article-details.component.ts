@@ -19,4 +19,8 @@ export class ArticleDetailsComponent {
   clickLikeButton(id: string) {
     this.resolveLike.emit(id);
   }
+
+  likeTerm(num: number): string {
+    return '';
+  }
 }

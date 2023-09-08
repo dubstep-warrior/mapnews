@@ -32,15 +32,49 @@
 }
 
 .body {
-  * {
+  > * {
     margin-bottom: 16px;
   }
 
-  > :nth-last-child(2) {
+  > :nth-child(2) {
     margin-top: 16px;
 
     > app-image-gallery {
       width: 100%;
+    }
+  }
+
+  > .user {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid grey;
+    border-radius: 16px;
+    padding: 4px 8px;
+
+    * {
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    > * {
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    > :first-child {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      > :first-child {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
     }
   }
 

@@ -1,3 +1,4 @@
+import { IUser } from './auth.interface';
 import { ILocation } from './location.interface';
 
 export type ArticleCategory =
@@ -16,6 +17,7 @@ export interface Article {
   tags?: Array<string>;
   likes: string[];
   images: string[];
+  posted_by: IUser;
 }
 
 export interface GetArticleParams extends ILocation {

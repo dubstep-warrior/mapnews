@@ -28,9 +28,24 @@
     </div>
   </div>
   <div class="body" body>
-    <app-tags [tags]="article.tags" [currentState]="state"></app-tags>
+    <div>
+      <app-tags [tags]="article.tags" [currentState]="state"></app-tags>
+    </div>
     <div>
       <app-image-gallery [images]="article.images"></app-image-gallery>
+    </div>
+    <div class="user">
+      <div>
+        {{ "By:" }}
+        {{
+          !!article.posted_by?.email
+            ? article.posted_by.email.split("@")[0]
+            : "Unknown"
+        }}
+      </div>
+      <div>
+        {{ "this" | likeTerm: article.likes : authStatus?.id }}
+      </div>
     </div>
     <div>
       {{ article.description }}
