@@ -96,6 +96,12 @@ export class ArticleService {
       this.articles = this.articles.map((article) =>
         res.data?._id == article._id ? res.data : article,
       );
+
+      if (this.current == 'favourites') {
+        this.articles = [...this.articles, res.data].filter((article) =>
+          article.likes.includes(this.authStatus?.id),
+        );
+      }
       this.model.next(this.articles);
 
       if (res.data.likes?.includes(this.authStatus?.id)) {

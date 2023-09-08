@@ -22,7 +22,6 @@ export class AuthService {
   constructor(
     private service: ServerService,
     private wsService: WebSocketService,
-    private notificationService: NotificationService,
     private router: Router,
   ) {
     this.token = localStorage.getItem('token');
@@ -77,12 +76,13 @@ export class AuthService {
       if (res && res.success) {
         this.authenticated = true;
         this.token = res.data;
+        this.user = res.data.user;
         localStorage.setItem('token', res.data.token);
-        localStorage.setItem(res.data.token, JSON.stringify(res.data.user));
+        localStorage.setItem(res.data.token, JSON.stringify(this.user));
         this.afterAuthInit();
         this.authStatusSubject.next({
           loggedIn: this.authenticated,
-          id: res.data.user._id,
+          id: this.user._id,
         });
       }
       if (res && !res.success && res.error) {
@@ -102,6 +102,5 @@ export class AuthService {
 
   private afterAuthInit: () => void = () => {
     this.wsService.connect();
-    this.notificationService.pullNotifications();
   };
 }

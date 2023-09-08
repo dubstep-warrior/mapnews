@@ -28,10 +28,10 @@
       [type]="'post-location'"
       *ngIf="
         ['addArticleLocation', 'addArticle'].includes(state?.name) &&
-        formService.formCoordinates.length
+        formService?.formRef?.get('location')?.value?.coordinates?.length
       "
       [mark]="{
-        coordinates: formService.formCoordinates
+        coordinates: formService.formRef.get('location')?.value?.coordinates
       }"
     ></app-mark>
     <app-mark

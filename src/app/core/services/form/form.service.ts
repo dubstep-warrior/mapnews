@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import {
+  AbstractControl,
+  FormArray,
+  FormControl,
+  FormGroup,
+} from '@angular/forms';
 import { ServerService } from '../server/server.service';
 import { IResponse } from '../../interfaces/response.interface';
 import { IForm, IFormAttribute } from '../../interfaces/form.interface';
@@ -28,8 +33,8 @@ export class FormService {
     });
   };
 
-  get formCoordinates(): number[] {
-    return this.form?.get('location')?.value?.coordinates;
+  get formRef(): FormGroup {
+    return this.form;
   }
 
   resetForm: () => void = () => {
@@ -42,7 +47,7 @@ export class FormService {
     const formConfig: IForm = this.formConfigurations.find(
       (config) => config.name == name,
     );
-    const formGroupObject: any = {};
+    const formGroupObject: Record<string, AbstractControl> = {};
     Object.keys(formConfig.form).forEach((key) => {
       formGroupObject[key] = this.resolveType(formConfig.form[key]);
     });
@@ -52,20 +57,46 @@ export class FormService {
     return this.form;
   };
 
-  resolveType: (arg: IFormAttribute) => FormControl | void = (
+  resolveType: (arg: IFormAttribute) => AbstractControl = (
     formConfigObject,
   ) => {
     const type = formConfigObject.type;
     switch (type) {
-      case 'control':
+      case 'array':
+        return this.resolveFormArray(formConfigObject);
+      case 'group':
+        return this.resolveFormGroup(formConfigObject);
+      default:
         return new FormControl(
           formConfigObject.value,
           formConfigObject?.validators?.map(
             (validatorKey) => validator[validatorKey],
           ) ?? [],
         );
-      default:
-        return console.error('You have not implemented resolve group TBD soon');
     }
+  };
+
+  resolveFormGroup: (arg: IFormAttribute) => FormGroup = (formConfigObject) => {
+    const formGroupObject: any = {};
+    Object.keys(formConfigObject.value).forEach((key) => {
+      formGroupObject[key] = this.resolveType(formConfigObject.value[key]);
+    });
+    return new FormGroup(
+      formGroupObject,
+      formConfigObject?.validators?.map(
+        (validatorKey) => validator[validatorKey],
+      ) ?? [],
+    );
+  };
+
+  resolveFormArray: (arg: IFormAttribute) => FormArray = (formConfigObject) => {
+    return new FormArray(
+      Object.keys(formConfigObject.value).map((key) =>
+        this.resolveType(formConfigObject.value[key]),
+      ),
+      formConfigObject?.validators?.map(
+        (validatorKey) => validator[validatorKey],
+      ) ?? [],
+    );
   };
 }
