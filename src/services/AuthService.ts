@@ -1,5 +1,4 @@
 import User from "../models/User";
-import ImageKit from "imagekit";
 import * as dotenv from "dotenv";
 dotenv.config();
 import JsonWebToken from "jsonwebtoken";
@@ -7,14 +6,9 @@ import Bcrypt from "bcryptjs";
 import { Request } from "express";
 import { IAuth } from "../utils/interfaces/auth.interface";
 import { IUser } from "../utils/interfaces/user.interface";
+import { ImageKitClient } from "../clients/imagekit.client";
 
 class AuthService {
-  imageKit = new ImageKit({
-    publicKey: process.env.IMAGEKIT_PUBLIC_KEY!,
-    privateKey: process.env.IMAGEKIT_PRIVATE_KEY!,
-    urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT!,
-  });
-
   async createUser(req: Request): Promise<IAuth> {
     const data = req.body;
     const newUser: Partial<IUser> & { confirmPassword?: string } = {};
@@ -52,7 +46,7 @@ class AuthService {
       );
 
       if (req.file)
-        this.imageKit.upload(
+        ImageKitClient.upload(
           {
             file: req.file.buffer.toString("base64"),
             fileName: req.file.originalname,

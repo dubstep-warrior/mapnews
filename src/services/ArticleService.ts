@@ -1,5 +1,4 @@
 import Article from "../models/Article";
-import ImageKit from "imagekit";
 import * as dotenv from "dotenv";
 import mongoose from "mongoose";
 import { Cache } from "../utils/decorators/cache.decorator";
@@ -11,22 +10,17 @@ import {
 } from "../utils/interfaces/article.interface";
 import { Request } from "express";
 import { ResolverOptions } from "../utils/interfaces/resolver-options.interface";
+import { ImageKitClient } from "../clients/imagekit.client";
 dotenv.config();
 
 class ArticleService {
-  imageKit = new ImageKit({
-    publicKey: process.env.IMAGEKIT_PUBLIC_KEY!,
-    privateKey: process.env.IMAGEKIT_PRIVATE_KEY!,
-    urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT!,
-  });
-
   constructor() {}
 
   async createArticle(req: MulterRequest): Promise<IProcessedArticle> {
     try {
       const data = req.body;
       const imageUploads = req.files.map((img: any) =>
-        this.imageKit.upload({
+        ImageKitClient.upload({
           file: img.buffer.toString("base64"),
           fileName: img.originalname,
           folder: "Articles",
@@ -46,7 +40,9 @@ class ArticleService {
         }
       });
 
-      const response = await new Article(newArticle).save();
+      const response = await new Article(newArticle)
+        .save()
+        .then((res) => res.populate("posted_by"));
       return {
         ...response.toObject(),
         coordinates: (response.location as any).coordinates,
@@ -65,7 +61,7 @@ class ArticleService {
           id: new mongoose.Types.ObjectId(userId),
         }),
         { returnDocument: "after" },
-      );
+      ).populate("posted_by");
 
       if (!article) throw "Cant find article";
 
@@ -87,9 +83,9 @@ class ArticleService {
     if ("userId" in req.body)
       options["id"] = new mongoose.Types.ObjectId(req.body["userId"]);
     try {
-      const allArticles = await Article.find(
-        FilterResolver(req.path, options),
-      ).lean();
+      const allArticles = await Article.find(FilterResolver(req.path, options))
+        .populate("posted_by")
+        .lean();
 
       const articles = allArticles.map((article) => {
         return { ...article, coordinates: article.location.coordinates };
@@ -105,9 +101,9 @@ class ArticleService {
   async resolveArticleSearch(req: Request): Promise<IProcessedArticle[]> {
     try {
       const options: ResolverOptions = JSON.parse(req.query.data as string);
-      const allArticles = await Article.find(
-        FilterResolver(req.path, options),
-      ).lean();
+      const allArticles = await Article.find(FilterResolver(req.path, options))
+        .populate("posted_by")
+        .lean();
       return allArticles.map((article: any) => {
         return { ...article, coordinates: article.location.coordinates };
       });
