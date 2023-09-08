@@ -1,5 +1,4 @@
-import { Directive, OnInit, Input } from '@angular/core';
-import { Base } from './base.directive';
+import { Directive, Input, Inject } from '@angular/core';
 import { FormService } from '../services/form/form.service';
 import { FormGroup } from '@angular/forms';
 import { AppInjector } from 'src/app/app.module';
@@ -8,11 +7,14 @@ import { AuthService } from '../services/auth/auth.service';
 import { LocationService } from '../services/location/location.service';
 import { StateService } from '../services/state/state.service';
 import { State } from '../interfaces/state.interface';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
+type FormType = 'search' | 'addArticle' | 'register' | 'login';
 
 @Directive({
   selector: '[appForm]',
 })
-export class FormDirective extends Base implements OnInit {
+export class FormDirective {
   @Input() state: State;
   form: FormGroup;
 
@@ -22,20 +24,17 @@ export class FormDirective extends Base implements OnInit {
   locationService: LocationService;
   stateService: StateService;
 
-  formType: 'search' | 'addArticle' | 'register' | 'login';
-  constructor() {
-    super();
+  formType: FormType;
+  constructor(@Inject(String) formType: FormType) {
     this.formService = AppInjector.get(FormService);
     this.articleService = AppInjector.get(ArticleService);
     this.authService = AppInjector.get(AuthService);
     this.locationService = AppInjector.get(LocationService);
     this.stateService = AppInjector.get(StateService);
-  }
-
-  ngOnInit(): void {
-    this.form = this.formService.resolve(this.formType);
-    this.form.valueChanges.pipe(this.takeUntilDestroy()).subscribe(() => {
-      if (['register', 'login'].includes(this.formType))
+    this.formType = formType;
+    this.form = this.formService.resolve(formType);
+    this.form.valueChanges.pipe(takeUntilDestroyed()).subscribe(() => {
+      if (['register', 'login'].includes(formType))
         this.authService.clearError();
     });
   }

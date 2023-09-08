@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormDirective } from 'src/app/core/directives/form.directive';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -7,8 +8,7 @@ import { FormDirective } from 'src/app/core/directives/form.directive';
 })
 export class LoginComponent extends FormDirective {
   constructor() {
-    super();
-    this.formType = 'login';
+    super('login');
   }
 
   async submit() {

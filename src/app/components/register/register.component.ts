@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormDirective } from 'src/app/core/directives/form.directive';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent extends FormDirective implements OnInit {
+export class RegisterComponent extends FormDirective {
   previewImg: string;
   constructor() {
-    super();
-    this.formType = 'register';
+    super('register');
   }
 
   addImage(event: Event) {

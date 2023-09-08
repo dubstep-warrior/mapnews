@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { bounce, slideIn } from 'src/app/core/utilities/animations';
 import { FormDirective } from 'src/app/core/directives/form.directive';
 import { ILocation } from 'src/app/core/interfaces/location.interface';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-left-overlay',
@@ -9,17 +10,12 @@ import { ILocation } from 'src/app/core/interfaces/location.interface';
   templateUrl: './left-overlay.component.html',
   styleUrls: ['./left-overlay.component.scss'],
 })
-export class LeftOverlayComponent extends FormDirective implements OnInit {
+export class LeftOverlayComponent extends FormDirective {
   locationMouseMode: boolean = false;
-
   constructor() {
-    super();
-    this.formType = 'addArticle';
-  }
-
-  override ngOnInit(): void {
+    super('addArticle');
     this.locationService.mouseLocationCoordinates
-      .pipe(this.takeUntilDestroy())
+      .pipe(takeUntilDestroyed())
       .subscribe((data: ILocation) => {
         if (['addArticleLocation'].includes(this.state?.name)) {
           this.form.get('location').setValue({
@@ -27,8 +23,6 @@ export class LeftOverlayComponent extends FormDirective implements OnInit {
           });
         }
       });
-
-    super.ngOnInit();
   }
 
   exitOverlay(): void {

@@ -79,7 +79,8 @@ export class ArticleService {
     this.stateService.resolveState('submittingArticle');
     const res = await this.service.post(this.api, formData);
     if (res && res.success) {
-      this.model.next([...this.articles, res.data]);
+      this.articles = [...this.articles, res.data];
+      this.model.next(this.articles);
       this.wsService.send({
         name: 'postedArticle',
         data: res.data,

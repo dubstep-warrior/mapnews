@@ -1,7 +1,6 @@
-import { Component, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Article } from '../../core/interfaces/article.interface.';
 import { StateService } from './../../core/services/state/state.service';
-import { Base } from 'src/app/core/directives/base.directive';
 import { ArticleService } from 'src/app/core/services/article/article.service';
 import { LocationService } from 'src/app/core/services/location/location.service';
 import { State } from 'src/app/core/interfaces/state.interface';
@@ -14,6 +13,7 @@ import {
 } from 'src/app/core/interfaces/location.interface';
 import { MapMouseEvent } from 'maplibre-gl';
 import { EventData } from '@maplibre/ngx-maplibre-gl';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-map',
@@ -47,7 +47,7 @@ import { EventData } from '@maplibre/ngx-maplibre-gl';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
 })
-export class MapComponent extends Base implements AfterViewInit, OnDestroy {
+export class MapComponent {
   @ViewChild('map')
   map: any;
   currentCoordinates: IMapAttributes = { zoom: 14 };
@@ -60,21 +60,17 @@ export class MapComponent extends Base implements AfterViewInit, OnDestroy {
     private stateService: StateService,
     public formService: FormService,
   ) {
-    super();
     this.articles = this.service.model;
-  }
-
-  async ngAfterViewInit() {
     this.locationService
       .getLocation()
-      .pipe(this.takeUntilDestroy())
+      .pipe(takeUntilDestroyed())
       .subscribe((data: ILocation) => {
         this.currentCoordinates = { ...this.currentCoordinates, ...data };
       });
 
     this.stateService.model
       .pipe(
-        this.takeUntilDestroy(),
+        takeUntilDestroyed(),
         distinctUntilChanged((prev, curr) => {
           return prev.name === curr.name;
         }),
@@ -102,8 +98,7 @@ export class MapComponent extends Base implements AfterViewInit, OnDestroy {
     }
   }
 
-  override ngOnDestroy() {
+  ngOnDestroy() {
     this.map?.remove();
-    super.ngOnDestroy();
   }
 }

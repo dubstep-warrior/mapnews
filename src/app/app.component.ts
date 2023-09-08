@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { StateService } from './core/services/state/state.service';
-import { Base } from './core/directives/base.directive';
 import { State } from './core/interfaces/state.interface';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
-import { fader, slider } from './core/utilities/animations';
+import { slider } from './core/utilities/animations';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +12,7 @@ import { fader, slider } from './core/utilities/animations';
   animations: [slider],
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent extends Base implements OnInit {
+export class AppComponent {
   title = 'MapNews';
   state: State;
   currentURL: string;
@@ -20,17 +20,13 @@ export class AppComponent extends Base implements OnInit {
     private stateService: StateService,
     private router: Router,
   ) {
-    super();
-  }
-
-  ngOnInit(): void {
-    this.stateService.model.pipe(this.takeUntilDestroy()).subscribe((state) => {
+    this.stateService.model.pipe(takeUntilDestroyed()).subscribe((state) => {
       this.state = state;
     });
 
     this.router.events
       .pipe(
-        this.takeUntilDestroy(),
+        takeUntilDestroyed(),
         filter((event) => event instanceof NavigationEnd),
       )
       .subscribe((event) => {

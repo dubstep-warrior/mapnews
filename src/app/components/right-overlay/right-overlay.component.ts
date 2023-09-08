@@ -1,31 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthStatus } from 'src/app/core/interfaces/auth.interface';
 import { FormDirective } from 'src/app/core/directives/form.directive';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-right-overlay',
   templateUrl: './right-overlay.component.html',
   styleUrls: ['./right-overlay.component.scss'],
 })
-export class RightOverlayComponent extends FormDirective implements OnInit {
+export class RightOverlayComponent extends FormDirective {
   authStatus: AuthStatus;
 
   constructor() {
-    super();
-  }
-
-  override ngOnInit(): void {
+    super('search');
     this.authService.authStatusSubject
-      .pipe(this.takeUntilDestroy())
+      .pipe(takeUntilDestroyed())
       .subscribe((status) => {
         this.authStatus = status;
       });
-    if (['search'].includes(this.state.name)) {
-      this.formType = 'search';
-      super.ngOnInit();
-    }
   }
-
   async clickLikeButton(id: string): Promise<void> {
     await this.articleService.resolveArticleLikes(id);
   }

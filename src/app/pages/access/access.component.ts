@@ -1,12 +1,7 @@
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
-import { Base } from 'src/app/core/directives/base.directive';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { rotate, slider } from 'src/app/core/utilities/animations';
 
@@ -16,7 +11,7 @@ import { rotate, slider } from 'src/app/core/utilities/animations';
   animations: [slider, rotate],
   styleUrls: ['./access.component.scss'],
 })
-export class AccessComponent extends Base implements OnInit, AfterViewInit {
+export class AccessComponent implements AfterViewInit {
   authenticated: boolean = false;
   currentRoute: string;
   constructor(
@@ -24,19 +19,15 @@ export class AccessComponent extends Base implements OnInit, AfterViewInit {
     private service: AuthService,
     private router: Router,
   ) {
-    super();
-  }
-
-  ngOnInit(): void {
     this.service.authStatusSubject
-      .pipe(this.takeUntilDestroy())
+      .pipe(takeUntilDestroyed())
       .subscribe((status) => {
         this.authenticated = status.loggedIn;
       });
 
     this.router.events
       .pipe(
-        this.takeUntilDestroy(),
+        takeUntilDestroyed(),
         filter((event) => event instanceof NavigationEnd),
       )
       .subscribe((event) => {

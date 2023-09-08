@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Base } from 'src/app/core/directives/base.directive';
+import { Component, Input } from '@angular/core';
 import { ArticleService } from 'src/app/core/services/article/article.service';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { NotificationService } from 'src/app/core/services/notification/notification.service';
@@ -15,7 +14,7 @@ import {
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent extends Base implements OnInit {
+export class NavbarComponent {
   selected = 'Relevant';
   menu = ['Relevant', 'New', 'Favourites', 'My Posts'];
   @Input() authenticated: boolean = false;
@@ -26,11 +25,7 @@ export class NavbarComponent extends Base implements OnInit {
     private authService: AuthService,
     public articleService: ArticleService,
     public notificationService: NotificationService,
-  ) {
-    super();
-  }
-
-  ngOnInit(): void {}
+  ) {}
 
   addArticle() {
     this.mobileMenu = false;

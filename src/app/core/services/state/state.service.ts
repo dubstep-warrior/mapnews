@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Article } from '../../interfaces/article.interface.';
 import { Subject } from 'rxjs';
 import { State, StateName } from '../../interfaces/state.interface';
 import { WebSocketService } from '../ws/web-socket.service';

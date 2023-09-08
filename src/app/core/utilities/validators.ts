@@ -15,7 +15,7 @@ const validator: ValidatorMap = {
   textBody: Validators.maxLength(280),
   title: Validators.maxLength(50),
   location: (control) => {
-    const isEmpty = !(control.value.coordinates.length == 2);
+    const isEmpty = !(control.value?.coordinates?.length == 2);
     return isEmpty ? { location: { value: control.value } } : null;
   },
 };
