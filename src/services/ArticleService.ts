@@ -2,7 +2,7 @@ import Article from "../models/Article";
 import ImageKit from "imagekit";
 import * as dotenv from "dotenv";
 import mongoose from "mongoose";
-import { Cache } from "../utils/cache.decorator";
+import { Cache } from "../utils/decorators/cache.decorator";
 import { FilterResolver } from "../utils/resolvers/article-filter.resolver";
 import { MulterRequest } from "../utils/interfaces/http.interface";
 import {

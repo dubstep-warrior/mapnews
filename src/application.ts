@@ -1,14 +1,10 @@
 // src/application.ts
-import express, {
-  Application as ExApplication,
-  Handler,
-  RequestHandler,
-} from "express";
+import express, { Application as ExApplication, Handler } from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import { controllers } from "./controllers";
 import { MetadataKeys } from "./utils/metadata.keys";
-import { IRouter } from "./utils/handlers.decorator";
+import { IRouter } from "./utils/decorators/handlers.decorator";
 import multer from "multer";
 
 class Application {

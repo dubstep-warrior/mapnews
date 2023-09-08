@@ -1,8 +1,8 @@
 import ArticleService from "../services/ArticleService";
 import { Request, Response, NextFunction } from "express";
-import Controller from "../utils/controller.decorator";
-import { Get, Post } from "../utils/handlers.decorator";
-import { Auth } from "../utils/authentication.decorator";
+import Controller from "../utils/decorators/controller.decorator";
+import { Get, Post } from "../utils/decorators/handlers.decorator";
+import { Auth } from "../utils/decorators/authentication.decorator";
 import { RedisPublisher } from "../clients/redis.client";
 
 @Controller("/article")

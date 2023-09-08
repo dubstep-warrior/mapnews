@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import Controller from "../utils/controller.decorator";
-import { Get } from "../utils/handlers.decorator";
-import { Auth } from "../utils/authentication.decorator";
+import Controller from "../utils/decorators/controller.decorator";
+import { Get } from "../utils/decorators/handlers.decorator";
+import { Auth } from "../utils/decorators/authentication.decorator";
 import NotificationService from "../services/NotificationService";
 
 @Controller("/notification")

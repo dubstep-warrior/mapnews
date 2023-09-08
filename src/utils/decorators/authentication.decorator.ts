@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
-import { JwtPayload } from "./interfaces/jwtpayload.interface";
-import bypass from "./resolvers/bypass-resolver";
+import { JwtPayload } from "../interfaces/jwtpayload.interface";
+import bypass from "../resolvers/bypass-resolver";
 dotenv.config();
 
 export const Auth = (userAttName?: string) => {

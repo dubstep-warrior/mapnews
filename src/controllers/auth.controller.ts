@@ -1,7 +1,7 @@
 import authService from "../services/AuthService";
 import { Request, Response, NextFunction } from "express";
-import Controller from "../utils/controller.decorator";
-import { Post } from "../utils/handlers.decorator";
+import Controller from "../utils/decorators/controller.decorator";
+import { Post } from "../utils/decorators/handlers.decorator";
 import MongoServerErrors from "./../config/mongo-server.errors.json";
 
 @Controller("/auth")

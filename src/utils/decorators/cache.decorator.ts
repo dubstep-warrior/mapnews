@@ -1,6 +1,6 @@
 import * as dotenv from "dotenv";
-import RedisClient from "../clients/redis.client";
-import bypass from "./resolvers/bypass-resolver";
+import RedisClient from "../../clients/redis.client";
+import bypass from "./../resolvers/bypass-resolver";
 dotenv.config();
 
 export const Cache = () => {

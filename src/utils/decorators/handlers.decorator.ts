@@ -1,4 +1,4 @@
-import { MetadataKeys } from "./metadata.keys";
+import { MetadataKeys } from "./../metadata.keys";
 import "reflect-metadata";
 
 export enum Methods {

@@ -1,6 +1,6 @@
 import * as dotenv from "dotenv";
 import Notification from "../models/Notification";
-import { Cache } from "../utils/cache.decorator";
+import { Cache } from "../utils/decorators/cache.decorator";
 import { Request } from "express";
 import {
   IFullNotification,

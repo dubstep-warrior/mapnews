@@ -1,7 +1,7 @@
 import ConfigService from "../services/ConfigService";
 import { Request, Response, NextFunction } from "express";
-import Controller from "../utils/controller.decorator";
-import { Get } from "../utils/handlers.decorator";
+import Controller from "../utils/decorators/controller.decorator";
+import { Get } from "../utils/decorators/handlers.decorator";
 import { IForm } from "../utils/interfaces/form.interface";
 
 @Controller("/config")
