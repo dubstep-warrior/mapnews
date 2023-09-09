@@ -17,11 +17,11 @@ export class StateService {
       name: stateName,
     };
     this.state.data = data;
-    this.wsService.send(this.state);
     this.stateBroadcast();
   };
 
   private stateBroadcast: () => void = () => {
+    this.wsService.send(this.state);
     this.model.next(this.state);
   };
 
