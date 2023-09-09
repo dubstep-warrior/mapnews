@@ -44,7 +44,7 @@
         }}
       </div>
       <div>
-        {{ "this" | likeTerm: article.likes : authStatus?.id }}
+        {{ article.likes | likeTerm: authStatus?.id }}
       </div>
     </div>
     <div>

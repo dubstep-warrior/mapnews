@@ -25,14 +25,14 @@
     </div>
     <div class="not-mobile">
       <div
-        (click)="resolveMenuOption(item)"
+        (click)="resolveMenuOption(item.api)"
         *ngFor="let item of menu.slice(0, authenticated ? menu.length : 2)"
         class="menu-item"
         [class.selected]="
-          item == selected && articleService.current !== 'search'
+          item.api == selected && articleService.current !== 'search'
         "
       >
-        <div>{{ item }}</div>
+        <div>{{ item.title }}</div>
         <div></div>
       </div>
     </div>
@@ -62,25 +62,21 @@
   <div class="mobile-menu" [class.appear]="mobileMenu">
     <div>
       <div
-        (click)="resolveMenuOption(item)"
+        (click)="resolveMenuOption(item.api)"
         *ngFor="let item of menu.slice(0, authenticated ? menu.length : 2)"
         class="menu-item"
         [class.selected]="
-          item == selected && articleService.current !== 'search'
+          item.api == selected && articleService.current !== 'search'
         "
       >
         <div>
           <img
             class="icon"
-            [src]="
-              './../../../assets/images/' +
-              (item.replaceAll(' ', '') | lowercase) +
-              '.png'
-            "
+            [src]="'./../../../assets/images/' + item.api + '.png'"
             alt=""
           />
         </div>
-        <div>{{ item }}</div>
+        <div>{{ item.title }}</div>
       </div>
     </div>
 

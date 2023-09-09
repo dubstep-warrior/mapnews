@@ -4,13 +4,19 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'likeTerm',
 })
 export class LikeTermPipe implements PipeTransform {
-  transform(value: string, likes: string[], currentUserID: string): unknown {
+  transform(likes: string[], currentUserID: string): unknown {
     const currentUserLike = likes.includes(currentUserID);
     const number = likes.length - Number(currentUserLike);
-    const body = !!number ? `and ${number} others likes` : 'like';
+    const body = currentUserLike
+      ? `You ${this.transformCurrentUserLikeTerm(number)} this`
+      : `${!!number ? `${number} ${!!(number - 1) ? `likes` : `like`}` : ``}`;
 
-    return !!likes.length
-      ? `${currentUserLike ? 'You' : ''} ${body} ${value}`
-      : '';
+    return body;
+  }
+
+  transformCurrentUserLikeTerm(number: number): string {
+    return !!number
+      ? `and ${!!(number - 1) ? `${number} others like` : `1 other likes`}`
+      : 'like';
   }
 }

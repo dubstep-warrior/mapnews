@@ -7,6 +7,7 @@ import {
   slideInFromLeft,
   slideInFromRight,
 } from 'src/app/core/utilities/animations';
+import GeneralConfig from './../../core/configs/general.config.json';
 
 @Component({
   selector: 'app-navbar',
@@ -15,8 +16,8 @@ import {
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent {
-  selected = 'Relevant';
-  menu = ['Relevant', 'New', 'Favourites', 'My Posts'];
+  selected = 'relevant';
+  menu = GeneralConfig.menu;
   @Input() authenticated: boolean = false;
   mobileMenu: boolean = false;
 

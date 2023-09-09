@@ -1,4 +1,7 @@
 import { Component, Input } from '@angular/core';
+import GeneralConfig from './../../core/configs/general.config.json';
+
+type ThumbnailPosition = 'bottom' | 'top' | 'left' | 'right';
 
 @Component({
   selector: 'app-image-gallery',
@@ -7,31 +10,7 @@ import { Component, Input } from '@angular/core';
 })
 export class ImageGalleryComponent {
   @Input() images: Array<string>;
-  position: 'bottom' | 'top' | 'left' | 'right' = 'bottom';
-
-  positionOptions = [
-    {
-      label: 'Bottom',
-      value: 'bottom',
-    },
-    {
-      label: 'Top',
-      value: 'top',
-    },
-    {
-      label: 'Left',
-      value: 'left',
-    },
-    {
-      label: 'Right',
-      value: 'right',
-    },
-  ];
-
-  responsiveOptions = [
-    {
-      breakpoint: '1024px',
-      numVisible: 3,
-    },
-  ];
+  position: ThumbnailPosition = 'bottom';
+  positionOptions = GeneralConfig['image-gallery'].positionOptions;
+  responsiveOptions = GeneralConfig['image-gallery'].responsiveOptions;
 }

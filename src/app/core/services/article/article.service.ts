@@ -20,13 +20,6 @@ export class ArticleService {
   model: BehaviorSubject<Article[]>;
   api: string = 'api/v1/article';
   current: string = 'relevant';
-  navMapping: any = {
-    favourites: '/favourites',
-    relevant: '/relevant',
-    new: '/new',
-    myposts: '/self',
-    search: '/search',
-  };
   constructor(
     private service: ServerService,
     private authService: AuthService,
@@ -44,10 +37,10 @@ export class ArticleService {
     async (key, params) => {
       this.current = key == 'current' ? this.current : key;
 
-      const res = await this.service.get(
-        `${this.api}${this.navMapping[this.current]}`,
-        { ...this.locationService.currentLocation, ...params },
-      );
+      const res = await this.service.get(`${this.api}/${this.current}`, {
+        ...this.locationService.currentLocation,
+        ...params,
+      });
       if (res && res.success) {
         this.articles = res.data;
         this.model.next(this.articles);
