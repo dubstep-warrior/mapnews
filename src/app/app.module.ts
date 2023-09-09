@@ -31,6 +31,7 @@ import { AccessContainerComponent } from './components/shared/access-container/a
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { NotificationMessagePipe } from './core/pipes/notification-message/notification-message.pipe';
 import { LikeTermPipe } from './core/pipes/like-term/like-term.pipe';
+import { EmailNamePipe } from './core/pipes/email-name/email-name.pipe';
 
 export let AppInjector: Injector;
 @NgModule({
@@ -57,6 +58,7 @@ export let AppInjector: Injector;
     NotificationsComponent,
     NotificationMessagePipe,
     LikeTermPipe,
+    EmailNamePipe,
   ],
   imports: [
     HttpClientModule,

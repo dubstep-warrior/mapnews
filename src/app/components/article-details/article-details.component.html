@@ -36,12 +36,7 @@
     </div>
     <div class="user">
       <div>
-        {{ "By:" }}
-        {{
-          !!article.posted_by?.email
-            ? article.posted_by.email.split("@")[0]
-            : "Unknown"
-        }}
+        {{ article.posted_by?.email | emailName }}
       </div>
       <div>
         {{ article.likes | likeTerm: authStatus?.id }}
