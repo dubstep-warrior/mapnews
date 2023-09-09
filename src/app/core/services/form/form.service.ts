@@ -57,7 +57,7 @@ export class FormService {
     return this.form;
   };
 
-  resolveType: (arg: IFormAttribute) => AbstractControl = (
+  private resolveType: (arg: IFormAttribute) => AbstractControl = (
     formConfigObject,
   ) => {
     const type = formConfigObject.type;
@@ -76,7 +76,9 @@ export class FormService {
     }
   };
 
-  resolveFormGroup: (arg: IFormAttribute) => FormGroup = (formConfigObject) => {
+  private resolveFormGroup: (arg: IFormAttribute) => FormGroup = (
+    formConfigObject,
+  ) => {
     const formGroupObject: any = {};
     Object.keys(formConfigObject.value).forEach((key) => {
       formGroupObject[key] = this.resolveType(formConfigObject.value[key]);
@@ -89,7 +91,9 @@ export class FormService {
     );
   };
 
-  resolveFormArray: (arg: IFormAttribute) => FormArray = (formConfigObject) => {
+  private resolveFormArray: (arg: IFormAttribute) => FormArray = (
+    formConfigObject,
+  ) => {
     return new FormArray(
       Object.keys(formConfigObject.value).map((key) =>
         this.resolveType(formConfigObject.value[key]),

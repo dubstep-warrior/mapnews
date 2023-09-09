@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { NotificationService } from '../notification/notification.service';
 import { Notification } from '../../interfaces/notification.interface';
 
 @Injectable({
