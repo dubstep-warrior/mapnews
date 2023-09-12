@@ -28,10 +28,16 @@
     </div>
   </div>
   <div class="body" body>
+    <div class="time">
+      <img src="./../../../assets/images/time.png" alt="" />
+      <div>
+        {{ article.time | customTime | uppercase }}
+      </div>
+    </div>
     <div>
       <app-tags [tags]="article.tags" [currentState]="state"></app-tags>
     </div>
-    <div>
+    <div class="images">
       <app-image-gallery [images]="article.images"></app-image-gallery>
     </div>
     <div class="user">

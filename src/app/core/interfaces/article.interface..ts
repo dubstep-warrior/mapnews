@@ -17,6 +17,7 @@ export interface Article {
   tags?: Array<string>;
   likes: string[];
   images: string[];
+  time: Date;
   posted_by: IUser;
 }
 

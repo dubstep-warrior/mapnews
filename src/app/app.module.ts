@@ -32,6 +32,9 @@ import { NotificationsComponent } from './components/notifications/notifications
 import { NotificationMessagePipe } from './core/pipes/notification-message/notification-message.pipe';
 import { LikeTermPipe } from './core/pipes/like-term/like-term.pipe';
 import { EmailNamePipe } from './core/pipes/email-name/email-name.pipe';
+import { CustomTimePipe } from './core/pipes/custom-time/custom-time.pipe';
+import { DatePipe } from '@angular/common';
+import { IntlRelativeTimePipe } from 'angular-ecmascript-intl';
 
 export let AppInjector: Injector;
 @NgModule({
@@ -59,6 +62,7 @@ export let AppInjector: Injector;
     NotificationMessagePipe,
     LikeTermPipe,
     EmailNamePipe,
+    CustomTimePipe,
   ],
   imports: [
     HttpClientModule,
@@ -78,6 +82,8 @@ export let AppInjector: Injector;
       useClass: AuthInterceptor,
       multi: true,
     },
+    DatePipe,
+    IntlRelativeTimePipe,
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
