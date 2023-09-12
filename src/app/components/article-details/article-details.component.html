@@ -30,7 +30,7 @@
   <div class="body" body>
     <div class="time">
       <img src="./../../../assets/images/time.png" alt="" />
-      <div>
+      <div *ngIf="!!article.time">
         {{ article.time | customTime | uppercase }}
       </div>
     </div>
