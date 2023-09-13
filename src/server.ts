@@ -13,7 +13,7 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
   } as ConnectOptions)
-  .then((res: any) => console.log(`Connection Succesful ${res}`))
+  .then((res: any) => console.log(`Connection Succesful to MongoDB`))
   .catch((err: any) => console.log(`Error in DB connection ${err}`));
 
 const server = http.createServer(application.instance);

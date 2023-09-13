@@ -6,7 +6,6 @@ const Controller = (basePath: string): ClassDecorator => {
       "/api/v1" + basePath,
       target,
     );
-    console.log(MetadataKeys);
   };
 };
 export default Controller;

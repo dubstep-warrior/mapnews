@@ -11,6 +11,7 @@ import { ImageKitClient } from "../clients/imagekit.client";
 class AuthService {
   async createUser(req: Request): Promise<IAuth> {
     const data = req.body;
+    console.log(data);
     const newUser: Partial<IUser> & { confirmPassword?: string } = {};
     Object.keys(data).forEach((key) => {
       const index: keyof IUser = key as keyof IUser;
