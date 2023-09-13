@@ -39,35 +39,33 @@ class AuthService {
     newUser["password"] = Bcrypt.hashSync(newUser["password"]!, 10);
 
     const user = await new User(newUser).save();
-    if (user) {
-      const token = JsonWebToken.sign(
-        { id: user._id, email: user.email },
-        process.env.SECRET_JWT_CODE!,
+    if (!user) throw new Error("Something happened, please try again later");
+
+    const token = JsonWebToken.sign(
+      { id: user._id, email: user.email },
+      process.env.SECRET_JWT_CODE!,
+    );
+
+    if (req.file)
+      ImageKitClient.upload(
+        {
+          file: req.file.buffer.toString("base64"),
+          fileName: req.file.originalname,
+          folder: "Users",
+        },
+        (err, res) => {
+          if (err) throw err;
+          else {
+            user.profile_img = res?.url;
+            user.save();
+          }
+        },
       );
 
-      if (req.file)
-        ImageKitClient.upload(
-          {
-            file: req.file.buffer.toString("base64"),
-            fileName: req.file.originalname,
-            folder: "Users",
-          },
-          (err, res) => {
-            if (err) throw err;
-            else {
-              user.profile_img = res?.url;
-              user.save();
-            }
-          },
-        );
-
-      return {
-        token,
-        user: user.toObject(),
-      };
-    } else {
-      throw new Error("Something happened, please try again later");
-    }
+    return {
+      token,
+      user: user.toObject(),
+    };
   }
 
   async userLogin(req: Request): Promise<IAuth> {
