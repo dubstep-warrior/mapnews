@@ -44,13 +44,31 @@
 
 ## 📍 Overview
 
-HTTPStatus Exception: 400
+The frontend implementation of our map-based news application is a comprehensive and sophisticated system built using Angular, a component-based framework. This frontend repository serves as the user interface for our application, providing a rich and interactive news consumption experience for users.
 
 ---
 
 ## ⚙️ Features
 
-HTTPStatus Exception: 400
+Key aspects of the frontend implementation include:
+
+Angular Framework: The application is developed using Angular, a popular framework that promotes rapid development through the reusability of HTML and logic codes. It enables the separation of code into individual UI components, enhancing reusability and readability.
+
+TypeScript: TypeScript is used for coding to ensure type safety and maintain consistency during development.
+
+Prefetching and Location Data: The application leverages Angular resolvers to prefetch user location and form configuration data. Geolocation data is used to fetch relevant articles based on proximity and time factors.
+
+Reactive Forms: Angular's reactive forms are employed for handling form inputs, allowing the tracking of input values and validation states. Form configurations are stored in a database collection, and individual FormControls are dynamically created based on input attributes.
+
+Map Integration: The MapLibre library is used for interactive maps, and the NgxMapLibreGLModule provides an Angular wrapper for seamless integration. Map styling is obtained from the MapTiler API, and the map displays news articles and user locations as markers.
+
+State Management: Angular's 'StateService' is implemented to manage the application's state. This service follows the singleton design pattern and communicates state changes to relevant components using RxJS, a reactive programming library.
+
+Service-based Functionality: Functional features such as login, registration, news reporting, and article consumption are implemented using Angular services. These services, like the Article Service and Auth Service, call the appropriate HTTP requests via a Server Service dependency to fulfill their functionality.
+
+Dependency Injection: The architecture relies on dependency injection to establish relationships between intermediate and base services, allowing data propagation using a publish-subscribe model with RxJS.
+
+Overall, this frontend implementation provides a solid foundation for the map-based news application, offering features such as user location-based article retrieval, interactive maps, state management, and seamless communication between services and components. It combines the power of Angular with various libraries and design patterns to create a responsive and feature-rich user interface.
 
 ---
 
