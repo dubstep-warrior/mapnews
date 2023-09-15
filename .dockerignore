@@ -4,3 +4,4 @@ notification
 .husky
 migrations
 .env
+docker-compose.test.yml

@@ -1,17 +1,13 @@
 version: "3.0"
 services:
   app:
-    image: mapnews-backend:latest
+    image: dubstepwarrior/mapnews:backend
     ports:
-      - 8000:8000
+      - 8000
     environment:
       - SERVICE_PORTS=8000
-      - MONGODB_CLUSTER_URI=${MONGODB_CLUSTER_URI}
-      - IMAGEKIT_PUBLIC_KEY=${IMAGEKIT_PUBLIC_KEY}
-      - IMAGEKIT_PRIVATE_KEY=${IMAGEKIT_PRIVATE_KEY}
-      - IMAGEKIT_URL_ENDPOINT=${IMAGEKIT_URL_ENDPOINT}
-      - SECRET_JWT_CODE=${SECRET_JWT_CODE}
-      - REDIS_URL=${REDIS_URL}
+    env_file:
+      - .env
     deploy:
       replicas: 5
       update_config:
@@ -24,10 +20,9 @@ services:
     networks:
       - web
   notification-service:
-    image: mapnews-notification:latest
-    environment:
-      MONGODB_CLUSTER_URI: ${MONGODB_CLUSTER_URI}
-      REDIS_URL: ${REDIS_URL}
+    image: dubstepwarrior/mapnews:notification-service
+    env_file:
+      - .env
   proxy:
     image: dockercloud/haproxy
     depends_on:
