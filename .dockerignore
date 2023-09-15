@@ -3,3 +3,4 @@ dist
 notification
 .husky
 migrations
+.env
