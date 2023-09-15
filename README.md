@@ -261,37 +261,7 @@ root
 │ │ └── home.component.ts
 │ ├── assets
 │ │ └── images
-│ │ ├── 9C4G.gif
-│ │ ├── close-white.png
-│ │ ├── close.png
-│ │ ├── crime.png
-│ │ ├── current-loc.gif
-│ │ ├── current-loc.png
-│ │ ├── emergency.png
-│ │ ├── event.png
-│ │ ├── favourites.png
-│ │ ├── location.png
-│ │ ├── location.webp
-│ │ ├── logout.png
-│ │ ├── menu.png
-│ │ ├── new.png
-│ │ ├── notification.png
-│ │ ├── observation.png
-│ │ ├── post-location.png
-│ │ ├── profile.png
-│ │ ├── recommendation.png
-│ │ ├── relevant.png
-│ │ ├── right-arrow.png
-│ │ ├── right-arrow.svg
-│ │ ├── search.png
-│ │ ├── select-loc.png
-│ │ ├── self.png
-│ │ ├── star-liked.png
-│ │ ├── star-unliked.png
-│ │ ├── submit-failure.png
-│ │ ├── submit-success.png
-│ │ ├── time.png
-│ │ └── upload-image.png
+│ │ ├── ...31 files
 │ ├── environments
 │ │ ├── environment.prod.ts
 │ │ └── environment.ts
