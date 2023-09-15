@@ -74,6 +74,239 @@ Overall, this frontend implementation provides a solid foundation for the map-ba
 
 ## 📂 Project Structure
 
+root
+├── .editorconfig
+├── .gitignore
+├── .husky
+│ └── pre-commit
+├── .npmrc
+├── .vscode
+│ ├── extensions.json
+│ ├── launch.json
+│ └── tasks.json
+├── README.md
+├── angular.json
+├── package-lock.json
+├── package.json
+├── polyfill.ts
+├── src
+│ ├── app
+│ │ ├── app-routing.module.ts
+│ │ ├── app.component.html
+│ │ ├── app.component.scss
+│ │ ├── app.component.spec.ts
+│ │ ├── app.component.ts
+│ │ ├── app.module.ts
+│ │ ├── components
+│ │ │ ├── article-box
+│ │ │ │ ├── article-box.component.html
+│ │ │ │ ├── article-box.component.scss
+│ │ │ │ ├── article-box.component.spec.ts
+│ │ │ │ └── article-box.component.ts
+│ │ │ ├── article-details
+│ │ │ │ ├── article-details.component.html
+│ │ │ │ ├── article-details.component.scss
+│ │ │ │ ├── article-details.component.spec.ts
+│ │ │ │ └── article-details.component.ts
+│ │ │ ├── article-form
+│ │ │ │ ├── article-form.component.html
+│ │ │ │ ├── article-form.component.scss
+│ │ │ │ ├── article-form.component.spec.ts
+│ │ │ │ └── article-form.component.ts
+│ │ │ ├── image-gallery
+│ │ │ │ ├── image-gallery.component.html
+│ │ │ │ ├── image-gallery.component.scss
+│ │ │ │ ├── image-gallery.component.spec.ts
+│ │ │ │ └── image-gallery.component.ts
+│ │ │ ├── left-overlay
+│ │ │ │ ├── left-overlay.component.html
+│ │ │ │ ├── left-overlay.component.scss
+│ │ │ │ ├── left-overlay.component.spec.ts
+│ │ │ │ └── left-overlay.component.ts
+│ │ │ ├── login
+│ │ │ │ ├── login.component.html
+│ │ │ │ ├── login.component.scss
+│ │ │ │ ├── login.component.spec.ts
+│ │ │ │ └── login.component.ts
+│ │ │ ├── map
+│ │ │ │ ├── map.component.html
+│ │ │ │ ├── map.component.scss
+│ │ │ │ ├── map.component.spec.ts
+│ │ │ │ └── map.component.ts
+│ │ │ ├── mark
+│ │ │ │ ├── mark.component.html
+│ │ │ │ ├── mark.component.scss
+│ │ │ │ ├── mark.component.spec.ts
+│ │ │ │ └── mark.component.ts
+│ │ │ ├── multi-item-carousel
+│ │ │ │ ├── multi-item-carousel.component.html
+│ │ │ │ ├── multi-item-carousel.component.scss
+│ │ │ │ ├── multi-item-carousel.component.spec.ts
+│ │ │ │ └── multi-item-carousel.component.ts
+│ │ │ ├── navbar
+│ │ │ │ ├── navbar.component.html
+│ │ │ │ ├── navbar.component.scss
+│ │ │ │ ├── navbar.component.spec.ts
+│ │ │ │ └── navbar.component.ts
+│ │ │ ├── notifications
+│ │ │ │ ├── notifications.component.html
+│ │ │ │ ├── notifications.component.scss
+│ │ │ │ ├── notifications.component.spec.ts
+│ │ │ │ └── notifications.component.ts
+│ │ │ ├── register
+│ │ │ │ ├── register.component.html
+│ │ │ │ ├── register.component.scss
+│ │ │ │ ├── register.component.spec.ts
+│ │ │ │ └── register.component.ts
+│ │ │ ├── right-overlay
+│ │ │ │ ├── right-overlay.component.html
+│ │ │ │ ├── right-overlay.component.scss
+│ │ │ │ ├── right-overlay.component.spec.ts
+│ │ │ │ └── right-overlay.component.ts
+│ │ │ ├── shared
+│ │ │ │ ├── access-container
+│ │ │ │ │ ├── access-container.component.html
+│ │ │ │ │ ├── access-container.component.scss
+│ │ │ │ │ ├── access-container.component.spec.ts
+│ │ │ │ │ └── access-container.component.ts
+│ │ │ │ └── right-overlay-container
+│ │ │ │ ├── right-overlay-container.component.html
+│ │ │ │ ├── right-overlay-container.component.scss
+│ │ │ │ ├── right-overlay-container.component.spec.ts
+│ │ │ │ └── right-overlay-container.component.ts
+│ │ │ └── tags
+│ │ │ ├── tags.component.html
+│ │ │ ├── tags.component.scss
+│ │ │ ├── tags.component.spec.ts
+│ │ │ └── tags.component.ts
+│ │ ├── core
+│ │ │ ├── configs
+│ │ │ │ ├── general.config.json
+│ │ │ │ └── notification.messages.json
+│ │ │ ├── directives
+│ │ │ │ ├── form.directive.spec.ts
+│ │ │ │ └── form.directive.ts
+│ │ │ ├── interceptors
+│ │ │ │ └── auth
+│ │ │ │ ├── auth.interceptor.spec.ts
+│ │ │ │ └── auth.interceptor.ts
+│ │ │ ├── interfaces
+│ │ │ │ ├── article.interface..ts
+│ │ │ │ ├── auth.interface.ts
+│ │ │ │ ├── form.interface.ts
+│ │ │ │ ├── location.interface.ts
+│ │ │ │ ├── notification.interface.ts
+│ │ │ │ ├── preview-image.interface.ts
+│ │ │ │ ├── response.interface.ts
+│ │ │ │ └── state.interface.ts
+│ │ │ ├── pipes
+│ │ │ │ ├── custom-time
+│ │ │ │ │ ├── custom-time.pipe.spec.ts
+│ │ │ │ │ └── custom-time.pipe.ts
+│ │ │ │ ├── email-name
+│ │ │ │ │ ├── email-name.pipe.spec.ts
+│ │ │ │ │ └── email-name.pipe.ts
+│ │ │ │ ├── like-term
+│ │ │ │ │ ├── like-term.pipe.spec.ts
+│ │ │ │ │ └── like-term.pipe.ts
+│ │ │ │ └── notification-message
+│ │ │ │ ├── notification-message.pipe.spec.ts
+│ │ │ │ └── notification-message.pipe.ts
+│ │ │ ├── resolvers
+│ │ │ │ ├── config
+│ │ │ │ │ ├── config.resolver.spec.ts
+│ │ │ │ │ └── config.resolver.ts
+│ │ │ │ └── location
+│ │ │ │ ├── location.resolver.spec.ts
+│ │ │ │ └── location.resolver.ts
+│ │ │ ├── services
+│ │ │ │ ├── article
+│ │ │ │ │ ├── article.service.spec.ts
+│ │ │ │ │ └── article.service.ts
+│ │ │ │ ├── auth
+│ │ │ │ │ ├── auth.service.spec.ts
+│ │ │ │ │ └── auth.service.ts
+│ │ │ │ ├── form
+│ │ │ │ │ ├── form.service.spec.ts
+│ │ │ │ │ └── form.service.ts
+│ │ │ │ ├── location
+│ │ │ │ │ ├── location.service.spec.ts
+│ │ │ │ │ └── location.service.ts
+│ │ │ │ ├── notification
+│ │ │ │ │ ├── notification.service.spec.ts
+│ │ │ │ │ └── notification.service.ts
+│ │ │ │ ├── server
+│ │ │ │ │ ├── server.service.spec.ts
+│ │ │ │ │ └── server.service.ts
+│ │ │ │ ├── state
+│ │ │ │ │ ├── state.service.spec.ts
+│ │ │ │ │ └── state.service.ts
+│ │ │ │ └── ws
+│ │ │ │ ├── web-socket.service.spec.ts
+│ │ │ │ └── web-socket.service.ts
+│ │ │ └── utilities
+│ │ │ ├── animations.ts
+│ │ │ └── validators.ts
+│ │ └── pages
+│ │ ├── access
+│ │ │ ├── access.component.html
+│ │ │ ├── access.component.scss
+│ │ │ ├── access.component.spec.ts
+│ │ │ └── access.component.ts
+│ │ └── home
+│ │ ├── home.component.html
+│ │ ├── home.component.scss
+│ │ ├── home.component.spec.ts
+│ │ └── home.component.ts
+│ ├── assets
+│ │ └── images
+│ │ ├── 9C4G.gif
+│ │ ├── close-white.png
+│ │ ├── close.png
+│ │ ├── crime.png
+│ │ ├── current-loc.gif
+│ │ ├── current-loc.png
+│ │ ├── emergency.png
+│ │ ├── event.png
+│ │ ├── favourites.png
+│ │ ├── location.png
+│ │ ├── location.webp
+│ │ ├── logout.png
+│ │ ├── menu.png
+│ │ ├── new.png
+│ │ ├── notification.png
+│ │ ├── observation.png
+│ │ ├── post-location.png
+│ │ ├── profile.png
+│ │ ├── recommendation.png
+│ │ ├── relevant.png
+│ │ ├── right-arrow.png
+│ │ ├── right-arrow.svg
+│ │ ├── search.png
+│ │ ├── select-loc.png
+│ │ ├── self.png
+│ │ ├── star-liked.png
+│ │ ├── star-unliked.png
+│ │ ├── submit-failure.png
+│ │ ├── submit-success.png
+│ │ ├── time.png
+│ │ └── upload-image.png
+│ ├── environments
+│ │ ├── environment.prod.ts
+│ │ └── environment.ts
+│ ├── favicon.ico
+│ ├── index.html
+│ ├── main.ts
+│ ├── shared
+│ │ ├── \_mixins.scss
+│ │ └── \_variables.scss
+│ └── styles.scss
+├── tsconfig.app.json
+├── tsconfig.json
+└── tsconfig.spec.json
+
+53 directories, 176 files
+
 ---
 
 ## 🧩 Modules
