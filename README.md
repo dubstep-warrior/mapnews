@@ -74,6 +74,7 @@ Overall, this frontend implementation provides a solid foundation for the map-ba
 
 ## 📂 Project Structure
 
+```bash
 root
 ├── .editorconfig
 ├── .gitignore
@@ -306,6 +307,7 @@ root
 └── tsconfig.spec.json
 
 53 directories, 176 files
+```
 
 ---
 
