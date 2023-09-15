@@ -65,6 +65,7 @@ The MapNews Backend project is a Node.js application that serves as the backend 
 
 ## 📂 Project Structure
 
+```bash
 root
 ├── .dockerignore
 ├── .gitignore
@@ -137,6 +138,7 @@ root
 └── tsconfig.json
 
 16 directories, 53 files
+```
 
 ---
 
