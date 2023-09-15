@@ -65,6 +65,79 @@ The MapNews Backend project is a Node.js application that serves as the backend 
 
 ## 📂 Project Structure
 
+root
+├── .dockerignore
+├── .gitignore
+├── .husky
+│ └── pre-commit
+├── Dockerfile
+├── Procfile
+├── README.md
+├── docker-compose.yml
+├── notification
+│ ├── Dockerfile
+│ ├── config
+│ │ └── cron.config.json
+│ ├── package-lock.json
+│ ├── package.json
+│ └── src
+│ ├── aggregations
+│ │ ├── activity.aggregation.js
+│ │ └── interest.aggregation.js
+│ └── index.js
+├── package-lock.json
+├── package.json
+├── src
+│ ├── application.ts
+│ ├── clients
+│ │ ├── imagekit.client.ts
+│ │ └── redis.client.ts
+│ ├── config
+│ │ └── mongo-server.errors.json
+│ ├── controllers
+│ │ ├── article.controller.ts
+│ │ ├── auth.controller.ts
+│ │ ├── config.controller.ts
+│ │ ├── index.ts
+│ │ └── notification.controller.ts
+│ ├── models
+│ │ ├── Article.ts
+│ │ ├── Config.ts
+│ │ ├── Notification.ts
+│ │ └── User.ts
+│ ├── server.ts
+│ ├── services
+│ │ ├── ArticleService.ts
+│ │ ├── AuthService.ts
+│ │ ├── ConfigService.ts
+│ │ └── NotificationService.ts
+│ ├── utils
+│ │ ├── decorators
+│ │ │ ├── authentication.decorator.ts
+│ │ │ ├── cache.decorator.ts
+│ │ │ ├── controller.decorator.ts
+│ │ │ └── handlers.decorator.ts
+│ │ ├── interfaces
+│ │ │ ├── action.interface.ts
+│ │ │ ├── article.interface.ts
+│ │ │ ├── auth.interface.ts
+│ │ │ ├── form.interface.ts
+│ │ │ ├── http.interface.ts
+│ │ │ ├── jwtpayload.interface.ts
+│ │ │ ├── location.interface.ts
+│ │ │ ├── notification.interface.ts
+│ │ │ ├── resolver-options.interface.ts
+│ │ │ └── user.interface.ts
+│ │ ├── metadata.keys.ts
+│ │ └── resolvers
+│ │ ├── article-filter.resolver.ts
+│ │ └── bypass-resolver.ts
+│ └── websockets
+│ └── index.ts
+└── tsconfig.json
+
+16 directories, 53 files
+
 ---
 
 ## 🧩 Modules
