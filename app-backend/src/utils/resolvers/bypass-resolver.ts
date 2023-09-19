@@ -1,9 +1,5 @@
-const bypass = (key: string, data: any) => {
-  const resolveArticles = ["/new", "/relevant", "/search"].includes(data);
-  return {
-    apiResolveArticles: resolveArticles,
-    resolveArticles: resolveArticles,
-  }[key];
+const bypass = (reqPath: string) => {
+  return ["/new", "/relevant", "/search"].includes(reqPath);;
 };
 
 export default bypass;

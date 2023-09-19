@@ -23,8 +23,8 @@
 
 - [📒 Table of Contents](#-table-of-contents)
 - [📍 Overview](#-overview) 
-- [📂 Project Structure](#project-structure)
-- [🧩 Modules](#modules) 
+- [📂 Project Structure](#-project-structure)
+- [🧩 Modules](#-modules) 
 - [🗺 Roadmap](#-roadmap) 
 ---
 
@@ -38,19 +38,20 @@ Notification service for the Mapnews project that performs cron jobs for updatin
 
 ```bash
 root  
+├── Dockerfile
+├── README.md
 ├── config
-│ └── cron.config.json
+│   └── cron.config.json
 ├── package-lock.json
 ├── package.json
-├── src
-│ ├── aggregations
-│ │ ├── activity.aggregation.js
-│ │ └── interest.aggregation.js
-│ └── index.js
-└── Dockerfile
+└── src
+    ├── aggregations
+    │   ├── activity.aggregation.js
+    │   └── interest.aggregation.js
+    └── index.js
  
 
-3 directories, 7 files
+3 directories, 8 files
 ```
 
 ---
@@ -67,10 +68,9 @@ root
 
 <details closed><summary>Src</summary>
 
-| File                                                                                               | Summary                                                                                                                                                                                                                                                                                        |
-| -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
- 
-| [index.js](https://github.com/dubstep-warrior/mapnews-backend/blob/main/notification/src/index.js) | This code is responsible for handling emergency and general subscriptions by publishing notifications to interested users. It also includes cron jobs for updating user metrics and locations. Redis and MongoDB are used for data storage and retrieval.                                      |
+| File                                                                                  | Summary                                                                                                                  |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+|[index.js](https://github.com/dubstep-warrior/mapnews-backend/blob/main/notification/src/index.js) | This code is responsible for handling emergency and general subscriptions by publishing notifications to interested users. It also includes cron jobs for updating user metrics and locations. Redis and MongoDB are used for data storage and retrieval.            | 
 
 </details> 
  
@@ -88,8 +88,6 @@ root
 
 ## 🗺 Roadmap
 
-> - [x] `ℹ️  Task 1: Implement X`
-> - [ ] `ℹ️  Task 2: Refactor Y`
-> - [ ] `ℹ️ ...`
+> - [x] `ℹ️  Task 1: Refactor index.js` 
 
 --- 

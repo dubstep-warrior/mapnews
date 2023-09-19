@@ -16,8 +16,8 @@
 - [📒 Table of Contents](#-table-of-contents)
 - [📍 Overview](#-overview)
 - [⚙️ Features](#-features)
-- [📂 Project Structure](#project-structure)
-- [🧩 Modules](#modules)
+- [📂 Project Structure](#-project-structure)
+- [🧩 Modules](#-modules)
 - [🗺 Roadmap](#-roadmap)
 
 ---
@@ -47,77 +47,60 @@ The MapNews Backend project is a Node.js application that serves as the backend 
 
 ```bash
 root
-├── .dockerignore
-├── .gitignore
-├── .husky
-│ └── pre-commit
-├── Dockerfile
-├── Procfile
+├── Dockerfile 
 ├── README.md
-├── docker-compose.yml
-├── notification
-│ ├── Dockerfile
-│ ├── config
-│ │ └── cron.config.json
-│ ├── package-lock.json
-│ ├── package.json
-│ └── src
-│ ├── aggregations
-│ │ ├── activity.aggregation.js
-│ │ └── interest.aggregation.js
-│ └── index.js
 ├── package-lock.json
 ├── package.json
 ├── src
-│ ├── application.ts
-│ ├── clients
-│ │ ├── imagekit.client.ts
-│ │ └── redis.client.ts
-│ ├── config
-│ │ └── mongo-server.errors.json
-│ ├── controllers
-│ │ ├── article.controller.ts
-│ │ ├── auth.controller.ts
-│ │ ├── config.controller.ts
-│ │ ├── index.ts
-│ │ └── notification.controller.ts
-│ ├── models
-│ │ ├── Article.ts
-│ │ ├── Config.ts
-│ │ ├── Notification.ts
-│ │ └── User.ts
-│ ├── server.ts
-│ ├── services
-│ │ ├── ArticleService.ts
-│ │ ├── AuthService.ts
-│ │ ├── ConfigService.ts
-│ │ └── NotificationService.ts
-│ ├── utils
-│ │ ├── decorators
-│ │ │ ├── authentication.decorator.ts
-│ │ │ ├── cache.decorator.ts
-│ │ │ ├── controller.decorator.ts
-│ │ │ └── handlers.decorator.ts
-│ │ ├── interfaces
-│ │ │ ├── action.interface.ts
-│ │ │ ├── article.interface.ts
-│ │ │ ├── auth.interface.ts
-│ │ │ ├── form.interface.ts
-│ │ │ ├── http.interface.ts
-│ │ │ ├── jwtpayload.interface.ts
-│ │ │ ├── location.interface.ts
-│ │ │ ├── notification.interface.ts
-│ │ │ ├── resolver-options.interface.ts
-│ │ │ └── user.interface.ts
-│ │ ├── metadata.keys.ts
-│ │ └── resolvers
-│ │ ├── article-filter.resolver.ts
-│ │ └── bypass-resolver.ts
-│ └── websockets
-│ └── index.ts
+│   ├── application.ts
+│   ├── clients
+│   │   ├── imagekit.client.ts
+│   │   └── redis.client.ts
+│   ├── config
+│   │   └── mongo-server.errors.json
+│   ├── controllers
+│   │   ├── article.controller.ts
+│   │   ├── auth.controller.ts
+│   │   ├── config.controller.ts
+│   │   ├── index.ts
+│   │   └── notification.controller.ts
+│   ├── models
+│   │   ├── Article.ts
+│   │   ├── Config.ts
+│   │   ├── Notification.ts
+│   │   └── User.ts
+│   ├── server.ts
+│   ├── services
+│   │   ├── ArticleService.ts
+│   │   ├── AuthService.ts
+│   │   ├── ConfigService.ts
+│   │   └── NotificationService.ts
+│   ├── utils
+│   │   ├── decorators
+│   │   │   ├── authentication.decorator.ts
+│   │   │   ├── cache.decorator.ts
+│   │   │   ├── controller.decorator.ts
+│   │   │   └── handlers.decorator.ts
+│   │   ├── interfaces
+│   │   │   ├── action.interface.ts
+│   │   │   ├── article.interface.ts
+│   │   │   ├── auth.interface.ts
+│   │   │   ├── form.interface.ts
+│   │   │   ├── http.interface.ts
+│   │   │   ├── jwtpayload.interface.ts
+│   │   │   ├── location.interface.ts
+│   │   │   ├── notification.interface.ts
+│   │   │   ├── resolver-options.interface.ts
+│   │   │   └── user.interface.ts
+│   │   ├── metadata.keys.ts
+│   │   └── resolvers
+│   │       ├── article-filter.resolver.ts
+│   │       └── bypass-resolver.ts
+│   └── websockets
+│       └── index.ts
 └── tsconfig.json
 
-16 directories, 53 files
+11 directories, 42 files
 ```
 
 ---
@@ -129,7 +112,7 @@ root
 | File                                                                                  | Summary                                                                                                                  |
 | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
 | [Dockerfile](https://github.com/dubstep-warrior/mapnews-backend/blob/main/Dockerfile) | This code sets up a Node.js environment, installs dependencies, builds the app, and then starts the server on port 8000. |
-| [Procfile](https://github.com/dubstep-warrior/mapnews-backend/blob/main/Procfile)     | This code runs a web server using Node.js and starts the server by executing the file "dist/server.js".                  |
+ 
 
 </details>
 
@@ -158,7 +141,7 @@ root
 | File                                                                                                                                  | Summary                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | ------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [auth.controller.ts](https://github.com/dubstep-warrior/mapnews-backend/blob/main/src/controllers/auth.controller.ts)                 | This code defines an Auth class that handles user registration and login routes. It imports the authService module, sets up the routes with decorators, and handles errors by catching and returning appropriate responses.                                                                                                                                                                                                                   |
-| [article.controller.ts](https://github.com/dubstep-warrior/mapnews-backend/blob/main/src/controllers/article.controller.ts)           | This code represents a Tech Lead's implementation of an Article controller. It handles functions related to resolving, creating, and liking articles. It utilizes decorators for authentication and routing. The resolveArticles function resolves articles based on different endpoints, while the createArticle function creates a new article and publishes it to Redis. Lastly, the resolveArticleLikes function handles liking articles. |
+| [article.controller.ts](https://github.com/dubstep-warrior/mapnews-backend/blob/main/src/controllers/article.controller.ts)           | This code is an implementation of an Article controller. It handles functions related to resolving, creating, and liking articles. It utilizes decorators for authentication and routing. The resolveArticles function resolves articles based on different endpoints, while the createArticle function creates a new article and publishes it to Redis. Lastly, the resolveArticleLikes function handles liking articles. |
 | [index.ts](https://github.com/dubstep-warrior/mapnews-backend/blob/main/src/controllers/index.ts)                                     | This code exports multiple controller functions from separate files for articles, authentication, configuration, and notifications. These controllers are combined into an array called "controllers" for easy access and integration into the application.                                                                                                                                                                                   |
 | [config.controller.ts](https://github.com/dubstep-warrior/mapnews-backend/blob/main/src/controllers/config.controller.ts)             | The code is a part of a controller that handles a GET request to fetch a configuration. It imports a ConfigService to retrieve the configuration data, and the controller responds with the fetched data in the response. It handles error cases such as when no configuration is found or when an internal server error occurs.                                                                                                              |
 | [notification.controller.ts](https://github.com/dubstep-warrior/mapnews-backend/blob/main/src/controllers/notification.controller.ts) | This code defines a controller for handling notifications in an API. It has a route for retrieving all notifications, which requires authentication. It uses the NotificationService to fetch the notifications and returns the result in JSON format. Handles error cases as well.                                                                                                                                                           |

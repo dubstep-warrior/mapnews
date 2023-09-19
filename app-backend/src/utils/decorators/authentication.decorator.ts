@@ -24,7 +24,7 @@ export const Auth = (userAttName?: string) => {
 
         return originalMethod.apply(this, args);
       } catch (err) {
-        if (bypass(propertyKey, req.path)) {
+        if (bypass(req.path)) {
           console.log(propertyKey, req.path);
           console.log("yes we are bypassing");
           return originalMethod.apply(this, args);

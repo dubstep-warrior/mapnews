@@ -35,7 +35,7 @@ export const Cache = () => {
         return models;
       } catch (err) {
         console.log(propertyKey, req.path);
-        if (bypass(propertyKey, req.path)) {
+        if (bypass(req.path)) {
           console.log("yes we are bypassing cache");
           return originalMethod.apply(this, args);
         } else throw "Error in retrieving server cache";
