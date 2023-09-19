@@ -14,6 +14,7 @@ const userSchema = new Schema<IUser>(
     password: {
       type: String,
       required: true,
+      select: false,
     },
     profile_img: {
       type: String,
@@ -21,6 +22,7 @@ const userSchema = new Schema<IUser>(
     },
     usage: {
       type: Object,
+      select: false,
     },
   },
   { collection: "users" },
