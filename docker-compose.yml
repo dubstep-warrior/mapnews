@@ -25,6 +25,8 @@ services:
       - .env
   frontend:
     image: dubstepwarrior/mapnews:frontend
+    environment:
+      PORT: 4200
   proxy:
     image: dockercloud/haproxy
     depends_on:
