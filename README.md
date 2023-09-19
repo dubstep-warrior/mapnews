@@ -84,7 +84,7 @@ docker swarm init
 4. Deploy the docker swarm (Ensure environement variables are replaced with appropiate values)
 
 ```sh
-docker stack deploy --compose-file docker-compose.test.yml mapnews
+docker stack deploy --compose-file docker-compose.yml mapnews
 ``` 
 
 ---
