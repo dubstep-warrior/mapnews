@@ -1,0 +1,34 @@
+{
+  "menu": [
+    {
+      "title": "Relevant",
+      "api": "relevant"
+    },
+    {
+      "title": "New",
+      "api": "new"
+    },
+    {
+      "title": "Favourites",
+      "api": "favourites"
+    },
+    {
+      "title": "My Posts",
+      "api": "self"
+    }
+  ],
+  "image-gallery": {
+    "positionOptions": [
+      { "label": "Bottom", "value": "bottom" },
+      { "label": "Top", "value": "top" },
+      { "label": "Left", "value": "left" },
+      { "label": "Right", "value": "right" }
+    ],
+    "responsiveOptions": [
+      {
+        "breakpoint": "1024px",
+        "numVisible": 3
+      }
+    ]
+  }
+}

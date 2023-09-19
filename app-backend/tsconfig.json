@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2018",
+    "module": "CommonJS",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true
+  },
+  "ts-node": {
+    "esm": true
+  },
+  "exclude": ["./migrations"]
+}

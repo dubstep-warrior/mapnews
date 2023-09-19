@@ -1,0 +1,22 @@
+<app-navbar [authenticated]="authenticated" [state]="state"></app-navbar>
+<app-right-overlay
+  [@slideInFromRight]
+  *ngIf="['articleDetails', 'search'].includes(state?.name)"
+  [state]="state"
+></app-right-overlay>
+<app-left-overlay
+  [@slideInFromLeft]
+  *ngIf="
+    [
+      'addArticle',
+      'addArticleLocation',
+      'submittingArticle',
+      'submitAttempted'
+    ].includes(state?.name) && authenticated
+  "
+  [state]="state"
+></app-left-overlay>
+<app-notifications
+  *ngIf="['notifications'].includes(state?.name) && authenticated"
+></app-notifications>
+<app-article-box [fromMap]="false"></app-article-box>

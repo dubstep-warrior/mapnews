@@ -1,0 +1,33 @@
+@use "mixins" as *;
+
+.gallery-section {
+  ::ng-deep .p-galleria-item {
+    background-color: black !important;
+
+    img {
+      max-width: 100%;
+      height: 320px;
+      display: block;
+
+      @include screen-small {
+        height: 200px;
+      }
+    }
+  }
+
+  ::ng-deep .p-galleria-thumbnail-container {
+    max-height: 100px;
+
+    .p-galleria-thumbnail-items {
+      max-height: 100%;
+
+      .p-galleria-thumbnail-item {
+        overflow: hidden !important;
+      }
+    }
+
+    @include screen-x-small {
+      max-height: 70px;
+    }
+  }
+}

@@ -1,0 +1,107 @@
+<form
+  enctype="multipart/form-data"
+  [formGroup]="form"
+  (keydown.enter)="$event.preventDefault()"
+  (submit)="submitClicked()"
+>
+  <div>
+    <h2>Category</h2>
+    <select formControlName="category">
+      <option value="emergency">Emergency</option>
+      <option value="crime">Crime</option>
+      <option value="event">Event</option>
+      <option value="observation">Observation</option>
+      <option value="recommendation">Recommendations</option>
+    </select>
+  </div>
+  <div class="title-section" *ngIf="type == 'add'">
+    <h2>Title</h2>
+    <div class="input">
+      <input formControlName="title" />
+    </div>
+  </div>
+  <div class="tag-section">
+    <h2>Tags</h2>
+    <div class="input">
+      <input #tags (keyup.enter)="tagAdded($event); $event.preventDefault()" />
+    </div>
+    <div class="tags">
+      <div *ngFor="let tag of form.get('tags').value">{{ tag }}</div>
+    </div>
+  </div>
+  <div class="location-section" *ngIf="type == 'add'">
+    <h2>Location</h2>
+    <div>
+      <div class="input">
+        <input
+          readonly
+          [value]="form.get('location').value.coordinates.toString()"
+        />
+      </div>
+      <div (click)="locationSet('current')">
+        <img class="" src="./../../../assets/images/current-loc.png" alt="" />
+      </div>
+      <div (click)="locationSet()" [class.selected]="locationMouseMode == true">
+        <img class="" src="./../../../assets/images/select-loc.png" alt="" />
+      </div>
+    </div>
+  </div>
+  <div class="description-section" *ngIf="type == 'add'">
+    <h2>Description</h2>
+    <div>
+      <textarea
+        formControlName="description"
+        [maxlength]="descMaxLength"
+        (ngModelChange)="
+          textAreaRemaining =
+            descMaxLength - form.get('description').value.length
+        "
+      ></textarea>
+      <div>{{ textAreaRemaining + "/" + descMaxLength + " remaining" }}</div>
+    </div>
+  </div>
+  <div class="image-section" *ngIf="type == 'add'">
+    <h2>Add Images</h2>
+    <div>
+      <label
+        (dragover)="$event.preventDefault()"
+        (drop)="imageDropHandler($event)"
+        class="button"
+        for="image"
+      >
+        <input
+          (change)="imageAdded($event)"
+          type="file"
+          name="image"
+          id="image"
+          style="display: none"
+        />
+        <div>
+          <div>
+            <img
+              class=""
+              src="./../../../assets/images/upload-image.png"
+              alt=""
+            />
+            <div>Drop image here</div>
+          </div>
+        </div>
+      </label>
+      <div>
+        <app-multi-item-carousel
+          [images]="form.get('images').value"
+        ></app-multi-item-carousel>
+      </div>
+    </div>
+  </div>
+  <div>
+    <button
+      [disabled]="form.invalid"
+      (click)="submitClicked()"
+      class="button blue-btn"
+    >
+      Submit
+    </button>
+  </div>
+  <input type="submit" hidden />
+</form>

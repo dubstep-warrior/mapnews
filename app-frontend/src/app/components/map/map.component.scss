@@ -1,0 +1,24 @@
+mgl-map {
+  height: 100vh;
+  width: 100%;
+
+  &.locationSelection {
+    ::ng-deep .maplibregl-canvas-container {
+      cursor: crosshair !important;
+    }
+  }
+}
+
+.marker {
+  position: relative;
+  z-index: 0 !important;
+
+  > img {
+    position: relative;
+    z-index: 0 !important;
+  }
+}
+
+::ng-deep .maplibregl-ctrl.maplibregl-ctrl-attrib {
+  display: none;
+}

@@ -1,0 +1,106 @@
+@use "mixins" as *;
+
+.notifications {
+  min-width: 200px;
+  min-height: 200px;
+  max-width: 500px;
+  background-color: rgba(0, 0, 0, 0.349);
+  position: absolute;
+  top: 68px;
+  right: 12px;
+  border-radius: 12px;
+  display: flex;
+  overflow: hidden;
+  max-height: 300px;
+  overflow-y: scroll;
+
+  @include screen-small {
+    max-width: unset;
+    max-height: calc(100vh - 72px);
+    inset: 68px 4px auto 4px;
+  }
+
+  &::-webkit-scrollbar {
+    width: 10px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    overflow: hidden;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.349);
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+  }
+
+  > div.empty {
+    text-overflow: wrap;
+    flex-wrap: wrap;
+    width: 55%;
+    margin: auto;
+    text-align: center;
+    color: white;
+    font-weight: 450;
+  }
+
+  > div:not(.empty) {
+    max-width: 100%;
+
+    > div {
+      display: flex;
+      flex-direction: column-reverse;
+      max-width: 100%;
+
+      > div {
+        padding: 12px;
+        color: white;
+        max-width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        overflow: hidden;
+        background-color: transparent;
+        border-bottom: 1px solid rgb(61, 61, 61);
+
+        &:hover {
+          cursor: pointer;
+          background-color: rgba(0, 0, 0, 0.349) !important;
+        }
+
+        > :first-child {
+          margin-right: 8px;
+        }
+
+        > :last-child {
+          flex-grow: 1;
+          min-width: 0;
+
+          > div {
+            max-width: 100%;
+            display: flex;
+            flex-direction: column;
+
+            > :first-child {
+              font-size: 18px;
+              font-weight: 500;
+              margin-bottom: 8px;
+            }
+
+            > :last-child {
+              font-size: 14px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              color: rgb(234, 234, 234);
+            }
+          }
+        }
+      }
+    }
+  }
+}

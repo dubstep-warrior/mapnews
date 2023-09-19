@@ -1,0 +1,98 @@
+.title {
+  display: flex;
+  align-items: center;
+
+  div {
+    display: flex;
+    align-items: center;
+  }
+
+  > div {
+    &.category {
+      margin-right: 16px;
+      cursor: auto !important;
+    }
+
+    > div:first-child {
+      margin-right: 12px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+  }
+
+  .hover.active {
+    width: 35px;
+    height: 35px;
+
+    img {
+      width: 35px;
+      height: 35px;
+    }
+  }
+}
+
+.body {
+  > * {
+    margin-bottom: 16px;
+  }
+
+  > .images {
+    margin-top: 16px;
+
+    > app-image-gallery {
+      width: 100%;
+    }
+  }
+
+  > .time,
+  > .user {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid grey;
+    border-radius: 16px;
+    padding: 4px 8px;
+  }
+
+  > .time {
+    justify-content: flex-start;
+
+    > img {
+      width: 16px;
+      height: 16px;
+      object-fit: contain;
+      margin-right: 16px;
+    }
+  }
+
+  > .user {
+    * {
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    > * {
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    > :first-child {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      > :first-child {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+    }
+  }
+
+  > :last-child {
+    text-align: left;
+  }
+}

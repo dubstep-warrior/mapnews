@@ -1,0 +1,55 @@
+<app-right-overlay-container>
+  <div class="title" title>
+    <div class="category marker">
+      <img [src]="'./../../assets/images/' + article.category + '.png'" />
+    </div>
+    <div>
+      <div>
+        {{ article.title | titlecase }}
+      </div>
+      <div
+        *ngIf="authStatus?.loggedIn"
+        class="hover"
+        (click)="clickLikeButton(article._id)"
+        (mousedown)="favouriteActive = true"
+        (mouseup)="favouriteActive = false"
+        [class.active]="favouriteActive"
+      >
+        <img
+          class="icon"
+          [src]="
+            '../../../assets/images/star-' +
+            (article.likes?.includes(authStatus?.id) ? '' : 'un') +
+            'liked.png'
+          "
+          alt=""
+        />
+      </div>
+    </div>
+  </div>
+  <div class="body" body>
+    <div class="time">
+      <img src="./../../../assets/images/time.png" alt="" />
+      <div *ngIf="!!article.time">
+        {{ article.time | customTime | uppercase }}
+      </div>
+    </div>
+    <div>
+      <app-tags [tags]="article.tags" [currentState]="state"></app-tags>
+    </div>
+    <div class="images">
+      <app-image-gallery [images]="article.images"></app-image-gallery>
+    </div>
+    <div class="user">
+      <div>
+        {{ article.posted_by?.email | emailName }}
+      </div>
+      <div>
+        {{ article.likes | likeTerm: authStatus?.id }}
+      </div>
+    </div>
+    <div>
+      {{ article.description }}
+    </div>
+  </div>
+</app-right-overlay-container>

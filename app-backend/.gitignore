@@ -1,0 +1,8 @@
+.env
+node_modules
+dist 
+migrations
+src/models/index.ts
+migrate.json
+env.json
+docker-compose.test.yml

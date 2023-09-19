@@ -1,0 +1,33 @@
+<section (click)="$event.stopPropagation()">
+  <app-article-form
+    *ngIf="['addArticle', 'addArticleLocation'].includes(state?.name) && form"
+    [form]="form"
+    [state]="state"
+    [locationMouseMode]="locationMouseMode"
+    [type]="'add'"
+    (submit)="submit()"
+    (imageDrop)="imageDropHandler($event)"
+    (addImage)="addImage($event)"
+    (addTag)="addTag($event)"
+    (setLoc)="setLoc($event)"
+  ></app-article-form>
+  <mat-spinner *ngIf="['submittingArticle'].includes(state.name)"></mat-spinner>
+  <div *ngIf="['submitAttempted'].includes(state.name)">
+    <img
+      [@bounce]
+      (@bounce.done)="resetState()"
+      [src]="
+        './../../../assets/images/submit-' +
+        (state.data?.success ? 'success' : 'failure') +
+        '.png'
+      "
+    />
+    <div [@slideIn]>
+      {{
+        state.data?.success
+          ? "Successfully Reported"
+          : "Failed to add article, please try again later."
+      }}
+    </div>
+  </div>
+</section>

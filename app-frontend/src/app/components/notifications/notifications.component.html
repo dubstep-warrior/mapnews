@@ -1,0 +1,41 @@
+<section class="notifications" (click)="$event.stopPropagation()">
+  <div *ngIf="!!(notifications$ | async)?.length; else empty">
+    <div>
+      <div
+        class="button"
+        (click)="selectNotification(notification)"
+        *ngFor="let notification of notifications$ | async"
+      >
+        <div>
+          <!-- image -->
+          <img
+            class="icon"
+            [src]="
+              './../../assets/images/' + notification.article.category + '.png'
+            "
+          />
+        </div>
+        <div>
+          <div>
+            <div>
+              {{
+                notification.article.title
+                  | notificationMessage: notification.type
+              }}
+            </div>
+            <div>
+              <!-- message -->
+              {{ notification.article.description }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #empty>
+    <div class="empty">
+      You have no notifications at the moment, please check again later!
+    </div>
+  </ng-template>
+</section>

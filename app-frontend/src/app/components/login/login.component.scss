@@ -1,0 +1,10 @@
+@use "mixins" as *;
+
+:host {
+  height: 100%;
+  display: flex;
+
+  @include screen-small {
+    width: 100%;
+  }
+}
