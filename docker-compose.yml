@@ -1,0 +1,45 @@
+version: "3.0"
+services:
+  backend:
+    image: dubstepwarrior/mapnews:backend
+    ports:
+      - 8000
+    environment:
+      - SERVICE_PORTS=8000
+    env_file:
+      - .env
+    deploy:
+      replicas: 5
+      update_config:
+        parallelism: 5
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+        window: 120s
+    networks:
+      - web
+  notification-service:
+    image: dubstepwarrior/mapnews:notification-service
+    env_file:
+      - .env
+  frontend:
+    image: dubstepwarrior/mapnews:frontend
+  proxy:
+    image: dockercloud/haproxy
+    depends_on:
+      - backend
+    environment:
+      - BALANCE=leastconn
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 80:80
+    networks:
+      - web
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+networks:
+  web:
+    driver: overlay

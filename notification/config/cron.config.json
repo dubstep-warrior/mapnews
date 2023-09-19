@@ -1,0 +1,5 @@
+{
+  "action-update": "*/30 * * * *",
+  "user-metrics": "0 * * * *",
+  "location-update": "* * * * *"
+}
