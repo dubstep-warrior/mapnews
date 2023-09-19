@@ -6,9 +6,7 @@
 <h3>◦ Backend application of the MapNews system</h3>
 
 <img src="https://img.shields.io/github/languages/top/dubstep-warrior/mapnews-backend?style&color=5D6D7E" alt="GitHub top language" />
-<img src="https://img.shields.io/github/languages/code-size/dubstep-warrior/mapnews-backend?style&color=5D6D7E" alt="GitHub code size in bytes" />
-<img src="https://img.shields.io/github/commit-activity/m/dubstep-warrior/mapnews-backend?style&color=5D6D7E" alt="GitHub commit activity" />
-<img src="https://img.shields.io/github/license/dubstep-warrior/mapnews-backend?style&color=5D6D7E" alt="GitHub license" />
+<img src="https://img.shields.io/github/languages/code-size/dubstep-warrior/mapnews-backend?style&color=5D6D7E" alt="GitHub code size in bytes" /> 
 </div>
 
 ---
