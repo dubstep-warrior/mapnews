@@ -16,13 +16,14 @@ RUN npm install
 RUN npm run build
 
 
-# Stage 2: Serve app with nginx server
+FROM node:10 AS server-build
 
-# Use official nginx image as the base image
-FROM nginx:latest
+WORKDIR /root/
+COPY --from=build /usr/local/app/dist ./my-app/dist
+COPY package*.json ./
+RUN npm install
+COPY server.js .
 
-# Copy the build output to replace the default nginx contents.
-COPY --from=build /usr/local/app/dist/app-frontend /usr/share/nginx/html
+EXPOSE 3080
 
-# Expose port 80
-EXPOSE $PORT
+CMD ["node", "server.js"]

@@ -12,7 +12,7 @@
     "start-deployment": "docker build -t mapnews-notification ./notification && docker build -t mapnews-backend:latest . &&  docker stack deploy --compose-file docker-compose.yml mapnews-backend",
     "stop-deployment": "docker stack rm mapnews-backend",
     "restart-deployment": "npm run stop-deployment && docker stack deploy --compose-file docker-compose.yml mapnews-backend",
-    "test-swarm": "docker stack deploy --compose-file docker-compose.test.yml mapnews-backend",
+    "test-swarm": "docker stack deploy --compose-file docker-compose.test.yml mapnews",
     "format": "npx prettier --write ."
   },
   "author": "",
