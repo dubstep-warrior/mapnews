@@ -3,17 +3,7 @@
 <img src="https://raw.githubusercontent.com/PKief/vscode-material-icon-theme/ec559a9f6bfd399b82bb44393651661b08aaf7ba/icons/folder-markdown-open.svg" width="100" />
 <br>mapnews-notification
 </h1>
-<h3>◦ Notification service for the MapNews system</h3>
-<h3>◦ Developed with the software and tools listed below.</h3>
-
-<p align="center">
- 
-<img src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style&logo=JavaScript&logoColor=black" alt="JavaScript" /> 
-<img src="https://img.shields.io/badge/Redis-DC382D.svg?style&logo=Redis&logoColor=white" alt="Redis" /> 
-
-<img src="https://img.shields.io/badge/MongoDB-47A248.svg?style&logo=MongoDB&logoColor=white" alt="MongoDB" />   
-<img src="https://img.shields.io/badge/JSON-000000.svg?style&logo=JSON&logoColor=white" alt="JSON" />
-</p>
+<h3>◦ Notification service for the MapNews system</h3> 
  
 </div>
 
