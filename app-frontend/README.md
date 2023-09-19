@@ -55,207 +55,201 @@ Overall, this frontend implementation provides a solid foundation for the map-ba
 
 ```bash
 root
-├── .editorconfig
-├── .gitignore
-├── .husky
-│ └── pre-commit
-├── .npmrc
-├── .vscode
-│ ├── extensions.json
-│ ├── launch.json
-│ └── tasks.json
+├── Dockerfile
 ├── README.md
 ├── angular.json
 ├── package-lock.json
 ├── package.json
 ├── polyfill.ts
+├── server.js
 ├── src
-│ ├── app
-│ │ ├── app-routing.module.ts
-│ │ ├── app.component.html
-│ │ ├── app.component.scss
-│ │ ├── app.component.spec.ts
-│ │ ├── app.component.ts
-│ │ ├── app.module.ts
-│ │ ├── components
-│ │ │ ├── article-box
-│ │ │ │ ├── article-box.component.html
-│ │ │ │ ├── article-box.component.scss
-│ │ │ │ ├── article-box.component.spec.ts
-│ │ │ │ └── article-box.component.ts
-│ │ │ ├── article-details
-│ │ │ │ ├── article-details.component.html
-│ │ │ │ ├── article-details.component.scss
-│ │ │ │ ├── article-details.component.spec.ts
-│ │ │ │ └── article-details.component.ts
-│ │ │ ├── article-form
-│ │ │ │ ├── article-form.component.html
-│ │ │ │ ├── article-form.component.scss
-│ │ │ │ ├── article-form.component.spec.ts
-│ │ │ │ └── article-form.component.ts
-│ │ │ ├── image-gallery
-│ │ │ │ ├── image-gallery.component.html
-│ │ │ │ ├── image-gallery.component.scss
-│ │ │ │ ├── image-gallery.component.spec.ts
-│ │ │ │ └── image-gallery.component.ts
-│ │ │ ├── left-overlay
-│ │ │ │ ├── left-overlay.component.html
-│ │ │ │ ├── left-overlay.component.scss
-│ │ │ │ ├── left-overlay.component.spec.ts
-│ │ │ │ └── left-overlay.component.ts
-│ │ │ ├── login
-│ │ │ │ ├── login.component.html
-│ │ │ │ ├── login.component.scss
-│ │ │ │ ├── login.component.spec.ts
-│ │ │ │ └── login.component.ts
-│ │ │ ├── map
-│ │ │ │ ├── map.component.html
-│ │ │ │ ├── map.component.scss
-│ │ │ │ ├── map.component.spec.ts
-│ │ │ │ └── map.component.ts
-│ │ │ ├── mark
-│ │ │ │ ├── mark.component.html
-│ │ │ │ ├── mark.component.scss
-│ │ │ │ ├── mark.component.spec.ts
-│ │ │ │ └── mark.component.ts
-│ │ │ ├── multi-item-carousel
-│ │ │ │ ├── multi-item-carousel.component.html
-│ │ │ │ ├── multi-item-carousel.component.scss
-│ │ │ │ ├── multi-item-carousel.component.spec.ts
-│ │ │ │ └── multi-item-carousel.component.ts
-│ │ │ ├── navbar
-│ │ │ │ ├── navbar.component.html
-│ │ │ │ ├── navbar.component.scss
-│ │ │ │ ├── navbar.component.spec.ts
-│ │ │ │ └── navbar.component.ts
-│ │ │ ├── notifications
-│ │ │ │ ├── notifications.component.html
-│ │ │ │ ├── notifications.component.scss
-│ │ │ │ ├── notifications.component.spec.ts
-│ │ │ │ └── notifications.component.ts
-│ │ │ ├── register
-│ │ │ │ ├── register.component.html
-│ │ │ │ ├── register.component.scss
-│ │ │ │ ├── register.component.spec.ts
-│ │ │ │ └── register.component.ts
-│ │ │ ├── right-overlay
-│ │ │ │ ├── right-overlay.component.html
-│ │ │ │ ├── right-overlay.component.scss
-│ │ │ │ ├── right-overlay.component.spec.ts
-│ │ │ │ └── right-overlay.component.ts
-│ │ │ ├── shared
-│ │ │ │ ├── access-container
-│ │ │ │ │ ├── access-container.component.html
-│ │ │ │ │ ├── access-container.component.scss
-│ │ │ │ │ ├── access-container.component.spec.ts
-│ │ │ │ │ └── access-container.component.ts
-│ │ │ │ └── right-overlay-container
-│ │ │ │ ├── right-overlay-container.component.html
-│ │ │ │ ├── right-overlay-container.component.scss
-│ │ │ │ ├── right-overlay-container.component.spec.ts
-│ │ │ │ └── right-overlay-container.component.ts
-│ │ │ └── tags
-│ │ │ ├── tags.component.html
-│ │ │ ├── tags.component.scss
-│ │ │ ├── tags.component.spec.ts
-│ │ │ └── tags.component.ts
-│ │ ├── core
-│ │ │ ├── configs
-│ │ │ │ ├── general.config.json
-│ │ │ │ └── notification.messages.json
-│ │ │ ├── directives
-│ │ │ │ ├── form.directive.spec.ts
-│ │ │ │ └── form.directive.ts
-│ │ │ ├── interceptors
-│ │ │ │ └── auth
-│ │ │ │ ├── auth.interceptor.spec.ts
-│ │ │ │ └── auth.interceptor.ts
-│ │ │ ├── interfaces
-│ │ │ │ ├── article.interface..ts
-│ │ │ │ ├── auth.interface.ts
-│ │ │ │ ├── form.interface.ts
-│ │ │ │ ├── location.interface.ts
-│ │ │ │ ├── notification.interface.ts
-│ │ │ │ ├── preview-image.interface.ts
-│ │ │ │ ├── response.interface.ts
-│ │ │ │ └── state.interface.ts
-│ │ │ ├── pipes
-│ │ │ │ ├── custom-time
-│ │ │ │ │ ├── custom-time.pipe.spec.ts
-│ │ │ │ │ └── custom-time.pipe.ts
-│ │ │ │ ├── email-name
-│ │ │ │ │ ├── email-name.pipe.spec.ts
-│ │ │ │ │ └── email-name.pipe.ts
-│ │ │ │ ├── like-term
-│ │ │ │ │ ├── like-term.pipe.spec.ts
-│ │ │ │ │ └── like-term.pipe.ts
-│ │ │ │ └── notification-message
-│ │ │ │ ├── notification-message.pipe.spec.ts
-│ │ │ │ └── notification-message.pipe.ts
-│ │ │ ├── resolvers
-│ │ │ │ ├── config
-│ │ │ │ │ ├── config.resolver.spec.ts
-│ │ │ │ │ └── config.resolver.ts
-│ │ │ │ └── location
-│ │ │ │ ├── location.resolver.spec.ts
-│ │ │ │ └── location.resolver.ts
-│ │ │ ├── services
-│ │ │ │ ├── article
-│ │ │ │ │ ├── article.service.spec.ts
-│ │ │ │ │ └── article.service.ts
-│ │ │ │ ├── auth
-│ │ │ │ │ ├── auth.service.spec.ts
-│ │ │ │ │ └── auth.service.ts
-│ │ │ │ ├── form
-│ │ │ │ │ ├── form.service.spec.ts
-│ │ │ │ │ └── form.service.ts
-│ │ │ │ ├── location
-│ │ │ │ │ ├── location.service.spec.ts
-│ │ │ │ │ └── location.service.ts
-│ │ │ │ ├── notification
-│ │ │ │ │ ├── notification.service.spec.ts
-│ │ │ │ │ └── notification.service.ts
-│ │ │ │ ├── server
-│ │ │ │ │ ├── server.service.spec.ts
-│ │ │ │ │ └── server.service.ts
-│ │ │ │ ├── state
-│ │ │ │ │ ├── state.service.spec.ts
-│ │ │ │ │ └── state.service.ts
-│ │ │ │ └── ws
-│ │ │ │ ├── web-socket.service.spec.ts
-│ │ │ │ └── web-socket.service.ts
-│ │ │ └── utilities
-│ │ │ ├── animations.ts
-│ │ │ └── validators.ts
-│ │ └── pages
-│ │ ├── access
-│ │ │ ├── access.component.html
-│ │ │ ├── access.component.scss
-│ │ │ ├── access.component.spec.ts
-│ │ │ └── access.component.ts
-│ │ └── home
-│ │ ├── home.component.html
-│ │ ├── home.component.scss
-│ │ ├── home.component.spec.ts
-│ │ └── home.component.ts
-│ ├── assets
-│ │ └── images
-│ │ ├── ...31 files
-│ ├── environments
-│ │ ├── environment.prod.ts
-│ │ └── environment.ts
-│ ├── favicon.ico
-│ ├── index.html
-│ ├── main.ts
-│ ├── shared
-│ │ ├── \_mixins.scss
-│ │ └── \_variables.scss
-│ └── styles.scss
+│   ├── app
+│   │   ├── app-routing.module.ts
+│   │   ├── app.component.html
+│   │   ├── app.component.scss
+│   │   ├── app.component.spec.ts
+│   │   ├── app.component.ts
+│   │   ├── app.module.ts
+│   │   ├── components
+│   │   │   ├── article-box
+│   │   │   │   ├── article-box.component.html
+│   │   │   │   ├── article-box.component.scss
+│   │   │   │   ├── article-box.component.spec.ts
+│   │   │   │   └── article-box.component.ts
+│   │   │   ├── article-details
+│   │   │   │   ├── article-details.component.html
+│   │   │   │   ├── article-details.component.scss
+│   │   │   │   ├── article-details.component.spec.ts
+│   │   │   │   └── article-details.component.ts
+│   │   │   ├── article-form
+│   │   │   │   ├── article-form.component.html
+│   │   │   │   ├── article-form.component.scss
+│   │   │   │   ├── article-form.component.spec.ts
+│   │   │   │   └── article-form.component.ts
+│   │   │   ├── image-gallery
+│   │   │   │   ├── image-gallery.component.html
+│   │   │   │   ├── image-gallery.component.scss
+│   │   │   │   ├── image-gallery.component.spec.ts
+│   │   │   │   └── image-gallery.component.ts
+│   │   │   ├── left-overlay
+│   │   │   │   ├── left-overlay.component.html
+│   │   │   │   ├── left-overlay.component.scss
+│   │   │   │   ├── left-overlay.component.spec.ts
+│   │   │   │   └── left-overlay.component.ts
+│   │   │   ├── login
+│   │   │   │   ├── login.component.html
+│   │   │   │   ├── login.component.scss
+│   │   │   │   ├── login.component.spec.ts
+│   │   │   │   └── login.component.ts
+│   │   │   ├── map
+│   │   │   │   ├── map.component.html
+│   │   │   │   ├── map.component.scss
+│   │   │   │   ├── map.component.spec.ts
+│   │   │   │   └── map.component.ts
+│   │   │   ├── mark
+│   │   │   │   ├── mark.component.html
+│   │   │   │   ├── mark.component.scss
+│   │   │   │   ├── mark.component.spec.ts
+│   │   │   │   └── mark.component.ts
+│   │   │   ├── multi-item-carousel
+│   │   │   │   ├── multi-item-carousel.component.html
+│   │   │   │   ├── multi-item-carousel.component.scss
+│   │   │   │   ├── multi-item-carousel.component.spec.ts
+│   │   │   │   └── multi-item-carousel.component.ts
+│   │   │   ├── navbar
+│   │   │   │   ├── navbar.component.html
+│   │   │   │   ├── navbar.component.scss
+│   │   │   │   ├── navbar.component.spec.ts
+│   │   │   │   └── navbar.component.ts
+│   │   │   ├── notifications
+│   │   │   │   ├── notifications.component.html
+│   │   │   │   ├── notifications.component.scss
+│   │   │   │   ├── notifications.component.spec.ts
+│   │   │   │   └── notifications.component.ts
+│   │   │   ├── register
+│   │   │   │   ├── register.component.html
+│   │   │   │   ├── register.component.scss
+│   │   │   │   ├── register.component.spec.ts
+│   │   │   │   └── register.component.ts
+│   │   │   ├── right-overlay
+│   │   │   │   ├── right-overlay.component.html
+│   │   │   │   ├── right-overlay.component.scss
+│   │   │   │   ├── right-overlay.component.spec.ts
+│   │   │   │   └── right-overlay.component.ts
+│   │   │   ├── shared
+│   │   │   │   ├── access-container
+│   │   │   │   │   ├── access-container.component.html
+│   │   │   │   │   ├── access-container.component.scss
+│   │   │   │   │   ├── access-container.component.spec.ts
+│   │   │   │   │   └── access-container.component.ts
+│   │   │   │   └── right-overlay-container
+│   │   │   │       ├── right-overlay-container.component.html
+│   │   │   │       ├── right-overlay-container.component.scss
+│   │   │   │       ├── right-overlay-container.component.spec.ts
+│   │   │   │       └── right-overlay-container.component.ts
+│   │   │   └── tags
+│   │   │       ├── tags.component.html
+│   │   │       ├── tags.component.scss
+│   │   │       ├── tags.component.spec.ts
+│   │   │       └── tags.component.ts
+│   │   ├── core
+│   │   │   ├── configs
+│   │   │   │   ├── general.config.json
+│   │   │   │   └── notification.messages.json
+│   │   │   ├── directives
+│   │   │   │   ├── form.directive.spec.ts
+│   │   │   │   └── form.directive.ts
+│   │   │   ├── interceptors
+│   │   │   │   └── auth
+│   │   │   │       ├── auth.interceptor.spec.ts
+│   │   │   │       └── auth.interceptor.ts
+│   │   │   ├── interfaces
+│   │   │   │   ├── article.interface..ts
+│   │   │   │   ├── auth.interface.ts
+│   │   │   │   ├── form.interface.ts
+│   │   │   │   ├── location.interface.ts
+│   │   │   │   ├── notification.interface.ts
+│   │   │   │   ├── preview-image.interface.ts
+│   │   │   │   ├── response.interface.ts
+│   │   │   │   └── state.interface.ts
+│   │   │   ├── pipes
+│   │   │   │   ├── custom-time
+│   │   │   │   │   ├── custom-time.pipe.spec.ts
+│   │   │   │   │   └── custom-time.pipe.ts
+│   │   │   │   ├── email-name
+│   │   │   │   │   ├── email-name.pipe.spec.ts
+│   │   │   │   │   └── email-name.pipe.ts
+│   │   │   │   ├── like-term
+│   │   │   │   │   ├── like-term.pipe.spec.ts
+│   │   │   │   │   └── like-term.pipe.ts
+│   │   │   │   └── notification-message
+│   │   │   │       ├── notification-message.pipe.spec.ts
+│   │   │   │       └── notification-message.pipe.ts
+│   │   │   ├── resolvers
+│   │   │   │   ├── config
+│   │   │   │   │   ├── config.resolver.spec.ts
+│   │   │   │   │   └── config.resolver.ts
+│   │   │   │   └── location
+│   │   │   │       ├── location.resolver.spec.ts
+│   │   │   │       └── location.resolver.ts
+│   │   │   ├── services
+│   │   │   │   ├── article
+│   │   │   │   │   ├── article.service.spec.ts
+│   │   │   │   │   └── article.service.ts
+│   │   │   │   ├── auth
+│   │   │   │   │   ├── auth.service.spec.ts
+│   │   │   │   │   └── auth.service.ts
+│   │   │   │   ├── form
+│   │   │   │   │   ├── form.service.spec.ts
+│   │   │   │   │   └── form.service.ts
+│   │   │   │   ├── location
+│   │   │   │   │   ├── location.service.spec.ts
+│   │   │   │   │   └── location.service.ts
+│   │   │   │   ├── notification
+│   │   │   │   │   ├── notification.service.spec.ts
+│   │   │   │   │   └── notification.service.ts
+│   │   │   │   ├── server
+│   │   │   │   │   ├── server.service.spec.ts
+│   │   │   │   │   └── server.service.ts
+│   │   │   │   ├── state
+│   │   │   │   │   ├── state.service.spec.ts
+│   │   │   │   │   └── state.service.ts
+│   │   │   │   └── ws
+│   │   │   │       ├── web-socket.service.spec.ts
+│   │   │   │       └── web-socket.service.ts
+│   │   │   └── utilities
+│   │   │       ├── animations.ts
+│   │   │       └── validators.ts
+│   │   └── pages
+│   │       ├── access
+│   │       │   ├── access.component.html
+│   │       │   ├── access.component.scss
+│   │       │   ├── access.component.spec.ts
+│   │       │   └── access.component.ts
+│   │       └── home
+│   │           ├── home.component.html
+│   │           ├── home.component.scss
+│   │           ├── home.component.spec.ts
+│   │           └── home.component.ts
+│   ├── assets
+│   │   └── images
+│   │       └── ...31 files
+│   ├── environments
+│   │   ├── environment.prod.ts
+│   │   └── environment.ts
+│   ├── favicon.ico
+│   ├── index.html
+│   ├── main.ts
+│   ├── server.ts
+│   ├── shared
+│   │   ├── _mixins.scss
+│   │   └── _variables.scss
+│   └── styles.scss
 ├── tsconfig.app.json
 ├── tsconfig.json
 └── tsconfig.spec.json
 
-53 directories, 176 files
+51 directories, 172 files
 ```
 
 ---
@@ -267,7 +261,7 @@ root
 | File                                                                                     | Summary                                                                                                                                                                                                                                                                                                                                                      |
 | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | [polyfill.ts](https://github.com/dubstep-warrior/mapnews-frontend/blob/main/polyfill.ts) | The code snippet sets the global object in a browser environment by assigning the window object to the global variable. This allows accessing global variables and functions across different modules within the application.                                                                                                                                |
-| [.npmrc](https://github.com/dubstep-warrior/mapnews-frontend/blob/main/.npmrc)           | The "legacy-peer-deps" flag enables compatibility with older packages that rely on outdated peer dependency resolution. It allows the code to use the legacy peer dependency behavior where dependencies defined as peers are given more flexibility in version matching. This ensures that older packages can still run properly with the current codebase. |
+ 
 
 </details>
 
