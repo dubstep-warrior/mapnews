@@ -12,6 +12,10 @@ section {
     width: 533px;
     height: 100%;
     padding: 24px 36px;
+
+    @include screen-small {
+      padding: 12px 24px;
+    }
   }
 
   @include screen-small {

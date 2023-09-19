@@ -46,6 +46,7 @@
       gap: 8px;
 
       img {
+        min-width: 30px;
         width: 30px;
         height: 30px;
         object-fit: cover;
@@ -54,8 +55,21 @@
       }
 
       div {
-        font-size: 24px;
+        font-size: 18px;
         font-weight: bold;
+
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+
+        @supports (-webkit-line-clamp: 2) {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: initial;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+        }
       }
     }
   }
