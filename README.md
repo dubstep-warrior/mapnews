@@ -87,7 +87,7 @@ docker swarm init
 docker stack deploy --compose-file docker-compose.yml mapnews
 ``` 
 
-5. Access the web application from [localhost:3000](https://localhost:3000/).
+5. Access the web application from [localhost:3000](http://localhost:3000/).
 ---
 
 ## 🤝 Contributing
