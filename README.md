@@ -1,6 +1,6 @@
 <div align="center">
 <h1 align="center">
-<img src="https://raw.githubusercontent.com/PKief/vscode-material-icon-theme/ec559a9f6bfd399b82bb44393651661b08aaf7ba/icons/folder-markdown-open.svg" width="100" />
+<img src="https://cdn.iconscout.com/icon/free/png-256/free-map-and-location-2569358-2148268.png" width="100" />
 <br>MapNews
 </h1>
 <h3>◦ Mapnews: Navigating Global Stories</h3>
