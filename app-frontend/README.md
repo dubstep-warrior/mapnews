@@ -5,8 +5,7 @@
 </h1>
 <h3>◦ Frontend application of the MapNews system</h3> 
  
-<img src="https://img.shields.io/github/languages/top/dubstep-warrior/mapnews-frontend?style&color=5D6D7E" alt="GitHub top language" />
-<img src="https://img.shields.io/github/languages/code-size/dubstep-warrior/mapnews-frontend?style&color=5D6D7E" alt="GitHub code size in bytes" /> 
+ 
 </div>
 
 ---
@@ -16,8 +15,8 @@
 - [📒 Table of Contents](#-table-of-contents)
 - [📍 Overview](#-overview)
 - [⚙️ Features](#-features)
-- [📂 Project Structure](#project-structure)
-- [🧩 Modules](#modules)
+- [📂 Project Structure](#-project-structure)
+- [🧩 Modules](#-modules)
 - [🗺 Roadmap](#-roadmap)
 
 ---
