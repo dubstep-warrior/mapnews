@@ -47,7 +47,7 @@
 
 ## 📍 Overview
 
-Mapnews is a comprehensive and sophisticated map-based news system built using Angular for the frontend and Express for the backend. The system is a docker swarm consisting of the backend, frontend, and notification services. The swarm configuration features horizontal scaling in our backend in order to meet high concurrency requirements for this application, where we implement load balancing between the websocket replicas.  
+Mapnews is a comprehensive and sophisticated map-based news system built using Angular for the frontend and Express for the backend. The system is a docker swarm consisting of the backend, frontend, and notification services. The swarm configuration features horizontal scaling in our backend in order to meet high concurrency requirements for this application, where we implement load balancing between the websocket server replicas.  
 
 In-depth feature and implementation details are discussed in the README.md of their respective sub-directories
 
