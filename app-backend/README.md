@@ -3,22 +3,8 @@
 <img src="https://raw.githubusercontent.com/PKief/vscode-material-icon-theme/ec559a9f6bfd399b82bb44393651661b08aaf7ba/icons/folder-markdown-open.svg" width="100" />
 <br>mapnews-backend
 </h1>
-<h3>◦ Powering news mapping with precision.</h3>
-<h3>◦ Developed with the software and tools listed below.</h3>
+<h3>◦ Backend application of the MapNews system</h3>
 
-<p align="center">
-<img src="https://img.shields.io/badge/precommit-FAB040.svg?style&logo=pre-commit&logoColor=black" alt="precommit" />
-<img src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style&logo=JavaScript&logoColor=black" alt="JavaScript" />
-<img src="https://img.shields.io/badge/Prettier-F7B93E.svg?style&logo=Prettier&logoColor=black" alt="Prettier" />
-<img src="https://img.shields.io/badge/Redis-DC382D.svg?style&logo=Redis&logoColor=white" alt="Redis" />
-<img src="https://img.shields.io/badge/Nodemon-76D04B.svg?style&logo=Nodemon&logoColor=white" alt="Nodemon" />
-
-<img src="https://img.shields.io/badge/MongoDB-47A248.svg?style&logo=MongoDB&logoColor=white" alt="MongoDB" />
-<img src="https://img.shields.io/badge/TypeScript-3178C6.svg?style&logo=TypeScript&logoColor=white" alt="TypeScript" />
-<img src="https://img.shields.io/badge/Docker-2496ED.svg?style&logo=Docker&logoColor=white" alt="Docker" />
-<img src="https://img.shields.io/badge/Express-000000.svg?style&logo=Express&logoColor=white" alt="Express" />
-<img src="https://img.shields.io/badge/JSON-000000.svg?style&logo=JSON&logoColor=white" alt="JSON" />
-</p>
 <img src="https://img.shields.io/github/languages/top/dubstep-warrior/mapnews-backend?style&color=5D6D7E" alt="GitHub top language" />
 <img src="https://img.shields.io/github/languages/code-size/dubstep-warrior/mapnews-backend?style&color=5D6D7E" alt="GitHub code size in bytes" />
 <img src="https://img.shields.io/github/commit-activity/m/dubstep-warrior/mapnews-backend?style&color=5D6D7E" alt="GitHub commit activity" />
@@ -34,11 +20,7 @@
 - [⚙️ Features](#-features)
 - [📂 Project Structure](#project-structure)
 - [🧩 Modules](#modules)
-- [🚀 Getting Started](#-getting-started)
 - [🗺 Roadmap](#-roadmap)
-- [🤝 Contributing](#-contributing)
-- [📄 License](#-license)
-- [👏 Acknowledgments](#-acknowledgments)
 
 ---
 
@@ -155,11 +137,10 @@ root
 
 <details closed><summary>Src</summary>
 
-| File                                                                                               | Summary                                                                                                                                                                                                                                                                                        |
-| -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [server.ts](https://github.com/dubstep-warrior/mapnews-backend/blob/main/src/server.ts)            | This code is responsible for establishing a connection to MongoDB, creating an HTTP server, and initializing a WebSocket server. It also sets up the application to listen for incoming requests on a specified port.                                                                          |
-| [application.ts](https://github.com/dubstep-warrior/mapnews-backend/blob/main/src/application.ts)  | The code is a class that creates an application using Express.js. It sets up various middleware such as bodyParser and multer for handling HTTP requests, enables CORS for cross-origin requests, allows for image uploading, and registers routes and handlers defined by controller classes. |
-| [index.js](https://github.com/dubstep-warrior/mapnews-backend/blob/main/notification/src/index.js) | This code is responsible for handling emergency and general subscriptions by publishing notifications to interested users. It also includes cron jobs for updating user metrics and locations. Redis and MongoDB are used for data storage and retrieval.                                      |
+| File                                                                                              | Summary                                                                                                                                                                                                                                                                                        |
+| ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [server.ts](https://github.com/dubstep-warrior/mapnews-backend/blob/main/src/server.ts)           | This code is responsible for establishing a connection to MongoDB, creating an HTTP server, and initializing a WebSocket server. It also sets up the application to listen for incoming requests on a specified port.                                                                          |
+| [application.ts](https://github.com/dubstep-warrior/mapnews-backend/blob/main/src/application.ts) | The code is a class that creates an application using Express.js. It sets up various middleware such as bodyParser and multer for handling HTTP requests, enables CORS for cross-origin requests, allows for image uploading, and registers routes and handlers defined by controller classes. |
 
 </details>
 
@@ -259,123 +240,12 @@ root
 
 </details>
 
-<details closed><summary>.husky</summary>
-
-| File                                                                                         | Summary                                                                                                                                                                          |
-| -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [pre-commit](https://github.com/dubstep-warrior/mapnews-backend/blob/main/.husky/pre-commit) | This code script executes the npm build command, formats the code using npm format command, and adds all changes to git. The "husky.sh" file is sourced for executing Git hooks. |
-
-</details>
-
-<details closed><summary>Notification</summary>
-
-| File                                                                                               | Summary                                                                                                                                                                                                                                                                  |
-| -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| [Dockerfile](https://github.com/dubstep-warrior/mapnews-backend/blob/main/notification/Dockerfile) | This code sets up a Node.js environment, installs dependencies defined in the package.json file, and copies the entire project into the /app directory. Finally, it starts the application using the "start" script defined in package.json using the npm start command. |
-
-</details>
-
-<details closed><summary>Aggregations</summary>
-
-| File                                                                                                                                          | Summary                                                                                                                                                                                                                                                                                                                                                                            |
-| --------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [interest.aggregation.js](https://github.com/dubstep-warrior/mapnews-backend/blob/main/notification/src/aggregations/interest.aggregation.js) | This code defines the InterestAggregation function which takes an article as input and returns a MongoDB aggregation pipeline. The pipeline evaluates the usage history of articles to determine if they are suitable based on certain threshold values for combined category and tags usage. The pipeline eventually projects the \_id field of the suitable articles as strings. |
-| [activity.aggregation.js](https://github.com/dubstep-warrior/mapnews-backend/blob/main/notification/src/aggregations/activity.aggregation.js) | This code performs an activity aggregation based on an article's location and tags. It calculates the distance from the article's location to nearby activities, filters based on time, groups tags, calculates their count and averages, matches tags of the article, and finally returns a result based on the comparison of the matched tags to the average.                    |
-
-</details>
-
----
-
-## 🚀 Getting Started
-
-### ✔️ Prerequisites
-
-Before you begin, ensure that you have the following prerequisites installed:
-
-> - `ℹ️ Requirement 1`
-> - `ℹ️ Requirement 2`
-> - `ℹ️ ...`
-
-### 📦 Installation
-
-1. Clone the mapnews-backend repository:
-
-```sh
-git clone https://github.com/dubstep-warrior/mapnews-backend
-```
-
-2. Change to the project directory:
-
-```sh
-cd mapnews-backend
-```
-
-3. Install the dependencies:
-
-```sh
-npm install
-```
-
-### 🎮 Using mapnews-backend
-
-```sh
-npm run build && node dist/main.js
-```
-
-### 🧪 Running Tests
-
-```sh
-npm test
-```
-
 ---
 
 ## 🗺 Roadmap
 
-> - [x] `ℹ️  Task 1: Implement X`
-> - [ ] `ℹ️  Task 2: Refactor Y`
-> - [ ] `ℹ️ ...`
-
----
-
-## 🤝 Contributing
-
-Contributions are always welcome! Please follow these steps:
-
-1. Fork the project repository. This creates a copy of the project on your account that you can modify without affecting the original project.
-2. Clone the forked repository to your local machine using a Git client like Git or GitHub Desktop.
-3. Create a new branch with a descriptive name (e.g., `new-feature-branch` or `bugfix-issue-123`).
-
-```sh
-git checkout -b new-feature-branch
-```
-
-4. Make changes to the project's codebase.
-5. Commit your changes to your local branch with a clear commit message that explains the changes you've made.
-
-```sh
-git commit -m 'Implemented new feature.'
-```
-
-6. Push your changes to your forked repository on GitHub using the following command
-
-```sh
-git push origin new-feature-branch
-```
-
-7. Create a new pull request to the original project repository. In the pull request, describe the changes you've made and why they're necessary.
-   The project maintainers will review your changes and provide feedback or merge them into the main branch.
-
----
-
-## 📄 License
-
-This project is licensed under the `ℹ️  INSERT-LICENSE-TYPE` License. See the [LICENSE](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/adding-a-license-to-a-repository) file for additional info.
-
----
-
-## 👏 Acknowledgments
-
-> - `ℹ️  List any resources, contributors, inspiration, etc.`
+> - [ ] `ℹ️  Task 1: Clean up codebase`
+> - [ ] `ℹ️  Task 2: Implement Unit testing`
+> - [ ] `ℹ️  Task 3: Implement deployment on cloud platform`
 
 ---
