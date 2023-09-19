@@ -22,19 +22,22 @@ client.connect();
 
 const RedisSubscriber = RedisClient.duplicate();
 const RedisPublisher = RedisClient.duplicate();
-RedisPublisher.connect();
-RedisSubscriber.connect();
-RedisClient.connect();
 
-RedisClient.on("error", function (error) {
-  console.error(error);
-});
-RedisSubscriber.on("error", function (error) {
-  console.error(error);
-});
-RedisPublisher.on("error", function (error) {
-  console.error(error);
-});
+const clients = {
+  'RedisClient': RedisClient,
+  'RedisPublisher': RedisPublisher,
+  'RedisSubscriber': RedisSubscriber
+}
+
+Object.keys(clients).forEach(name => {
+  clients[name].connect()
+  .then(() => console.log(`Connection Succesful to ${name}`))
+  .catch((err) => console.log(`Error in DB connection ${err}`));
+
+  clients[name].on("error", function (error) {
+    console.error(error);
+  });
+}) 
 
 // EMERGENCY SUBSCRIPTION
 // **********************
