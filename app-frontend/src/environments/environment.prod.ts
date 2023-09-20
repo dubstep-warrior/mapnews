@@ -1,4 +1,4 @@
-const base_api = 'backend-proxy';
+const base_api = 'localhost';
 
 export const environment = {
   production: true,
