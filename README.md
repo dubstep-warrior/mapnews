@@ -81,7 +81,7 @@ cd mapnews
 docker swarm init
 ``` 
 
-4. Deploy the docker swarm (Ensure environement variables are replaced with appropiate values)
+4. Deploy the docker swarm (Ensure environment variables are replaced with appropiate values)
 
 ```sh
 docker stack deploy --compose-file docker-compose.yml mapnews
