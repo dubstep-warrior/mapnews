@@ -1,9 +1,7 @@
 version: "3.0"
 services:
   backend:
-    image: dubstepwarrior/mapnews:backend
-    ports:
-      - 8000:8000
+    image: dubstepwarrior/mapnews:backend 
     environment:
       - SERVICE_PORTS=8000  
       - MONGODB_CLUSTER_URI={YOUR CLUSTER URI HERE}
@@ -34,6 +32,8 @@ services:
       PORT: 3000 
     ports:
       - 3000:3000
+    networks:
+      - web
   backend-proxy:
     image: dockercloud/haproxy
     depends_on:
@@ -41,9 +41,7 @@ services:
     environment:
       - BALANCE=leastconn
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    ports:
-      - 80:80
+      - /var/run/docker.sock:/var/run/docker.sock 
     networks:
       - web
     deploy:
