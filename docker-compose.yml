@@ -31,9 +31,7 @@ services:
     environment:
       PORT: 3000 
     ports:
-      - 3000:3000
-    networks:
-      - web
+      - 3000:3000 
   backend-proxy:
     image: dockercloud/haproxy
     depends_on:
