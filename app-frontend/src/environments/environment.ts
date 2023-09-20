@@ -7,4 +7,4 @@ export const environment = {
 };
 
 // Localhost: http://localhost:8000
-// Deployment: http://mapnews-dev-backend-58a0a55a5d5a.herokuapp.com
+// Docker: localhost
