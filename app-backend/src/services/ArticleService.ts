@@ -77,12 +77,13 @@ class ArticleService {
 
   @Cache()
   async resolveArticles(req: Request): Promise<IProcessedArticle[]> {
-    const options: ResolverOptions = {
-      ...JSON.parse(req.query.data as string),
-    };
-    if ("userId" in req.body)
-      options["id"] = new mongoose.Types.ObjectId(req.body["userId"]);
     try {
+      const options: ResolverOptions = {
+        ...JSON.parse((req.query.data as string) ?? "null"),
+      };
+      if ("userId" in req.body)
+        options["id"] = new mongoose.Types.ObjectId(req.body["userId"]);
+
       const allArticles = await Article.find(FilterResolver(req.path, options))
         .populate("posted_by")
         .lean();

@@ -258,10 +258,9 @@ root
 
 <details closed><summary>Root</summary>
 
-| File                                                                                     | Summary                                                                                                                                                                                                                                                                                                                                                      |
-| ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| [polyfill.ts](https://github.com/dubstep-warrior/mapnews-frontend/blob/main/polyfill.ts) | The code snippet sets the global object in a browser environment by assigning the window object to the global variable. This allows accessing global variables and functions across different modules within the application.                                                                                                                                |
- 
+| File                                                                                     | Summary                                                                                                                                                                                                                       |
+| ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [polyfill.ts](https://github.com/dubstep-warrior/mapnews-frontend/blob/main/polyfill.ts) | The code snippet sets the global object in a browser environment by assigning the window object to the global variable. This allows accessing global variables and functions across different modules within the application. |
 
 </details>
 
