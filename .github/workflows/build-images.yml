@@ -11,8 +11,7 @@ jobs:
 
     strategy: 
       matrix:
-        include:
-          subDir: ["frontend", "backend", "notification"] 
+        subDir: ["frontend", "backend", "notification"] 
 
     steps:
       - name: Set up Docker Build
