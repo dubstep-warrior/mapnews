@@ -4,7 +4,11 @@ on:
   push:
     branches:
       - main 
-
+    paths:
+      - frontend/**
+      - backend/**
+      - notification/**
+      
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
