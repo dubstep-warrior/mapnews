@@ -1,7 +1,7 @@
 version: "3.0"
 services:
   backend:
-    image: dubstepwarrior/mapnews:backend 
+    image: dubstepwarrior/mapnews:backend-service 
     environment:
       - SERVICE_PORTS=8000  
       - MONGODB_CLUSTER_URI={YOUR CLUSTER URI HERE}
@@ -27,7 +27,7 @@ services:
       MONGODB_CLUSTER_URI: {YOUR CLUSTER URI HERE}
       REDIS_URL: {YOUR REDIS URL HERE}
   frontend:
-    image: dubstepwarrior/mapnews:frontend
+    image: dubstepwarrior/mapnews:frontend-service 
     environment:
       PORT: 3000 
     ports:
