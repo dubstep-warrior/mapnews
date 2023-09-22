@@ -26,6 +26,6 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: "{{defaultContext}}:app-${{ matrix.subDir }}"
+          context: "{{defaultContext}}:${{ matrix.subDir }}"
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/mapnews:${{ matrix.subDir }}-service
