@@ -1,8 +1,8 @@
-name: Docker Build and Push
+name: CI Build
 
 on:
   workflow_run:
-    workflows: ['Test']
+    workflows: ['CI Test']
     types:
       - completed
       

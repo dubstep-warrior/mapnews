@@ -1,4 +1,4 @@
-name: Test
+name: CI Test
 
 on: [push]
 
@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
-    
+
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
@@ -22,7 +22,17 @@ jobs:
       - name: Install dependencies
         run: npm ci
         working-directory: ./${{ matrix.subDir }}
-    
+
+      - name: create env file
+        run: |
+          touch .env
+          echo MONGODB_CLUSTER_URI=${{ secrets.MONGODB_CLUSTER_URI }} >> .env
+          echo IMAGEKIT_PUBLIC_KEY=${{ secrets.IMAGEKIT_PUBLIC_KEY }} >> .env
+          echo IMAGEKIT_PRIVATE_KEY=${{ secrets.IMAGEKIT_PRIVATE_KEY }} >> .env
+          echo IMAGEKIT_URL_ENDPOINT=${{ secrets.IMAGEKIT_URL_ENDPOINT }} >> .env
+          echo SECRET_JWT_CODE=${{ secrets.SECRET_JWT_CODE }} >> .env
+          echo REDIS_URL=${{ secrets.REDIS_URL }} >> .env
+
       - name: Run tests
         run: npm test
         working-directory: ./${{ matrix.subDir }}
