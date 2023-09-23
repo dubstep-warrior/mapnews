@@ -13,24 +13,8 @@ const user = {
   id: new mongoose.Types.ObjectId().toString(),
   email: "test@test.com",
 };
-
-const articleInput = {
-  category: "emergency",
-  title: "emergency",
-  location: {
-    coordinates: [103.694179, 1.336777],
-  },
-  tags: ["test"],
-  description: "Hello world",
-};
-
-const articlePayload = {
-  ...articleInput,
-  time: Date.now(),
-  posted_by: user.id,
-  likes: [],
-};
-
+ 
+ 
 beforeAll(async () => {
     await RedisHandler.setup();
     await mongoose.connect(process.env.MONGODB_CLUSTER_URI!, {
