@@ -4,25 +4,24 @@ dotenv.config();
 import JsonWebToken from "jsonwebtoken";
 import Bcrypt from "bcryptjs";
 import { Request } from "express";
-import { IAuth } from "../utils/interfaces/auth.interface";
+import {
+  IAuth,
+  LoginParams,
+  RegisterParams,
+} from "../utils/interfaces/auth.interface";
 import { IUser } from "../utils/interfaces/user.interface";
 import { ImageKitClient } from "../clients/imagekit.client";
 
 class AuthService {
-  async createUser(req: Request): Promise<IAuth> {
-    const data = req.body;
-    console.log(data);
-    const newUser: Partial<IUser> & { confirmPassword?: string } = {};
-    Object.keys(data).forEach((key) => {
-      const index: keyof IUser = key as keyof IUser;
-      newUser[index] = data[index];
-    });
+  async createUser(params: RegisterParams): Promise<IAuth> {
+    const newUser: Partial<RegisterParams> = params;
 
     if (
       ["email", "password", "confirmPassword"].some(
         (element) => !newUser[element as keyof typeof newUser],
       )
     ) {
+      // @ts-ignore
       throw new Error("Not all required fields are filled");
     }
     if (newUser.password !== newUser.confirmPassword) {
@@ -47,11 +46,11 @@ class AuthService {
       process.env.SECRET_JWT_CODE!,
     );
 
-    if (req.file)
+    if (params.profile_img)
       ImageKitClient.upload(
         {
-          file: req.file.buffer.toString("base64"),
-          fileName: req.file.originalname,
+          file: params.profile_img.buffer.toString("base64"),
+          fileName: params.profile_img.originalname,
           folder: "Users",
         },
         (err, res) => {
@@ -69,12 +68,12 @@ class AuthService {
     };
   }
 
-  async userLogin(req: Request): Promise<IAuth> {
-    let data = req.body;
+  async userLogin(params: LoginParams): Promise<IAuth> {
+    let data = params;
 
     const currentUser: Partial<IUser> = {};
     Object.keys(data).forEach((key) => {
-      const index: keyof IUser = key as keyof IUser;
+      const index: keyof IUser = key as keyof LoginParams;
       currentUser[index] = data[index];
     });
 
@@ -86,7 +85,9 @@ class AuthService {
       throw new Error("Not all fields are filled");
     }
 
-    const user = await User.findOne({ email: currentUser["email"] });
+    const user = await User.findOne({ email: currentUser["email"] }).populate(
+      "password",
+    );
 
     if (!user) {
       throw new Error("User does not exist");

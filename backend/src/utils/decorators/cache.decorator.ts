@@ -38,7 +38,7 @@ export const Cache = () => {
         if (bypass(req.path)) {
           console.log("yes we are bypassing cache");
           return originalMethod.apply(this, args);
-        } else throw "Error in retrieving server cache";
+        } else throw "Error in retrieving server cache:" + err;
       }
     };
 

@@ -24,3 +24,5 @@ export interface IArticle {
 export interface IProcessedArticle extends IArticle {
   coordinates: Array<number>;
 }
+
+export type ArticleParams = Omit<IArticle, "_id" | "images" | "time" | "likes">;

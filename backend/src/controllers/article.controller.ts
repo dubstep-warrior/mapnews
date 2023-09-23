@@ -22,7 +22,7 @@ export default class Article {
         res.status(404).json("There are no article published yet!");
       }
 
-      res.json({
+      res.status(200).json({
         success: true,
         data: articles,
       });
@@ -40,14 +40,17 @@ export default class Article {
     next: NextFunction,
   ): Promise<void> {
     try {
-      const createdArticle = await ArticleService.createArticle(req);
+      const createdArticle = await ArticleService.createArticle(
+        req.body,
+        req.files as Express.Multer.File[],
+      );
 
       RedisPublisher.publish(
         createdArticle.category == "emergency" ? "emergency" : "general",
         JSON.stringify(createdArticle),
       );
 
-      res.json({
+      res.status(200).json({
         success: true,
         data: createdArticle,
       });

@@ -13,17 +13,19 @@ export default class Auth {
     next: NextFunction,
   ): Promise<void> {
     try {
-      const createdUser = await authService.createUser(req);
+      const createdUser = await authService.createUser({
+        ...req.body,
+        profile_img: req.file,
+      });
       res.json({
         success: true,
         data: createdUser,
       });
     } catch (error: any) {
-      console.log(error.name);
-      console.log(error.message);
       const key: any = error.message.split(" ")[0];
       const mongoErrors = MongoServerErrors.registration;
-      res.send({
+      console.log(error.name);
+      res.status(400).send({
         success: false,
         error: mongoErrors?.[key as keyof typeof mongoErrors] ?? error.message,
       });
@@ -37,14 +39,13 @@ export default class Auth {
     next: NextFunction,
   ): Promise<void> {
     try {
-      const token = await authService.userLogin(req);
+      const token = await authService.userLogin(req.body);
       res.json({
         success: true,
         data: token,
       });
     } catch (error: any) {
-      console.log("error caught heres");
-      res.status(500).json({ success: false, error: error.message });
+      res.status(401).json({ success: false, error: error.message });
     }
   }
 }

@@ -3,8 +3,8 @@ import * as dotenv from "dotenv";
 import mongoose from "mongoose";
 import { Cache } from "../utils/decorators/cache.decorator";
 import { FilterResolver } from "../utils/resolvers/article-filter.resolver";
-import { MulterRequest } from "../utils/interfaces/http.interface";
 import {
+  ArticleParams,
   IArticle,
   IProcessedArticle,
 } from "../utils/interfaces/article.interface";
@@ -16,10 +16,13 @@ dotenv.config();
 class ArticleService {
   constructor() {}
 
-  async createArticle(req: MulterRequest): Promise<IProcessedArticle> {
+  async createArticle(
+    params: ArticleParams,
+    files: Express.Multer.File[] = [],
+  ): Promise<IProcessedArticle> {
     try {
-      const data = req.body;
-      const imageUploads = req.files.map((img: any) =>
+      const data: Partial<ArticleParams> = {};
+      const imageUploads = files.map((img: any) =>
         ImageKitClient.upload({
           file: img.buffer.toString("base64"),
           fileName: img.originalname,
@@ -27,18 +30,19 @@ class ArticleService {
         }),
       );
 
-      const newArticle: Partial<IArticle> = {
-        images: (await Promise.all(imageUploads)).map((res) => res.url),
-      };
-
-      Object.keys(data).forEach((key) => {
-        const index: keyof IArticle = key as keyof IArticle;
+      Object.keys(params).forEach((key) => {
+        const index: keyof ArticleParams = key as keyof ArticleParams;
         try {
-          newArticle[index] = JSON.parse(data[key]);
+          data[index] = JSON.parse(params[index] as any);
         } catch (e) {
-          newArticle[index] = data[key];
+          data[index] = params[index] as any;
         }
       });
+
+      const newArticle: Partial<IArticle> = {
+        images: (await Promise.all(imageUploads)).map((res) => res.url),
+        ...data,
+      };
 
       const response = await new Article(newArticle)
         .save()

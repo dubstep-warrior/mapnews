@@ -10,6 +10,7 @@ export const Auth = (userAttName?: string) => {
 
     descriptor.value = function (...args: any[]) {
       const req = args[0];
+      const res = args[1];
       const token = req.headers.authorization?.split(" ")[1];
 
       try {
@@ -28,7 +29,7 @@ export const Auth = (userAttName?: string) => {
           console.log(propertyKey, req.path);
           console.log("yes we are bypassing");
           return originalMethod.apply(this, args);
-        } else throw "Invalid token:" + err;
+        } else res.status(401).send({ success: false, error: err });
       }
     };
 
