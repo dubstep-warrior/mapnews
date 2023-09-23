@@ -7,7 +7,7 @@ RUN npm run build
 
 FROM node:17.0.1-alpine AS prod
 ARG FOO=${TEST_SECRET} 
-ENV FOO=${TEST_SECRET}
+ENV FOO=$FOO
 WORKDIR /app
 COPY --from=build ./app/dist ./dist
 COPY package*.json ./
