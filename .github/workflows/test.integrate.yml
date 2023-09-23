@@ -2,6 +2,15 @@ name: CI Test
 
 on: [push]
 
+
+env:
+  MONGODB_CLUSTER_URI: ${{ secrets.MONGODB_CLUSTER_URI }} 
+  IMAGEKIT_PUBLIC_KEY: ${{ secrets.IMAGEKIT_PUBLIC_KEY }}  
+  IMAGEKIT_PRIVATE_KEY: ${{ secrets.IMAGEKIT_PRIVATE_KEY }}  
+  IMAGEKIT_URL_ENDPOINT: ${{ secrets.IMAGEKIT_URL_ENDPOINT }}  
+  SECRET_JWT_CODE: ${{ secrets.SECRET_JWT_CODE }} 
+  REDIS_URL: ${{ secrets.REDIS_URL }}  
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -21,17 +30,7 @@ jobs:
     
       - name: Install dependencies
         run: npm ci
-        working-directory: ./${{ matrix.subDir }}
-
-      - name: create env file
-        run: |
-          touch .env
-          echo MONGODB_CLUSTER_URI=${{ secrets.MONGODB_CLUSTER_URI }} >> .env
-          echo IMAGEKIT_PUBLIC_KEY=${{ secrets.IMAGEKIT_PUBLIC_KEY }} >> .env
-          echo IMAGEKIT_PRIVATE_KEY=${{ secrets.IMAGEKIT_PRIVATE_KEY }} >> .env
-          echo IMAGEKIT_URL_ENDPOINT=${{ secrets.IMAGEKIT_URL_ENDPOINT }} >> .env
-          echo SECRET_JWT_CODE=${{ secrets.SECRET_JWT_CODE }} >> .env
-          echo REDIS_URL=${{ secrets.REDIS_URL }} >> .env
+        working-directory: ./${{ matrix.subDir }} 
 
       - name: Run tests
         run: npm test
