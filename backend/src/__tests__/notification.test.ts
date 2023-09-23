@@ -13,37 +13,36 @@ const user = {
   id: new mongoose.Types.ObjectId().toString(),
   email: "test@test.com",
 };
- 
- 
+
 beforeAll(async () => {
-    await RedisHandler.setup();
-    await mongoose.connect(process.env.MONGODB_CLUSTER_URI!, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    } as ConnectOptions);
-  });
-  
-  afterAll(async () => {
-    return await RedisHandler.teardown();
-  });
- 
+  await RedisHandler.setup();
+  await mongoose.connect(process.env.MONGODB_CLUSTER_URI!, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  } as ConnectOptions);
+});
+
+afterAll(async () => {
+  await RedisHandler.teardown();
+  await mongoose.connection.close();
+});
 
 describe("notification", () => {
-  describe("not authenticated", () => {  
+  describe("not authenticated", () => {
     describe("retrieve notifications", () => {
       it("should return 401", async () => {
         const { statusCode, body } = await supertest(app).get(
-          "/api/v1/notification"
+          "/api/v1/notification",
         );
         expect(statusCode).toBe(401);
         expect(body.success).toBe(false);
         expect(body).toHaveProperty("error");
-      }); 
-    });  
+      });
+    });
   });
 
   describe("authenticated", () => {
-    const jwt = JsonWebToken.sign(user, process.env.SECRET_JWT_CODE!); 
+    const jwt = JsonWebToken.sign(user, process.env.SECRET_JWT_CODE!);
 
     describe("retrieve notification", () => {
       it("should return 200", async () => {
@@ -56,6 +55,6 @@ describe("notification", () => {
         expect(body).toHaveProperty("data");
         expect(body.data).toBeInstanceOf(Array);
       });
-    }); 
+    });
   });
 });

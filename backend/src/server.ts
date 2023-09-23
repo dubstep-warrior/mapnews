@@ -6,7 +6,7 @@ import * as http from "http";
 import "reflect-metadata";
 import websockets from "./websockets/index";
 import RedisHandler from "./clients/redis.client";
-const port = process.env.PORT || 8000; 
+const port = process.env.PORT || 8000;
 mongoose
   .connect(process.env.MONGODB_CLUSTER_URI!, {
     useNewUrlParser: true,
@@ -24,3 +24,8 @@ server.listen(port, () => {
 });
 
 websockets(server);
+
+// If the Node process ends, close the Mongoose connection
+process.on("SIGINT", function () {
+  mongoose.connection.close();
+});

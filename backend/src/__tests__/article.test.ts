@@ -40,7 +40,8 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  return await RedisHandler.teardown();
+  await RedisHandler.teardown();
+  await mongoose.connection.close();
 });
 
 describe("article", () => {
@@ -59,7 +60,7 @@ describe("article", () => {
     describe("retrieve article", () => {
       it("should return 401", async () => {
         const { statusCode, body } = await supertest(app).get(
-          "/api/v1/article/self"
+          "/api/v1/article/self",
         );
         expect(statusCode).toBe(401);
         expect(body.success).toBe(false);
@@ -68,7 +69,7 @@ describe("article", () => {
 
       it("should return 200 for bypassed checks", async () => {
         const { statusCode, body } = await supertest(app).get(
-          "/api/v1/article/new"
+          "/api/v1/article/new",
         );
         expect(statusCode).toBe(200);
         expect(body).toHaveProperty("success");
@@ -81,7 +82,7 @@ describe("article", () => {
     describe("like article", () => {
       it("should return 401", async () => {
         const { statusCode, body } = await supertest(app).post(
-          "/api/v1/article/like"
+          "/api/v1/article/like",
         );
         expect(statusCode).toBe(401);
         expect(body.success).toBe(false);

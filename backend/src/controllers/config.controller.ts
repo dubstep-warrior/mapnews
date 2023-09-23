@@ -14,10 +14,7 @@ export default class Config {
   ): Promise<void> {
     try {
       const config: IForm[] = await ConfigService.getConfig();
-      if (!config) {
-        res.status(404).json("There are no article published yet!");
-      }
-      res.json({
+      res.status(200).json({
         success: true,
         data: config,
       });

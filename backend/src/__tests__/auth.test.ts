@@ -25,11 +25,15 @@ const registerInput = {
   confirmPassword: loginInput.password,
 };
 
-beforeAll(async () => { 
+beforeAll(async () => {
   await mongoose.connect(process.env.MONGODB_CLUSTER_URI!, {
-   useNewUrlParser: true,
-   useUnifiedTopology: true,
- } as ConnectOptions)
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  } as ConnectOptions);
+});
+
+afterAll(async () => {
+  await mongoose.connection.close();
 });
 
 describe("auth", () => {
@@ -45,19 +49,18 @@ describe("auth", () => {
   });
 
   describe("auth login success", () => {
-    it("should return 200", async () => { 
-
+    it("should return 200", async () => {
       const { statusCode, body } = await supertest(app)
         .post("/api/v1/auth/login")
         .send(loginInput);
-      expect(statusCode).toBe(200); 
-      expect(body).toHaveProperty('success')
+      expect(statusCode).toBe(200);
+      expect(body).toHaveProperty("success");
       expect(body.success).toBe(true);
-      expect(body).toHaveProperty('data')
-      expect(body.data).toHaveProperty('token')
-      expect(typeof body.data.token).toBe('string')
-      expect(body.data).toHaveProperty('user') 
-      expect(body.data.user).toBeInstanceOf(Object)
+      expect(body).toHaveProperty("data");
+      expect(body.data).toHaveProperty("token");
+      expect(typeof body.data.token).toBe("string");
+      expect(body.data).toHaveProperty("user");
+      expect(body.data.user).toBeInstanceOf(Object);
     });
   });
 

@@ -45,7 +45,7 @@ export default class Article {
         req.files as Express.Multer.File[],
       );
 
-      RedisHandler.get('publisher').publish(
+      RedisHandler.get("publisher").publish(
         createdArticle.category == "emergency" ? "emergency" : "general",
         JSON.stringify(createdArticle),
       );
