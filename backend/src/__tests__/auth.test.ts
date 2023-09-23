@@ -2,7 +2,7 @@ import supertest from "supertest";
 import ApplicationWrapper from "../application";
 import Bcrypt from "bcryptjs";
 import AuthService from "../services/AuthService";
-import mongoose from "mongoose";
+import mongoose, { ConnectOptions } from "mongoose";
 
 const app = ApplicationWrapper.instance;
 jest.setTimeout(30000);
@@ -17,13 +17,20 @@ const userPayload = {
 
 const loginInput = {
   email: "test@test.com",
-  password: "password",
+  password: "test",
 };
 
 const registerInput = {
   ...loginInput,
   confirmPassword: loginInput.password,
 };
+
+beforeAll(async () => { 
+  await mongoose.connect(process.env.MONGODB_CLUSTER_URI!, {
+   useNewUrlParser: true,
+   useUnifiedTopology: true,
+ } as ConnectOptions)
+});
 
 describe("auth", () => {
   describe("auth login failure", () => {
@@ -38,18 +45,19 @@ describe("auth", () => {
   });
 
   describe("auth login success", () => {
-    it("should return 200", async () => {
-      const userLoginMock = jest
-        .spyOn(AuthService, "userLogin")
-        // @ts-ignore
-        .mockReturnValueOnce(userPayload);
+    it("should return 200", async () => { 
 
       const { statusCode, body } = await supertest(app)
         .post("/api/v1/auth/login")
         .send(loginInput);
-      expect(statusCode).toBe(200);
-      expect(body).toEqual({ success: true, data: userPayload });
-      expect(userLoginMock).toHaveBeenCalledWith(loginInput);
+      expect(statusCode).toBe(200); 
+      expect(body).toHaveProperty('success')
+      expect(body.success).toBe(true);
+      expect(body).toHaveProperty('data')
+      expect(body.data).toHaveProperty('token')
+      expect(typeof body.data.token).toBe('string')
+      expect(body.data).toHaveProperty('user') 
+      expect(body.data.user).toBeInstanceOf(Object)
     });
   });
 

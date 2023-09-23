@@ -14,26 +14,21 @@ class NotificationService {
   @Cache()
   async getAll(req: Request): Promise<IFullProcessedNotification[]> {
     const { userId } = req.body;
-    try {
-      const notifications = (await Notification.find({
-        users: { $all: userId },
-      })
-        .sort({ date: 1 })
-        .populate("article")
-        .lean()) as IFullNotification[];
-      return notifications.map((notification) => {
-        return {
-          ...notification,
-          article: {
-            ...notification.article,
-            coordinates: notification.article.location.coordinates,
-          },
-        } as IFullProcessedNotification;
-      });
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
+    const notifications = (await Notification.find({
+      users: { $all: userId },
+    })
+      .sort({ date: 1 })
+      .populate("article")
+      .lean()) as IFullNotification[];
+    return notifications.map((notification) => {
+      return {
+        ...notification,
+        article: {
+          ...notification.article,
+          coordinates: notification.article.location.coordinates,
+        },
+      } as IFullProcessedNotification;
+    });
   }
 }
 export default new NotificationService();

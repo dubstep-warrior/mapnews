@@ -15,14 +15,13 @@ export default class Notification {
   ): Promise<void> {
     try {
       const notifications = await NotificationService.getAll(req);
-      if (!notifications) {
-        res.status(404).json("There are no article published yet!");
-      }
-      res.json({
+       
+      res.status(200).json({
         success: true,
         data: notifications,
       });
     } catch (error) {
+      console.log('catch notif error', error)
       res.status(500).json({ success: false, error: error });
     }
   }

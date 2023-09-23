@@ -40,7 +40,7 @@ export default class Auth {
   ): Promise<void> {
     try {
       const token = await authService.userLogin(req.body);
-      res.json({
+      res.status(200).json({
         success: true,
         data: token,
       });
