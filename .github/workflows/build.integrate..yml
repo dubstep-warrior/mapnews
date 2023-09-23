@@ -1,13 +1,10 @@
 name: Docker Build and Push
 
 on:
-  push:
-    branches:
-      - main 
-    paths:
-      - frontend/**
-      - backend/**
-      - notification/**
+  workflow_run:
+    workflows: ['Test']
+    types:
+      - completed
       
 jobs:
   build-and-push:
