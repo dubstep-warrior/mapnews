@@ -6,8 +6,7 @@ import * as http from "http";
 import "reflect-metadata";
 import websockets from "./websockets/index";
 import RedisHandler from "./clients/redis.client";
-const port = process.env.PORT || 8000;
-console.log(process.env.FOO)
+const port = process.env.PORT || 8000; 
 mongoose
   .connect(process.env.MONGODB_CLUSTER_URI!, {
     useNewUrlParser: true,

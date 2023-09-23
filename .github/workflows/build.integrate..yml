@@ -29,6 +29,4 @@ jobs:
         with:
           context: "{{defaultContext}}:${{ matrix.subDir }}"
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/mapnews:${{ matrix.subDir }}-service
-          build-args: |
-            TEST_SECRET: ${{ secrets.TEST_SECRET }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/mapnews:${{ matrix.subDir }}-service 
