@@ -1,9 +1,13 @@
 import WebSocket from "ws";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import RedisClient, { RedisSubscriber } from "../clients/redis.client";
+import RedisHandler from "../clients/redis.client";
 import * as http from "http";
 import { Duplex } from "stream";
 import { Action } from "../utils/interfaces/action.interface";
+
+
+const RedisClient = RedisHandler.get('client')
+const RedisSubscriber = RedisHandler.get('subscriber')
 
 export default async (expressServer: http.Server) => {
   const websocketServer = new WebSocket.Server({

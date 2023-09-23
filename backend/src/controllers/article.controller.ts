@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from "express";
 import Controller from "../utils/decorators/controller.decorator";
 import { Get, Post } from "../utils/decorators/handlers.decorator";
 import { Auth } from "../utils/decorators/authentication.decorator";
-import { RedisPublisher } from "../clients/redis.client";
+import RedisHandler from "../clients/redis.client";
 
 @Controller("/article")
 export default class Article {
@@ -45,7 +45,7 @@ export default class Article {
         req.files as Express.Multer.File[],
       );
 
-      RedisPublisher.publish(
+      RedisHandler.get('publisher').publish(
         createdArticle.category == "emergency" ? "emergency" : "general",
         JSON.stringify(createdArticle),
       );

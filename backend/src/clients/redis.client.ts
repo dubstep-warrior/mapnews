@@ -6,44 +6,48 @@ const RedisClient = createClient({
   url: process.env.REDIS_URL,
 });
 
-export const RedisPublisher = RedisClient.duplicate();
-export const RedisSubscriber = RedisClient.duplicate();
+const RedisPublisher = RedisClient.duplicate();
+const RedisSubscriber = RedisClient.duplicate();
+
+type HandlerKeys = 'client' | 'publisher' | 'subscriber' 
 
 class RedisHandlerClass {
-  clients: Record<string, typeof RedisClient>;
+  private clients: Record<HandlerKeys, typeof RedisClient>;
   constructor() {
     this.clients = {
-      RedisClient: RedisClient,
-      RedisPublisher: RedisPublisher,
-      RedisSubscriber: RedisSubscriber,
+      client: RedisClient,
+      publisher: RedisPublisher,
+      subscriber: RedisSubscriber,
     };
+  }
+  
+  get(type: HandlerKeys): typeof RedisClient {
+    return this.clients[type]
   }
 
   async setup() {
     await Promise.all(
       Object.keys(this.clients).map((name) =>
-        this.clients[name]
+        this.clients[name as HandlerKeys]
           .connect()
-          .then((res: any) => console.log(`Connection Succesful to ${name}`))
-          .catch((err: any) => console.log(`Error in DB connection ${err}`)),
-      ),
+          .then((res: any) => console.log(`Connection Succesful to Redis ${name}`))
+          .catch((err: any) => console.log(`Error in DB connection ${err}`))
+      )
     );
 
     await Promise.all(
       Object.keys(this.clients).map((name) =>
-        this.clients[name].on("error", function (error) {
+        this.clients[name as HandlerKeys].on("error", function (error) {
           console.error(error);
-        }),
-      ),
+        })
+      )
     );
   }
 
   async teardown() {
     await Promise.all(
-      Object.keys(this.clients).map((name) => this.clients[name].quit()),
+      Object.keys(this.clients).map((name) => this.clients[name as HandlerKeys].quit())
     );
   }
 }
-export const RedisHandler = new RedisHandlerClass();
-
-export default RedisClient;
+export default new RedisHandlerClass();

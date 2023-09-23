@@ -4,7 +4,7 @@ import AuthService from "../services/AuthService";
 import mongoose from "mongoose";
 import JsonWebToken from "jsonwebtoken";
 import ArticleService from "../services/ArticleService";
-import { RedisHandler } from "../clients/redis.client";
+import RedisHandler from "../clients/redis.client";
 
 const app = ApplicationWrapper.instance;
 jest.setTimeout(30000);
