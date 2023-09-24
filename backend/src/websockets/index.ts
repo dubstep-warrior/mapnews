@@ -52,17 +52,23 @@ export default async (expressServer: http.Server) => {
 
       // RedisSub
       RedisSubscriber.subscribe(currentUser.id, async (message) => {
-        const cache = await RedisClient.get(
-          `/api/v1/notification/${currentUser.id}`,
-        );
-        if (cache) {
-          RedisClient.set(
+        console.log(`Redis channel ${currentUser.id} received notification`, message) 
+        try {
+          const cache = await RedisClient.get(
             `/api/v1/notification/${currentUser.id}`,
-            JSON.stringify([...JSON.parse(cache), JSON.parse(message)]),
-            {
-              EX: 10,
-            },
           );
+          if (cache) {
+            RedisClient.set(
+              `/api/v1/notification/${currentUser.id}`,
+              JSON.stringify([...JSON.parse(cache), JSON.parse(message)]),
+              {
+                EX: 10,
+              },
+            );
+          }
+        }
+        catch (e) {
+          console.log('failed to recache notification')
         }
         websocketConnection.send(message);
       });
