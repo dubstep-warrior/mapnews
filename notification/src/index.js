@@ -64,7 +64,7 @@ RedisSubscriber.subscribe("emergency", async (message) => {
       },
       { radius: 5, unit: "km" },
     )
-  ).filter((userID) => userID !== article.posted_by);
+  ).filter((userID) => userID !== article.posted_by._id);
 
   // CHECK ACTIVITY METRICS IF IT MAKE SENSE
   // CURRENT ISSUE: SUSCEPTIBLE TO NOTIFICATION SPAM
@@ -72,7 +72,7 @@ RedisSubscriber.subscribe("emergency", async (message) => {
   if (!!users.length) {
     console.log(users);
     console.log(article.posted_by);
-    console.log(users.includes(article.posted_by), typeof article.posted_by);
+    console.log(users.includes(article.posted_by._id), typeof article.posted_by);
 
     notification["users"] = users.map((userID) => new ObjectId(userID));
     console.log("filtered", notification["users"]);
@@ -142,7 +142,7 @@ RedisSubscriber.subscribe("general", async (message) => {
       // CURRENTLY USERS ARE NEARBY (ONLINE) AND INTERESTED, CHANGE SOON
       const users = [...nearByusers]
         .filter((x) => interestedUsers.has(x))
-        .filter((userID) => userID !== article.posted_by);
+        .filter((userID) => userID !== article.posted_by._id);
       console.log("all users", interestedUsers, nearByusers, users);
 
       if (!!users.length) {
