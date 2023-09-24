@@ -30,6 +30,7 @@ export default async (expressServer: http.Server) => {
 
         if (decoded) {
           websocketServer.handleUpgrade(request, socket, head, (websocket) => {
+            console.log(`upgraded for ${JSON.stringify(decoded)}`)
             websocketServer.emit("connection", websocket, request, decoded);
           });
         }

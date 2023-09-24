@@ -23,6 +23,7 @@ class NotificationService {
         populate: 'posted_by'
       }) 
       .lean()) as IFullNotification[]; 
+      console.log(notifications)
     return notifications.map((notification) => {
       return {
         ...notification,
