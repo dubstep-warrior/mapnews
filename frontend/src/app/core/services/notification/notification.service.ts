@@ -32,8 +32,10 @@ export class NotificationService {
       .subscribe(() => {
         this.pullNotifications();
       });
-    this.wsService.notificationSubject.subscribe((notification) =>
-      this.addNotification(notification),
+    this.wsService.notificationSubject.subscribe((notification) => {
+      console.log('YES WE DID RETRIEVE NOTIFICATIONS')
+      this.addNotification(notification)
+    }
     );
   }
 
