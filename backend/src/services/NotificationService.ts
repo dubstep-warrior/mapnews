@@ -18,8 +18,11 @@ class NotificationService {
       users: { $all: userId },
     })
       .sort({ date: 1 })
-      .populate("article")
-      .lean()) as IFullNotification[];
+      .populate({
+        path: "article",
+        populate: 'posted_by'
+      }) 
+      .lean()) as IFullNotification[]; 
     return notifications.map((notification) => {
       return {
         ...notification,
