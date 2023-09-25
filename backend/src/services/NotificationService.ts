@@ -20,21 +20,21 @@ class NotificationService {
       .sort({ date: 1 })
       .populate({
         path: "article",
-        populate: 'posted_by'
-      }) 
-      .lean()) as IFullNotification[]; 
-      console.log(notifications)
+        populate: "posted_by",
+      })
+      .lean()) as IFullNotification[];
+    console.log(notifications);
     return notifications
-    .filter(notification => !!notification.article)
-    .map((notification) => {
-      return {
-        ...notification,
-        article: {
-          ...notification.article,
-          coordinates: notification.article.location.coordinates,
-        },
-      } as IFullProcessedNotification;
-    });
+      .filter((notification) => !!notification.article)
+      .map((notification) => {
+        return {
+          ...notification,
+          article: {
+            ...notification.article,
+            coordinates: notification.article.location.coordinates,
+          },
+        } as IFullProcessedNotification;
+      });
   }
 }
 export default new NotificationService();

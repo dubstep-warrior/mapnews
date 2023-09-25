@@ -33,10 +33,9 @@ export class NotificationService {
         this.pullNotifications();
       });
     this.wsService.notificationSubject.subscribe((notification) => {
-      console.log('YES WE DID RETRIEVE NOTIFICATIONS')
-      this.addNotification(notification)
-    }
-    );
+      console.log('YES WE DID RETRIEVE NOTIFICATIONS');
+      this.addNotification(notification);
+    });
   }
 
   public get unviewedCount(): number {
