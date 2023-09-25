@@ -24,7 +24,9 @@ class NotificationService {
       }) 
       .lean()) as IFullNotification[]; 
       console.log(notifications)
-    return notifications.map((notification) => {
+    return notifications
+    .filter(notification => !!notification.article)
+    .map((notification) => {
       return {
         ...notification,
         article: {
