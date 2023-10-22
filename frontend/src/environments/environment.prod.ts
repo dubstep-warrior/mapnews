@@ -1,4 +1,4 @@
-const base_api = 'localhost';
+const base_api = 'https://backend.dubstep-warrior.com/app/mapnews';
 
 export const environment = {
   production: true,

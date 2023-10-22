@@ -19,6 +19,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-secrets-manager": "^3.433.0",
     "@types/query-string": "^6.3.0",
     "@types/ws": "^8.5.5",
     "bcryptjs": "^2.4.3",

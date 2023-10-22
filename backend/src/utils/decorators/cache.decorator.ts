@@ -14,6 +14,7 @@ export const Cache = () => {
 
       try {
         if (!req.body["userId"]) throw "No user";
+        console.log('before get', req.baseUrl, req.path, req.body)
         const cache = await RedisClient.get(
           `${req.baseUrl}${req.path}/${req.body["userId"]}`,
         );

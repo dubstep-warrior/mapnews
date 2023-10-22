@@ -18,7 +18,7 @@
         <img
           class="icon"
           [src]="
-            '../../../assets/images/star-' +
+            './assets/images/star-' +
             (article.likes?.includes(authStatus?.id) ? '' : 'un') +
             'liked.png'
           "
@@ -29,7 +29,7 @@
   </div>
   <div class="body" body>
     <div class="time">
-      <img src="./../../../assets/images/time.png" alt="" />
+      <img src="./assets/images/time.png" alt="" />
       <div *ngIf="!!article.time">
         {{ article.time | customTime | uppercase }}
       </div>

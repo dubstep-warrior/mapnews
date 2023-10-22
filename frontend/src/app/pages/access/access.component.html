@@ -7,12 +7,12 @@
       <router-outlet #outlet="outlet"></router-outlet>
     </div>
     <div class="button" [routerLink]="'/'">
-      <img class="icon" src="./../../../assets/images/close-white.png" alt="" />
+      <img class="icon" src="./assets/images/close-white.png" alt="" />
     </div>
   </div>
   <ng-template #successComponent>
     <div class="success">
-      <img src="./../../../assets/images/submit-success.png" alt="" />
+      <img src="./assets/images/submit-success.png" alt="" />
       <div>{{ (currentRoute ?? "Login") + " successful" | uppercase }}</div>
       <div [@rotate] (@rotate.done)="resetState()"></div>
     </div>

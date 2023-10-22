@@ -20,7 +20,7 @@
         </div>
       </ng-template>
       <div class="mobile button" (click)="resolveMobileMenu()">
-        <img class="icon" src="./../../../assets/images/menu.png" alt="" />
+        <img class="icon" src="./assets/images/menu.png" alt="" />
       </div>
     </div>
     <div class="not-mobile">
@@ -38,7 +38,7 @@
     </div>
     <div>
       <div class="button" (click)="searchArticle()">
-        <img class="icon" src="./../../../assets/images/search.png" alt="" />
+        <img class="icon" src="./assets/images/search.png" alt="" />
       </div>
       <div
         class="button notification"
@@ -47,7 +47,7 @@
       >
         <img
           class="icon"
-          src="./../../../assets/images/notification.png"
+          src="./assets/images/notification.png"
           alt=""
         />
         <div class="number" *ngIf="!!notificationService.unviewedCount">
@@ -55,7 +55,7 @@
         </div>
       </div>
       <div class="button not-mobile" *ngIf="authenticated" (click)="logout()">
-        <img class="icon" src="./../../../assets/images/logout.png" alt="" />
+        <img class="icon" src="./assets/images/logout.png" alt="" />
       </div>
     </div>
   </div>
@@ -72,7 +72,7 @@
         <div>
           <img
             class="icon"
-            [src]="'./../../../assets/images/' + item.api + '.png'"
+            [src]="'./assets/images/' + item.api + '.png'"
             alt=""
           />
         </div>
