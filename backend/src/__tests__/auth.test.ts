@@ -1,6 +1,5 @@
 import supertest from "supertest";
 import ApplicationWrapper from "../application";
-import Bcrypt from "bcryptjs";
 import AuthService from "../services/AuthService";
 import mongoose, { ConnectOptions } from "mongoose";
 

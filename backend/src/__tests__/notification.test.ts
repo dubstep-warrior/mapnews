@@ -1,9 +1,7 @@
 import supertest from "supertest";
 import ApplicationWrapper from "../application";
-import AuthService from "../services/AuthService";
 import mongoose, { ConnectOptions } from "mongoose";
 import JsonWebToken from "jsonwebtoken";
-import ArticleService from "../services/ArticleService";
 import RedisHandler from "../clients/redis.client";
 
 const app = ApplicationWrapper.instance;

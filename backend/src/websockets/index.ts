@@ -30,6 +30,7 @@ export default async (expressServer: http.Server) => {
 
         if (decoded) {
           websocketServer.handleUpgrade(request, socket, head, (websocket) => {
+            console.log(`upgraded for ${JSON.stringify(decoded)}`);
             websocketServer.emit("connection", websocket, request, decoded);
           });
         }
@@ -52,7 +53,10 @@ export default async (expressServer: http.Server) => {
 
       // RedisSub
       RedisSubscriber.subscribe(currentUser.id, async (message) => {
-        console.log(`Redis channel ${currentUser.id} received notification`, message) 
+        console.log(
+          `Redis channel ${currentUser.id} received notification`,
+          message,
+        );
         try {
           const cache = await RedisClient.get(
             `/api/v1/notification/${currentUser.id}`,
@@ -66,9 +70,8 @@ export default async (expressServer: http.Server) => {
               },
             );
           }
-        }
-        catch (e) {
-          console.log('failed to recache notification')
+        } catch (e) {
+          console.log("failed to recache notification");
         }
         websocketConnection.send(message);
       });

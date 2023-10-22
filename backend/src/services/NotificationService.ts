@@ -18,17 +18,23 @@ class NotificationService {
       users: { $all: userId },
     })
       .sort({ date: 1 })
-      .populate("article")
+      .populate({
+        path: "article",
+        populate: "posted_by",
+      })
       .lean()) as IFullNotification[];
-    return notifications.map((notification) => {
-      return {
-        ...notification,
-        article: {
-          ...notification.article,
-          coordinates: notification.article.location.coordinates,
-        },
-      } as IFullProcessedNotification;
-    });
+    console.log(notifications);
+    return notifications
+      .filter((notification) => !!notification.article)
+      .map((notification) => {
+        return {
+          ...notification,
+          article: {
+            ...notification.article,
+            coordinates: notification.article.location.coordinates,
+          },
+        } as IFullProcessedNotification;
+      });
   }
 }
 export default new NotificationService();
