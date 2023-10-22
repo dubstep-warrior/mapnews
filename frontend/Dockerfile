@@ -9,7 +9,7 @@ FROM node:17.0.1-alpine AS prod
 WORKDIR /app
 COPY --from=build ./app/dist ./dist
 COPY package*.json server.js ./ 
-RUN npm install --production 
+RUN npm install express --production 
 USER node
 EXPOSE 3000 
 CMD ["node", "server.js"]
