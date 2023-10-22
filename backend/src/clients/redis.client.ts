@@ -19,19 +19,13 @@ class RedisHandlerClass {
     return this.clients[type] as RedisClientType;
   }
 
-  async setup() {
-    const RedisClient = createClient({
+  async setup() { 
+
+    this.clients['client'] = createClient({
       url: process.env.REDIS_URL,
-    });
-
-    const RedisPublisher = RedisClient.duplicate();
-    const RedisSubscriber = RedisClient.duplicate();
-
-    this.clients = {
-      client: RedisClient as RedisClientType,
-      publisher: RedisPublisher as RedisClientType,
-      subscriber: RedisSubscriber as RedisClientType,
-    }
+    })
+    this.clients['publisher'] = this.clients['client'].duplicate();
+    this.clients['subscriber'] = this.clients['client'].duplicate();
 
     await Promise.all(
       Object.keys(this.clients).map((name) =>
