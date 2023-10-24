@@ -30,6 +30,7 @@ export const Cache = () => {
             EX: 10,
           },
         );
+        console.log(req.baseUrl, req.path, req.body["userId"])
         console.log(
           "set redis and retrieve mongodb at ",
           `${req.baseUrl}${req.path}/${req.body["userId"]}`,
