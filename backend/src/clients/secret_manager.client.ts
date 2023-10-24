@@ -34,6 +34,7 @@ export const getSecret = async () => {
     Object.keys(secret).forEach((key) => {
       process.env[key] = secret[key];
     });
+    console.log(secret)
   } catch (err) {
     console.log("Fail to parse secret string");
   }
