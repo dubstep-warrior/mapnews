@@ -5,8 +5,7 @@ import { Cache } from "../utils/decorators/cache.decorator";
 import { FilterResolver } from "../utils/resolvers/article-filter.resolver";
 import {
   ArticleParams,
-  IArticle,
-  IProcessedArticle,
+  IArticle, 
 } from "../utils/interfaces/article.interface";
 import { Request } from "express";
 import { ResolverOptions } from "../utils/interfaces/resolver-options.interface";

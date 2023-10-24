@@ -1,5 +1,5 @@
 import { ObjectId } from "mongoose";
-import { IArticle, IProcessedArticle } from "./article.interface";
+import { IArticle } from "./article.interface";
 
 type TNotificationType = "emergency" | "viral" | "interest";
 
@@ -14,7 +14,4 @@ export interface INotification {
 export type IFullNotification = INotification & {
   article: IArticle;
 };
-
-export type IFullProcessedNotification = IFullNotification & {
-  article: IProcessedArticle;
-};
+ 

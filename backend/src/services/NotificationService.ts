@@ -3,16 +3,15 @@ import Notification from "../models/Notification";
 import { Cache } from "../utils/decorators/cache.decorator";
 import { Request } from "express";
 import {
-  IFullNotification,
-  IFullProcessedNotification,
+  IFullNotification, 
 } from "../utils/interfaces/notification.interface";
 dotenv.config();
 
 class NotificationService {
-  constructor() {}
+  constructor() { }
 
   @Cache()
-  async getAll(req: Request): Promise<IFullProcessedNotification[]> {
+  async getAll(req: Request): Promise<IFullNotification[]> {
     const { userId } = req.body;
     const notifications = (await Notification.find({
       users: { $all: userId },
@@ -26,15 +25,7 @@ class NotificationService {
     console.log(notifications);
     return notifications
       .filter((notification) => !!notification.article)
-      .map((notification) => {
-        return {
-          ...notification,
-          article: {
-            ...notification.article,
-            coordinates: notification.article.location.coordinates,
-          },
-        } as IFullProcessedNotification;
-      });
+
   }
 }
 export default new NotificationService();
