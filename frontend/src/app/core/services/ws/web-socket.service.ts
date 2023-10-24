@@ -22,6 +22,7 @@ export class WebSocketService {
         }?authentication=${localStorage.getItem('token')}`,
       );
       this.connection$.subscribe((data) => {
+        console.log('notification received on frontend', data)
         this.notificationSubject.next(data);
       });
       return this.connection$;
