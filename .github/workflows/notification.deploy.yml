@@ -1,4 +1,4 @@
-name: CD Build and Deploy Frontend
+name: CD Build and Deploy Notification
 
 on:
   workflow_run:
@@ -64,5 +64,7 @@ jobs:
             aws ecr get-login-password --region $AWS_REGION | sudo docker login --username AWS --password-stdin $ACC_ID.dkr.ecr.$AWS_REGION.amazonaws.com    
             sudo service docker start || true   
             sudo docker pull $ECR_REGISTRY/$ECR_REPOSITORY-notification:$IMAGE_TAG
-            sudo docker run -d --name $ECR_REPOSITORY-notification \
-            --net $ECR_REPOSITORY $ECR_REGISTRY/$ECR_REPOSITORY-notification:$IMAGE_TAG
+            sudo docker run -d \
+            -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+            --name $ECR_REPOSITORY-notification --net $ECR_REPOSITORY \
+             $ECR_REGISTRY/$ECR_REPOSITORY-notification:$IMAGE_TAG
