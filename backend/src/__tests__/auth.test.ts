@@ -86,7 +86,7 @@ describe("auth", () => {
         .send(registerInput);
       expect(statusCode).toBe(200);
       expect(body).toEqual({ success: true, data: userPayload });
-      expect(userRegistrationMock).toHaveBeenCalledWith(registerInput);
+      expect(userRegistrationMock).toHaveBeenCalledWith(registerInput, undefined);
     });
   });
 });

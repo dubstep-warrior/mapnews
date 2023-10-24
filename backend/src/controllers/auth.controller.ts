@@ -13,10 +13,7 @@ export default class Auth {
     next: NextFunction,
   ): Promise<void> {
     try {
-      const createdUser = await authService.createUser({
-        ...req.body,
-        profile_img: req.file,
-      });
+      const createdUser = await authService.createUser(req.body, req.file as Express.Multer.File);
       res.json({
         success: true,
         data: createdUser,
@@ -24,7 +21,7 @@ export default class Auth {
     } catch (error: any) {
       const key: any = error.message.split(" ")[0];
       const mongoErrors = MongoServerErrors.registration;
-      console.log(error.name);
+      console.log(error);
       res.status(400).send({
         success: false,
         error: mongoErrors?.[key as keyof typeof mongoErrors] ?? error.message,

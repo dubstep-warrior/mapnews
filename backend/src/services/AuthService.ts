@@ -13,7 +13,7 @@ import { IUser } from "../utils/interfaces/user.interface";
 import { ImageKitHandler } from "../clients/imagekit.client";
 
 class AuthService {
-  async createUser(params: RegisterParams): Promise<IAuth> {
+  async createUser(params: RegisterParams, file:Express.Multer.File): Promise<IAuth> {
     const newUser: Partial<RegisterParams> = params;
 
     if (
@@ -46,11 +46,11 @@ class AuthService {
       process.env.SECRET_JWT_CODE!,
     );
 
-    if (params.profile_img)
+    if (file)
     ImageKitHandler.client!.upload(
         {
-          file: params.profile_img.buffer.toString("base64"),
-          fileName: params.profile_img.originalname,
+          file: file.buffer.toString("base64"),
+          fileName: file.originalname,
           folder: "Users",
         },
         (err, res) => {
