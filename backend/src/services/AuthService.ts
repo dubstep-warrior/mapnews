@@ -10,7 +10,7 @@ import {
   RegisterParams,
 } from "../utils/interfaces/auth.interface";
 import { IUser } from "../utils/interfaces/user.interface";
-import { ImageKitClient } from "../clients/imagekit.client";
+import { ImageKitHandler } from "../clients/imagekit.client";
 
 class AuthService {
   async createUser(params: RegisterParams): Promise<IAuth> {
@@ -47,7 +47,7 @@ class AuthService {
     );
 
     if (params.profile_img)
-      ImageKitClient.upload(
+    ImageKitHandler.client!.upload(
         {
           file: params.profile_img.buffer.toString("base64"),
           fileName: params.profile_img.originalname,

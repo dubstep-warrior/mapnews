@@ -16,5 +16,4 @@ class ImageKitHandlerClass {
   }
 }
 export const ImageKitHandler = new ImageKitHandlerClass();
-
-export const ImageKitClient = ImageKitHandler.client as ImageKit;
+ 

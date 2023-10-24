@@ -10,7 +10,7 @@ import {
 } from "../utils/interfaces/article.interface";
 import { Request } from "express";
 import { ResolverOptions } from "../utils/interfaces/resolver-options.interface";
-import { ImageKitClient } from "../clients/imagekit.client";
+import { ImageKitHandler } from "../clients/imagekit.client";
 dotenv.config();
 
 class ArticleService {
@@ -23,7 +23,7 @@ class ArticleService {
     try {
       const data: Partial<ArticleParams> = {};
       const imageUploads = files.map((img: any) =>
-        ImageKitClient.upload({
+      ImageKitHandler.client!.upload({
           file: img.buffer.toString("base64"),
           fileName: img.originalname,
           folder: "Articles",
