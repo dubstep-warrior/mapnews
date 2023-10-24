@@ -5,14 +5,14 @@ import * as http from "http";
 import { Duplex } from "stream";
 import { Action } from "../utils/interfaces/action.interface";
 
-const RedisClient = RedisHandler.get("client");
-const RedisSubscriber = RedisHandler.get("subscriber");
-
 export default async (expressServer: http.Server) => {
   const websocketServer = new WebSocket.Server({
     noServer: true,
     path: "/ws",
   });
+
+  const RedisClient = RedisHandler.get("client");
+  const RedisSubscriber = RedisHandler.get("subscriber");
 
   expressServer.on(
     "upgrade",
@@ -25,7 +25,7 @@ export default async (expressServer: http.Server) => {
       try {
         const decoded: string | JwtPayload = jwt.verify(
           urlParams.get("authentication")!,
-          process.env.SECRET_JWT_CODE!,
+          process.env.SECRET_JWT_CODE!
         );
 
         if (decoded) {
@@ -37,7 +37,7 @@ export default async (expressServer: http.Server) => {
       } catch (err) {
         console.log("JWT verification failed: ", err);
       }
-    },
+    }
   );
 
   websocketServer.on(
@@ -45,7 +45,7 @@ export default async (expressServer: http.Server) => {
     function connection(
       websocketConnection: any,
       connectionRequest: any,
-      user: any,
+      user: any
     ) {
       const [_path, params] = connectionRequest?.url?.split("?") as any;
 
@@ -55,11 +55,11 @@ export default async (expressServer: http.Server) => {
       RedisSubscriber.subscribe(currentUser.id, async (message) => {
         console.log(
           `Redis channel ${currentUser.id} received notification`,
-          message,
+          message
         );
         try {
           const cache = await RedisClient.get(
-            `/api/v1/notification/${currentUser.id}`,
+            `/api/v1/notification/${currentUser.id}`
           );
           if (cache) {
             RedisClient.set(
@@ -67,7 +67,7 @@ export default async (expressServer: http.Server) => {
               JSON.stringify([...JSON.parse(cache), JSON.parse(message)]),
               {
                 EX: 10,
-              },
+              }
             );
           }
         } catch (e) {
@@ -110,7 +110,7 @@ export default async (expressServer: http.Server) => {
           RedisClient.LPUSH("actions", JSON.stringify(action));
         }
       });
-    },
+    }
   );
 
   websocketServer.on("disconnect", () => {

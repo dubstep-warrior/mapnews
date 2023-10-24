@@ -11,18 +11,20 @@ class RedisHandlerClass {
     subscriber: null,
   };
   constructor() {
-    this.clients["client"] = createClient({
-      url: process.env.REDIS_URL,
-    });
-    this.clients["publisher"] = this.clients["client"].duplicate();
-    this.clients["subscriber"] = this.clients["client"].duplicate();
+     
   }
 
-  get(type: HandlerKeys) {
+  get(type: HandlerKeys) { 
     return this.clients[type] as RedisClientType;
   }
 
   async setup() {
+    this.clients["client"] = createClient({
+      url: process.env.REDIS_URL,
+    });
+    this.clients["publisher"] = this.clients["client"].duplicate();
+    this.clients["subscriber"] = this.clients["client"].duplicate(); 
+
     await Promise.all(
       Object.keys(this.clients).map((name) =>
         this.clients[name as HandlerKeys]!.connect()

@@ -22,6 +22,7 @@ getSecret().then(() => {
 
   RedisHandler.setup();
   ImageKitHandler.setup();
+  websockets(server);
 });
 
 const server = http.createServer(application.instance);
@@ -30,7 +31,6 @@ server.listen(port, () => {
   console.log(`Application is listening at port ${port}`);
 });
 
-websockets(server);
 
 // If the Node process ends, close the Mongoose connection
 process.on("SIGINT", function () {

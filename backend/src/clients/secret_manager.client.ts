@@ -33,8 +33,7 @@ export const getSecret = async () => {
     const secret = JSON.parse(response.SecretString!);
     Object.keys(secret).forEach((key) => {
       process.env[key] = secret[key];
-    });
-    console.log(secret)
+    }); 
   } catch (err) {
     console.log("Fail to parse secret string");
   }
