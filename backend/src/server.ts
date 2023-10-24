@@ -9,7 +9,7 @@ import "reflect-metadata";
 import websockets from "./websockets/index";
 import RedisHandler from "./clients/redis.client";
 import { ImageKitHandler } from "./clients/imagekit.client";
-const port = process.env.PORT || 8001;
+const port = process.env.PORT || 8000;
 
 getSecret().then(() => {
   mongoose
