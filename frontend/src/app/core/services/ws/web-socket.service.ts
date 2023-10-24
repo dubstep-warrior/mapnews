@@ -27,10 +27,10 @@ export class WebSocketService {
           }
         },
       closeObserver: {
-          next: () => {
-            console.log('[WebSocket] connection closed, reconnecting...');
+          next: () => { 
             this.closeConnection();
             if(!!localStorage.getItem('token')) {
+              console.log('[WebSocket] connection closed, reconnecting...');
               this.connect();
             } 
           }
