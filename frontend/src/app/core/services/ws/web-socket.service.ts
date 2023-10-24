@@ -17,17 +17,32 @@ export class WebSocketService {
       return this.connection$;
     } else {
       this.connection$ = webSocket(
-        `${
+       {
+        url:  `${
           environment.ws_endpoint_mapnews_backend_api
         }?authentication=${localStorage.getItem('token')}`,
+        openObserver: {
+          next: () => {
+            console.log('[WebSocket] connection established');
+          }
+        },
+      closeObserver: {
+          next: () => {
+            console.log('[WebSocket] connection closed, reconnecting...');
+            this.closeConnection();
+            this.connect();
+          }
+      },
+       }
       );
       this.connection$.subscribe((data) => {
         console.log('notification received on frontend', data)
         this.notificationSubject.next(data);
-      });
+      }); 
       return this.connection$;
     }
   };
+  
 
   send: (args: Record<string, any>) => void = (data) => {
     if (this.connection$) {
