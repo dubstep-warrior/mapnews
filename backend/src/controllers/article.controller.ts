@@ -55,6 +55,7 @@ export default class Article {
         data: createdArticle,
       });
     } catch (error) {
+      console.log('create article error caught', error)
       res.status(500).json({ success: false, error: error });
     }
   }
