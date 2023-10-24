@@ -14,18 +14,17 @@ export const Cache = () => {
 
       try {
         if (!req.body["userId"]) throw "No user";
-        console.log('before get', req.baseUrl, req.path, req.body)
+        console.log("before get", req.baseUrl, req.path, req.body);
         const cache = await RedisClient.get(
           `${req.baseUrl}${req.path}/${req.body["userId"]}`,
         );
-        console.log('there is cache', cache)
+        console.log("there is cache", cache);
         if (cache) {
-           
           return JSON.parse(cache);
         }
 
         const models = await originalMethod.apply(this, args);
-        console.log('before set')
+        console.log("before set");
         RedisClient.set(
           `${req.baseUrl}${req.path}/${req.body["userId"]}`,
           JSON.stringify(models),

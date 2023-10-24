@@ -45,11 +45,7 @@
         (click)="openNotifications()"
         *ngIf="authenticated"
       >
-        <img
-          class="icon"
-          src="./assets/images/notification.png"
-          alt=""
-        />
+        <img class="icon" src="./assets/images/notification.png" alt="" />
         <div class="number" *ngIf="!!notificationService.unviewedCount">
           {{ notificationService.unviewedCount }}
         </div>

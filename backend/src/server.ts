@@ -9,7 +9,7 @@ import "reflect-metadata";
 import websockets from "./websockets/index";
 import RedisHandler from "./clients/redis.client";
 import { ImageKitHandler } from "./clients/imagekit.client";
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 8001;
 
 getSecret().then(() => {
   mongoose
@@ -22,18 +22,17 @@ getSecret().then(() => {
 
   RedisHandler.setup();
   ImageKitHandler.setup();
-  const server = http.createServer(application.instance);
+});
 
-  server.listen(port, () => {
-    console.log(`Application is listening at port ${port}`);
-  });
+const server = http.createServer(application.instance);
 
-  websockets(server);
+server.listen(port, () => {
+  console.log(`Application is listening at port ${port}`);
+});
 
-  // If the Node process ends, close the Mongoose connection
-  process.on("SIGINT", function () {
-    mongoose.connection.close();
-  });
-})
+websockets(server);
 
-
+// If the Node process ends, close the Mongoose connection
+process.on("SIGINT", function () {
+  mongoose.connection.close();
+});

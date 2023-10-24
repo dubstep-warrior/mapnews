@@ -2,8 +2,6 @@ import { RedisClientType, createClient } from "redis";
 import * as dotenv from "dotenv";
 dotenv.config();
 
-
-
 type HandlerKeys = "client" | "publisher" | "subscriber";
 
 class RedisHandlerClass {
@@ -13,24 +11,21 @@ class RedisHandlerClass {
     subscriber: null,
   };
   constructor() {
+    this.clients["client"] = createClient({
+      url: process.env.REDIS_URL,
+    });
+    this.clients["publisher"] = this.clients["client"].duplicate();
+    this.clients["subscriber"] = this.clients["client"].duplicate();
   }
 
   get(type: HandlerKeys) {
     return this.clients[type] as RedisClientType;
   }
 
-  async setup() { 
-
-    this.clients['client'] = createClient({
-      url: process.env.REDIS_URL,
-    })
-    this.clients['publisher'] = this.clients['client'].duplicate();
-    this.clients['subscriber'] = this.clients['client'].duplicate();
-
+  async setup() {
     await Promise.all(
       Object.keys(this.clients).map((name) =>
-        this.clients[name as HandlerKeys]!
-          .connect()
+        this.clients[name as HandlerKeys]!.connect()
           .then((res: any) =>
             console.log(`Connection Succesful to Redis ${name}`),
           )

@@ -122,19 +122,18 @@ describe("article", () => {
       });
     });
 
-    // TODO FIX FOR THIS TEST ASAP
-    // describe("retrieve article", () => {
-    //   it("should return 200", async () => {
-    //     const { statusCode, body } = await supertest(app)
-    //       .get("/api/v1/article/self")
-    //       .set("Authorization", `Bearer ${jwt}`);
-    //     expect(statusCode).toBe(200);
-    //     expect(body).toHaveProperty("success");
-    //     expect(body.success).toBe(true);
-    //     expect(body).toHaveProperty("data");
-    //     expect(body.data).toBeInstanceOf(Array);
-    //   });
-    // });
+    describe("retrieve article", () => {
+      it("should return 200", async () => {
+        const { statusCode, body } = await supertest(app)
+          .get("/api/v1/article/self")
+          .set("Authorization", `Bearer ${jwt}`);
+        expect(statusCode).toBe(200);
+        expect(body).toHaveProperty("success");
+        expect(body.success).toBe(true);
+        expect(body).toHaveProperty("data");
+        expect(body.data).toBeInstanceOf(Array);
+      });
+    });
 
     describe("like article", () => {
       it("should return 200", async () => {
