@@ -1,8 +1,8 @@
 <mgl-marker
   *ngIf="fromMap && currentState?.name == 'selectedArticle'"
   [lngLat]="[
-    currentState.data['coordinates'][0],
-    currentState.data['coordinates'][1]
+    currentState.data.location['coordinates'][0],
+    currentState.data.location['coordinates'][1]
   ]"
 >
   <div class="article-box" (click)="$event.stopPropagation()">

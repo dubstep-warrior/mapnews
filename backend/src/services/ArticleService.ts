@@ -19,7 +19,7 @@ class ArticleService {
   async createArticle(
     params: ArticleParams,
     files: Express.Multer.File[] = [],
-  ): Promise<IProcessedArticle> {
+  ): Promise<IArticle> {
     try {
       const data: Partial<ArticleParams> = {};
       const imageUploads = files.map((img: any) =>
@@ -47,16 +47,13 @@ class ArticleService {
       const response = await new Article(newArticle)
         .save()
         .then((res) => res.populate("posted_by"));
-      return {
-        ...response.toObject(),
-        coordinates: (response.location as any).coordinates,
-      };
+      return response.toObject();
     } catch (error: any) {
       throw error;
     }
   }
 
-  async resolveArticleLikes(req: Request): Promise<IProcessedArticle> {
+  async resolveArticleLikes(req: Request): Promise<IArticle> {
     const { articleId, userId } = req.body;
     try {
       const article = await Article.findOneAndUpdate(
@@ -69,10 +66,7 @@ class ArticleService {
 
       if (!article) throw "Cant find article";
 
-      return {
-        ...article?.toObject(),
-        coordinates: (article?.location as any).coordinates,
-      };
+      return article?.toObject();
     } catch (error) {
       console.log(error);
       throw `Article not found. ${error}`;
@@ -80,7 +74,7 @@ class ArticleService {
   }
 
   @Cache()
-  async resolveArticles(req: Request): Promise<IProcessedArticle[]> {
+  async resolveArticles(req: Request): Promise<IArticle[]> {
     try {
       const options: ResolverOptions = {
         ...JSON.parse((req.query.data as string) ?? "null"),
@@ -90,28 +84,22 @@ class ArticleService {
 
       const allArticles = await Article.find(FilterResolver(req.path, options))
         .populate("posted_by")
-        .lean();
+        .lean(); 
 
-      const articles = allArticles.map((article) => {
-        return { ...article, coordinates: article.location.coordinates };
-      });
-
-      return articles;
+      return allArticles;
     } catch (error) {
       console.log(error);
       throw error;
     }
   }
 
-  async resolveArticleSearch(req: Request): Promise<IProcessedArticle[]> {
+  async resolveArticleSearch(req: Request): Promise<IArticle[]> {
     try {
       const options: ResolverOptions = JSON.parse(req.query.data as string);
       const allArticles = await Article.find(FilterResolver(req.path, options))
         .populate("posted_by")
         .lean();
-      return allArticles.map((article: any) => {
-        return { ...article, coordinates: article.location.coordinates };
-      });
+      return allArticles;
     } catch (error) {
       console.log(error);
       throw error;

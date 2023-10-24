@@ -10,7 +10,9 @@ export type ArticleCategory =
 
 export interface Article {
   category: ArticleCategory;
-  coordinates: Array<number>;
+  location: {
+    coordinates: Array<number>;
+  }
   _id: string;
   title: string;
   description: string;

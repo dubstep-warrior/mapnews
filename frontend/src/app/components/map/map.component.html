@@ -31,16 +31,20 @@
         formService?.formRef?.get('location')?.value?.coordinates?.length
       "
       [mark]="{
-        coordinates: formService.formRef.get('location')?.value?.coordinates
+        location: {
+          coordinates: formService.formRef.get('location')?.value?.coordinates
+        }
       }"
     ></app-mark>
     <app-mark
       [type]="'self'"
       [mark]="{
-        coordinates: [
-          currentCoordinates['longitude'],
-          currentCoordinates['latitude']
-        ]
+        location: {
+          coordinates: [
+            currentCoordinates['longitude'],
+            currentCoordinates['latitude']
+          ]
+        }
       }"
     ></app-mark>
   </mgl-map>

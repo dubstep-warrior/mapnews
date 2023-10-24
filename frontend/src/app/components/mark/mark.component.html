@@ -1,4 +1,4 @@
-<mgl-marker [lngLat]="[mark['coordinates'][0], mark['coordinates'][1]]">
+<mgl-marker [lngLat]="[mark.location['coordinates'][0], mark.location['coordinates'][1]]">
   <div
     *ngIf="mark?._id; else displayOnly"
     class="marker"
